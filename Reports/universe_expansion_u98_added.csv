@@ -1,0 +1,2446 @@
+Sector,ETF,ETF_beta_2019_2021,Sector_selected,Holdings_As_Of,ETF_Rank,ETF_Weight_%,Ticker,ETF_holding_name,Beta_2019_2021,First_Alpaca_bar,Max_1d_move_2019_2021_%,Status,Company,ADV_$M_3m,Note,Selection_rule,Source,Downloaded
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              FREEPORT MCMORAN INC
+Ticker                             FCX
+Identifier                   35671D857
+SEDOL                          2352118
+Weight                            5.66
+Sector                               -
+Shares Held                 6356807.00
+Local Currency                     USD
+ETF_Rank                             3
+issuer                          35671D
+dup                              False
+asof                       23-Sep-2026
+Beta_2019_2021                    1.71
+First_bar                   2018-12-20
+Name: 2, dtype: object>",3,5.655,FCX,FREEPORT MCMORAN INC,1.705,2018-12-20,29.7,ADDED,Freeport-McMoRan Inc.,944.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              LYONDELLBASELL INDU CL A
+Ticker                                 LYB
+Identifier                       N53745100
+SEDOL                              B3SPXZ3
+Weight                                2.32
+Sector                                   -
+Shares Held                     3161885.00
+Local Currency                         USD
+ETF_Rank                                22
+issuer                              N53745
+dup                                  False
+asof                           23-Sep-2026
+Beta_2019_2021                        1.51
+First_bar                       2018-12-20
+Name: 21, dtype: object>",22,2.324,LYB,LYONDELLBASELL INDU CL A,1.515,2018-12-20,25.5,ADDED,LyondellBasell Industries N.V.,262.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              STEEL DYNAMICS INC
+Ticker                          STLD
+Identifier                 858119100
+SEDOL                        2849472
+Weight                          4.45
+Sector                             -
+Shares Held               1549166.00
+Local Currency                   USD
+ETF_Rank                           7
+issuer                        858119
+dup                            False
+asof                     23-Sep-2026
+Beta_2019_2021                  1.38
+First_bar                 2018-12-20
+Name: 6, dtype: object>",7,4.449,STLD,STEEL DYNAMICS INC,1.377,2018-12-20,19.5,ADDED,"Steel Dynamics, Inc.",280.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              MOSAIC CO/THE
+Ticker                      MOS
+Identifier            61945C103
+SEDOL                   B3NPHP6
+Weight                     1.16
+Sector                        -
+Shares Held          3889392.00
+Local Currency              USD
+ETF_Rank                     25
+issuer                   61945C
+dup                       False
+asof                23-Sep-2026
+Beta_2019_2021             1.34
+First_bar            2018-12-20
+Name: 24, dtype: object>",25,1.162,MOS,MOSAIC CO/THE,1.337,2018-12-20,19.9,ADDED,The Mosaic Company,187.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              SMURFIT WESTROCK PLC
+Ticker                              SW
+Identifier                   G8267P108
+SEDOL                          BRK49M5
+Weight                            3.66
+Sector                               -
+Shares Held                 6417462.00
+Local Currency                     USD
+ETF_Rank                            13
+issuer                          G8267P
+dup                              False
+asof                       23-Sep-2026
+Beta_2019_2021                    1.32
+First_bar                   2018-12-20
+Name: 12, dtype: object>",13,3.657,SW,SMURFIT WESTROCK PLC,1.323,2018-12-20,17.3,ADDED,Smurfit Westrock plc,231.0,Smurfit Westrock since 2024-07; Alpaca history before that is WestRock (WRK),"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              ALBEMARLE CORP
+Ticker                       ALB
+Identifier             012653101
+SEDOL                    2046853
+Weight                      2.01
+Sector                         -
+Shares Held           1443772.00
+Local Currency               USD
+ETF_Rank                      23
+issuer                    012653
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.32
+First_bar             2018-12-20
+Name: 22, dtype: object>",23,2.008,ALB,ALBEMARLE CORP,1.321,2018-12-20,15.6,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name                  DOW INC
+Ticker                    DOW
+Identifier          260557103
+SEDOL                 BHXCF84
+Weight                   3.10
+Sector                      -
+Shares Held        8837732.00
+Local Currency            USD
+ETF_Rank                   17
+issuer                 260557
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.21
+First_bar          2018-12-20
+Name: 16, dtype: object>",17,3.104,DOW,DOW INC,1.205,2018-12-20,20.9,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name                  CRH PLC
+Ticker                    CRH
+Identifier          G25508105
+SEDOL                 B01ZKD6
+Weight                   4.36
+Sector                      -
+Shares Held        4173023.00
+Local Currency            USD
+ETF_Rank                   11
+issuer                 G25508
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.19
+First_bar          2018-12-20
+Name: 10, dtype: object>",11,4.36,CRH,CRH PLC,1.19,2018-12-20,18.0,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              CF INDUSTRIES HOLDINGS INC
+Ticker                                    CF
+Identifier                         125269100
+SEDOL                                B0G4K50
+Weight                                  2.74
+Sector                                     -
+Shares Held                       1851598.00
+Local Currency                           USD
+ETF_Rank                                  20
+issuer                                125269
+dup                                    False
+asof                             23-Sep-2026
+Beta_2019_2021                          1.15
+First_bar                         2018-12-20
+Name: 19, dtype: object>",20,2.738,CF,CF INDUSTRIES HOLDINGS INC,1.148,2018-12-20,16.2,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              INTERNATIONAL PAPER CO
+Ticker                                IP
+Identifier                     460146103
+SEDOL                            2465254
+Weight                              2.84
+Sector                                 -
+Shares Held                   6479189.00
+Local Currency                       USD
+ETF_Rank                              19
+issuer                            460146
+dup                                False
+asof                         23-Sep-2026
+Beta_2019_2021                      1.13
+First_bar                     2018-12-20
+Name: 18, dtype: object>",19,2.835,IP,INTERNATIONAL PAPER CO,1.134,2018-12-20,16.9,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name               ECOLAB INC
+Ticker                    ECL
+Identifier          278865100
+SEDOL                 2304227
+Weight                   4.65
+Sector                      -
+Shares Held        1369758.00
+Local Currency            USD
+ETF_Rank                    5
+issuer                 278865
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.13
+First_bar          2018-12-20
+Name: 4, dtype: object>",5,4.646,ECL,ECOLAB INC,1.126,2018-12-20,22.2,"candidate, not in top 5 beta",Ecolab Inc.,369.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              AVERY DENNISON CORP
+Ticker                            AVY
+Identifier                  053611109
+SEDOL                         2066408
+Weight                           1.96
+Sector                              -
+Shares Held                 927303.00
+Local Currency                    USD
+ETF_Rank                           24
+issuer                         053611
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   1.12
+First_bar                  2018-12-20
+Name: 23, dtype: object>",24,1.963,AVY,AVERY DENNISON CORP,1.119,2018-12-20,22.9,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              MARTIN MARIETTA MATERIALS
+Ticker                                  MLM
+Identifier                        573284106
+SEDOL                               2572079
+Weight                                 4.42
+Sector                                    -
+Shares Held                       734909.00
+Local Currency                          USD
+ETF_Rank                                  9
+issuer                               573284
+dup                                   False
+asof                            23-Sep-2026
+Beta_2019_2021                         1.10
+First_bar                        2018-12-20
+Name: 8, dtype: object>",9,4.418,MLM,MARTIN MARIETTA MATERIALS,1.099,2018-12-20,13.5,"candidate, not in top 5 beta","Martin Marietta Materials, Inc.",372.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name               NUCOR CORP
+Ticker                    NUE
+Identifier          670346105
+SEDOL                 2651086
+Weight                   4.38
+Sector                      -
+Shares Held        1445655.00
+Local Currency            USD
+ETF_Rank                   10
+issuer                 670346
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.10
+First_bar          2018-12-20
+Name: 9, dtype: object>",10,4.377,NUE,NUCOR CORP,1.098,2018-12-20,12.6,"candidate, not in top 5 beta",Nucor Corporation,352.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              PPG INDUSTRIES INC
+Ticker                           PPG
+Identifier                 693506107
+SEDOL                        2698470
+Weight                          3.57
+Sector                             -
+Shares Held               2719744.00
+Local Currency                   USD
+ETF_Rank                          14
+issuer                        693506
+dup                            False
+asof                     23-Sep-2026
+Beta_2019_2021                  1.04
+First_bar                 2018-12-20
+Name: 13, dtype: object>",14,3.574,PPG,PPG INDUSTRIES INC,1.04,2018-12-20,13.2,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              AIR PRODUCTS + CHEMICALS INC
+Ticker                                     APD
+Identifier                           009158106
+SEDOL                                  2011602
+Weight                                    4.44
+Sector                                       -
+Shares Held                         1262902.00
+Local Currency                             USD
+ETF_Rank                                     8
+issuer                                  009158
+dup                                      False
+asof                               23-Sep-2026
+Beta_2019_2021                            1.01
+First_bar                           2018-12-20
+Name: 7, dtype: object>",8,4.442,APD,AIR PRODUCTS + CHEMICALS INC,1.01,2018-12-20,13.7,"candidate, not in top 5 beta","Air Products and Chemicals, Inc.",349.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              SHERWIN WILLIAMS CO/THE
+Ticker                                SHW
+Identifier                      824348106
+SEDOL                             2804211
+Weight                               4.65
+Sector                                  -
+Shares Held                    1162881.00
+Local Currency                        USD
+ETF_Rank                                4
+issuer                             824348
+dup                                 False
+asof                          23-Sep-2026
+Beta_2019_2021                       0.99
+First_bar                      2018-12-20
+Name: 3, dtype: object>",4,4.653,SHW,SHERWIN WILLIAMS CO/THE,0.993,2018-12-20,18.7,"candidate, not in top 5 beta",The Sherwin-Williams Company,678.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name                LINDE PLC
+Ticker                    LIN
+Identifier          G54950103
+SEDOL                 BNZHB81
+Weight                  11.75
+Sector                      -
+Shares Held        2040609.00
+Local Currency            USD
+ETF_Rank                    1
+issuer                 G54950
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.99
+First_bar          2018-12-20
+Name: 0, dtype: object>",1,11.749,LIN,LINDE PLC,0.991,2018-12-20,11.7,"candidate, not in top 5 beta",Linde plc,1038.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              VULCAN MATERIALS CO
+Ticker                            VMC
+Identifier                  929160109
+SEDOL                         2931205
+Weight                           4.47
+Sector                              -
+Shares Held                1492100.00
+Local Currency                    USD
+ETF_Rank                            6
+issuer                         929160
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   0.94
+First_bar                  2018-12-20
+Name: 5, dtype: object>",6,4.47,VMC,VULCAN MATERIALS CO,0.936,2018-12-20,17.8,"candidate, not in top 5 beta",Vulcan Materials Company,293.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              INTL FLAVORS + FRAGRANCES
+Ticker                                  IFF
+Identifier                        459506101
+SEDOL                               2464165
+Weight                                 3.28
+Sector                                    -
+Shares Held                      3121689.00
+Local Currency                          USD
+ETF_Rank                                 15
+issuer                               459506
+dup                                   False
+asof                            23-Sep-2026
+Beta_2019_2021                         0.93
+First_bar                        2018-12-20
+Name: 14, dtype: object>",15,3.28,IFF,INTL FLAVORS + FRAGRANCES,0.926,2018-12-20,15.9,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              PACKAGING CORP OF AMERICA
+Ticker                                  PKG
+Identifier                        695156109
+SEDOL                               2504566
+Weight                                 3.20
+Sector                                    -
+Shares Held                      1083465.00
+Local Currency                          USD
+ETF_Rank                                 16
+issuer                               695156
+dup                                   False
+asof                            23-Sep-2026
+Beta_2019_2021                         0.92
+First_bar                        2018-12-20
+Name: 15, dtype: object>",16,3.2,PKG,PACKAGING CORP OF AMERICA,0.919,2018-12-20,15.8,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name                BALL CORP
+Ticker                   BALL
+Identifier          058498106
+SEDOL                 2073022
+Weight                   2.33
+Sector                      -
+Shares Held        3238567.00
+Local Currency            USD
+ETF_Rank                   21
+issuer                 058498
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.77
+First_bar          2018-12-20
+Name: 20, dtype: object>",21,2.335,BALL,BALL CORP,0.768,2018-12-20,12.1,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              NEWMONT CORP
+Ticker                     NEM
+Identifier           651639106
+SEDOL                  2636607
+Weight                    7.06
+Sector                       -
+Shares Held         4664402.00
+Local Currency             USD
+ETF_Rank                     2
+issuer                  651639
+dup                      False
+asof               23-Sep-2026
+Beta_2019_2021            0.41
+First_bar           2018-12-20
+Name: 1, dtype: object>",2,7.064,NEM,NEWMONT CORP,0.415,2018-12-20,14.0,"candidate, not in top 5 beta",Newmont Corporation,857.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name              CORTEVA INC
+Ticker                   CTVA
+Identifier          22052L104
+SEDOL                 BK73B42
+Weight                   4.34
+Sector                      -
+Shares Held        4399526.00
+Local Currency            USD
+ETF_Rank                   12
+issuer                 22052L
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021            NaN
+First_bar          2019-06-03
+Name: 11, dtype: object>",12,4.337,CTVA,CORTEVA INC,,2019-06-03,16.4,excluded: no full 2019-2021 data or spliced history (>100% 1-day move),,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Materials,XLB,1.078,True,"<bound method NDFrame.asof of Name                AMCOR PLC
+Ticker                   AMCR
+Identifier          G0250X149
+SEDOL                 BV7DQ55
+Weight                   2.97
+Sector                      -
+Shares Held        5656675.00
+Local Currency            USD
+ETF_Rank                   18
+issuer                 G0250X
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021            NaN
+First_bar          2019-06-11
+Name: 17, dtype: object>",18,2.968,AMCR,AMCOR PLC,,2019-06-11,16.2,excluded: no full 2019-2021 data or spliced history (>100% 1-day move),,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlb.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name                 APA CORP
+Ticker                    APA
+Identifier          03743Q108
+SEDOL                 BNNF1C1
+Weight                   0.81
+Sector                      -
+Shares Held        7436451.00
+Local Currency            USD
+ETF_Rank                   21
+issuer                 03743Q
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           2.04
+First_bar          2018-12-20
+Name: 20, dtype: object>",21,0.806,APA,APA CORP,2.042,2018-12-20,53.9,ADDED,APA Corporation,220.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              OCCIDENTAL PETROLEUM CORP
+Ticker                                  OXY
+Identifier                        674599105
+SEDOL                               2655408
+Weight                                 2.20
+Sector                                    -
+Shares Held                     15489149.00
+Local Currency                          USD
+ETF_Rank                                 15
+issuer                               674599
+dup                                   False
+asof                            23-Sep-2026
+Beta_2019_2021                         2.00
+First_bar                        2018-12-20
+Name: 14, dtype: object>",15,2.203,OXY,OCCIDENTAL PETROLEUM CORP,2.001,2018-12-20,52.0,ADDED,Occidental Petroleum Corporation,487.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              TARGA RESOURCES CORP
+Ticker                            TRGP
+Identifier                   87612G101
+SEDOL                          B55PZY3
+Weight                            3.19
+Sector                               -
+Shares Held                 4551482.00
+Local Currency                     USD
+ETF_Rank                            11
+issuer                          87612G
+dup                              False
+asof                       23-Sep-2026
+Beta_2019_2021                    1.89
+First_bar                   2018-12-20
+Name: 10, dtype: object>",11,3.194,TRGP,TARGA RESOURCES CORP,1.89,2018-12-20,55.5,ADDED,Targa Resources Corp.,347.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              DEVON ENERGY CORP
+Ticker                          DVN
+Identifier                25179M103
+SEDOL                       2480677
+Weight                         2.78
+Sector                            -
+Shares Held             23348317.00
+Local Currency                  USD
+ETF_Rank                         14
+issuer                       25179M
+dup                           False
+asof                    23-Sep-2026
+Beta_2019_2021                 1.79
+First_bar                2018-12-20
+Name: 13, dtype: object>",14,2.782,DVN,DEVON ENERGY CORP,1.794,2018-12-20,37.4,ADDED,Devon Energy Corporation,535.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              DIAMONDBACK ENERGY INC
+Ticker                              FANG
+Identifier                     25278X109
+SEDOL                            B7Y8YR3
+Weight                              2.00
+Sector                                 -
+Shares Held                   4338920.00
+Local Currency                       USD
+ETF_Rank                              16
+issuer                            25278X
+dup                                False
+asof                         23-Sep-2026
+Beta_2019_2021                      1.68
+First_bar                     2018-12-20
+Name: 15, dtype: object>",16,1.998,FANG,DIAMONDBACK ENERGY INC,1.679,2018-12-20,44.6,ADDED,"Diamondback Energy, Inc.",464.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              MARATHON PETROLEUM CORP
+Ticker                                MPC
+Identifier                      56585A102
+SEDOL                             B3K3L40
+Weight                               4.55
+Sector                                  -
+Shares Held                    4728431.00
+Local Currency                        USD
+ETF_Rank                                5
+issuer                             56585A
+dup                                 False
+asof                          23-Sep-2026
+Beta_2019_2021                       1.67
+First_bar                      2018-12-20
+Name: 4, dtype: object>",5,4.554,MPC,MARATHON PETROLEUM CORP,1.671,2018-12-20,27.0,"candidate, not in top 5 beta",Marathon Petroleum Corporation,892.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name                ONEOK INC
+Ticker                    OKE
+Identifier          30609A109
+SEDOL                 BWJJFW8
+Weight                   3.00
+Sector                      -
+Shares Held       13380089.00
+Local Currency            USD
+ETF_Rank                   13
+issuer                 30609A
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.67
+First_bar          2018-12-20
+Name: 12, dtype: object>",13,3.004,OKE,ONEOK INC,1.667,2018-12-20,37.8,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              VALERO ENERGY CORP
+Ticker                           VLO
+Identifier                 91913Y100
+SEDOL                        2041364
+Weight                          4.53
+Sector                             -
+Shares Held               4855932.00
+Local Currency                   USD
+ETF_Rank                           6
+issuer                        91913Y
+dup                            False
+asof                     23-Sep-2026
+Beta_2019_2021                  1.54
+First_bar                 2018-12-20
+Name: 5, dtype: object>",6,4.526,VLO,VALERO ENERGY CORP,1.538,2018-12-20,31.2,"candidate, not in top 5 beta",Valero Energy Corporation,1035.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              CONOCOPHILLIPS
+Ticker                       COP
+Identifier             20825C104
+SEDOL                    2685717
+Weight                      6.80
+Sector                         -
+Shares Held          21397580.00
+Local Currency               USD
+ETF_Rank                       3
+issuer                    20825C
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.47
+First_bar             2018-12-20
+Name: 2, dtype: object>",3,6.797,COP,CONOCOPHILLIPS,1.472,2018-12-20,25.2,"candidate, not in top 5 beta",ConocoPhillips,835.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              EOG RESOURCES INC
+Ticker                          EOG
+Identifier                26875P101
+SEDOL                       2318024
+Weight                         3.92
+Sector                            -
+Shares Held             11133545.00
+Local Currency                  USD
+ETF_Rank                          9
+issuer                       26875P
+dup                           False
+asof                    23-Sep-2026
+Beta_2019_2021                 1.36
+First_bar                2018-12-20
+Name: 8, dtype: object>",9,3.916,EOG,EOG RESOURCES INC,1.365,2018-12-20,32.0,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              PHILLIPS 66
+Ticker                    PSX
+Identifier          718546104
+SEDOL                 B78C4Y8
+Weight                   4.61
+Sector                      -
+Shares Held        7242548.00
+Local Currency            USD
+ETF_Rank                    4
+issuer                 718546
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.36
+First_bar          2018-12-20
+Name: 3, dtype: object>",4,4.607,PSX,PHILLIPS 66,1.361,2018-12-20,22.2,"candidate, not in top 5 beta",Phillips 66,654.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              TEXAS PACIFIC LAND CORP
+Ticker                                TPL
+Identifier                      88262P102
+SEDOL                             BM99VY2
+Weight                               1.04
+Sector                                  -
+Shares Held                    1244395.00
+Local Currency                        USD
+ETF_Rank                               20
+issuer                             88262P
+dup                                 False
+asof                          23-Sep-2026
+Beta_2019_2021                       1.32
+First_bar                      2018-12-20
+Name: 19, dtype: object>",20,1.036,TPL,TEXAS PACIFIC LAND CORP,1.323,2018-12-20,26.2,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              CHEVRON CORP
+Ticker                     CVX
+Identifier           166764100
+SEDOL                  2838555
+Weight                   17.94
+Sector                       -
+Shares Held        35191483.00
+Local Currency             USD
+ETF_Rank                     2
+issuer                  166764
+dup                      False
+asof               23-Sep-2026
+Beta_2019_2021            1.25
+First_bar           2018-12-20
+Name: 1, dtype: object>",2,17.935,CVX,CHEVRON CORP,1.254,2018-12-20,22.8,"candidate, not in top 5 beta",Chevron,1719.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              WILLIAMS COS INC
+Ticker                         WMB
+Identifier               969457100
+SEDOL                      2967181
+Weight                        4.43
+Sector                           -
+Shares Held            25132607.00
+Local Currency                 USD
+ETF_Rank                         7
+issuer                      969457
+dup                          False
+asof                   23-Sep-2026
+Beta_2019_2021                1.16
+First_bar               2018-12-20
+Name: 6, dtype: object>",7,4.432,WMB,WILLIAMS COS INC,1.159,2018-12-20,23.8,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              KINDER MORGAN INC
+Ticker                          KMI
+Identifier                49456B101
+SEDOL                       B3NQ4P8
+Weight                         3.24
+Sector                            -
+Shares Held             41593760.00
+Local Currency                  USD
+ETF_Rank                         10
+issuer                       49456B
+dup                           False
+asof                    23-Sep-2026
+Beta_2019_2021                 1.13
+First_bar                2018-12-20
+Name: 9, dtype: object>",10,3.236,KMI,KINDER MORGAN INC,1.126,2018-12-20,18.9,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              EXXONMOBIL HOLDINGS CORP
+Ticker                                 XOM
+Identifier                       30233Q108
+SEDOL                              BVSRPD7
+Weight                               23.50
+Sector                                   -
+Shares Held                    58780214.00
+Local Currency                         USD
+ETF_Rank                                 1
+issuer                              30233Q
+dup                                  False
+asof                           23-Sep-2026
+Beta_2019_2021                        1.10
+First_bar                       2018-12-20
+Name: 0, dtype: object>",1,23.503,XOM,EXXONMOBIL HOLDINGS CORP,1.102,2018-12-20,12.7,"candidate, not in top 5 beta",Exxon Mobil Corporation,2273.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name                 EQT CORP
+Ticker                    EQT
+Identifier          26884L109
+SEDOL                 2319414
+Weight                   1.68
+Sector                      -
+Shares Held       13277112.00
+Local Currency            USD
+ETF_Rank                   17
+issuer                 26884L
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.84
+First_bar          2018-12-20
+Name: 16, dtype: object>",17,1.681,EQT,EQT CORP,0.842,2018-12-20,37.3,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Energy,XLE,1.317,True,"<bound method NDFrame.asof of Name              EXPAND ENERGY CORP
+Ticker                           EXE
+Identifier                 165167735
+SEDOL                        BMZ5LZ5
+Weight                          1.06
+Sector                             -
+Shares Held               4913852.00
+Local Currency                   USD
+ETF_Rank                          19
+issuer                        165167
+dup                            False
+asof                     23-Sep-2026
+Beta_2019_2021                   NaN
+First_bar                 2018-12-20
+Name: 18, dtype: object>",19,1.061,EXE,EXPAND ENERGY CORP,,2018-12-20,279.7,excluded: no full 2019-2021 data or spliced history (>100% 1-day move),,,Expand Energy = ex-Chesapeake; history spliced across the 2020-21 bankruptcy (+280% one-day jump 2021-02-10),"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xle.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              CAPITAL ONE FINANCIAL CORP
+Ticker                                   COF
+Identifier                         14040H105
+SEDOL                                2654461
+Weight                                  1.56
+Sector                                     -
+Shares Held                       4116548.00
+Local Currency                           USD
+ETF_Rank                                  14
+issuer                                14040H
+dup                                    False
+asof                             23-Sep-2026
+Beta_2019_2021                          1.57
+First_bar                         2018-12-20
+Name: 13, dtype: object>",14,1.564,COF,CAPITAL ONE FINANCIAL CORP,1.571,2018-12-20,23.9,ADDED,Capital One Financial Corporation,781.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              CITIGROUP INC
+Ticker                        C
+Identifier            172967424
+SEDOL                   2297907
+Weight                     2.88
+Sector                        -
+Shares Held         11254959.00
+Local Currency              USD
+ETF_Rank                      9
+issuer                   172967
+dup                       False
+asof                23-Sep-2026
+Beta_2019_2021             1.56
+First_bar            2018-12-20
+Name: 8, dtype: object>",9,2.876,C,CITIGROUP INC,1.556,2018-12-20,19.3,ADDED,Citigroup Inc.,1458.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              APOLLO GLOBAL MANAGEMENT INC
+Ticker                                     APO
+Identifier                           03769M106
+SEDOL                                  BN44JF6
+Weight                                    0.76
+Sector                                       -
+Shares Held                         3170109.00
+Local Currency                             USD
+ETF_Rank                                    30
+issuer                                  03769M
+dup                                      False
+asof                               23-Sep-2026
+Beta_2019_2021                            1.46
+First_bar                           2018-12-20
+Name: 29, dtype: object>",30,0.764,APO,APOLLO GLOBAL MANAGEMENT INC,1.462,2018-12-20,26.2,ADDED,"Apollo Global Management, Inc.",474.0,Apollo/Athene merger 2022 (ticker continuous),"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              MORGAN STANLEY
+Ticker                        MS
+Identifier             617446448
+SEDOL                    2262314
+Weight                      3.08
+Sector                         -
+Shares Held           8008953.00
+Local Currency               USD
+ETF_Rank                       8
+issuer                    617446
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.44
+First_bar             2018-12-20
+Name: 7, dtype: object>",8,3.078,MS,MORGAN STANLEY,1.445,2018-12-20,19.8,ADDED,Morgan Stanley,1092.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              AMERICAN EXPRESS CO
+Ticker                            AXP
+Identifier                  025816109
+SEDOL                         2026082
+Weight                           2.07
+Sector                              -
+Shares Held                3534048.00
+Local Currency                    USD
+ETF_Rank                           11
+issuer                         025816
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   1.44
+First_bar                  2018-12-20
+Name: 10, dtype: object>",11,2.067,AXP,AMERICAN EXPRESS CO,1.444,2018-12-20,21.9,ADDED,American Express Company,979.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              BANK OF AMERICA CORP
+Ticker                             BAC
+Identifier                   060505104
+SEDOL                          2295677
+Weight                            4.73
+Sector                               -
+Shares Held                43634055.00
+Local Currency                     USD
+ETF_Rank                             5
+issuer                          060505
+dup                              False
+asof                       23-Sep-2026
+Beta_2019_2021                    1.42
+First_bar                   2018-12-20
+Name: 4, dtype: object>",5,4.733,BAC,BANK OF AMERICA CORP,1.417,2018-12-20,17.6,"candidate, not in top 5 beta",Bank of America Corporation,2013.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              TRUIST FINANCIAL CORP
+Ticker                              TFC
+Identifier                    89832Q109
+SEDOL                           BKP7287
+Weight                             0.75
+Sector                                -
+Shares Held                  8196808.00
+Local Currency                      USD
+ETF_Rank                             31
+issuer                           89832Q
+dup                               False
+asof                        23-Sep-2026
+Beta_2019_2021                     1.40
+First_bar                    2018-12-20
+Name: 30, dtype: object>",31,0.746,TFC,TRUIST FINANCIAL CORP,1.404,2018-12-20,19.1,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              MASTERCARD INC   A
+Ticker                            MA
+Identifier                 57636Q104
+SEDOL                        B121557
+Weight                          5.88
+Sector                             -
+Shares Held               5425355.00
+Local Currency                   USD
+ETF_Rank                           4
+issuer                        57636Q
+dup                            False
+asof                     23-Sep-2026
+Beta_2019_2021                  1.35
+First_bar                 2018-12-20
+Name: 3, dtype: object>",4,5.884,MA,MASTERCARD INC   A,1.35,2018-12-20,16.6,"candidate, not in top 5 beta",Mastercard Incorporated,1705.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              KKR + CO INC
+Ticker                     KKR
+Identifier           48251W104
+SEDOL                  BG1FRR1
+Weight                    0.87
+Sector                       -
+Shares Held         4637399.00
+Local Currency             USD
+ETF_Rank                    27
+issuer                  48251W
+dup                      False
+asof               23-Sep-2026
+Beta_2019_2021            1.35
+First_bar           2018-12-20
+Name: 26, dtype: object>",27,0.873,KKR,KKR + CO INC,1.349,2018-12-20,18.1,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              PNC FINANCIAL SERVICES GROUP
+Ticker                                     PNC
+Identifier                           693475105
+SEDOL                                  2692665
+Weight                                    1.16
+Sector                                       -
+Shares Held                         2676982.00
+Local Currency                             USD
+ETF_Rank                                    22
+issuer                                  693475
+dup                                      False
+asof                               23-Sep-2026
+Beta_2019_2021                            1.32
+First_bar                           2018-12-20
+Name: 21, dtype: object>",22,1.162,PNC,PNC FINANCIAL SERVICES GROUP,1.317,2018-12-20,15.9,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              MOODY S CORP
+Ticker                     MCO
+Identifier           615369105
+SEDOL                  2252058
+Weight                    0.92
+Sector                       -
+Shares Held          999397.00
+Local Currency             USD
+ETF_Rank                    26
+issuer                  615369
+dup                      False
+asof               23-Sep-2026
+Beta_2019_2021            1.29
+First_bar           2018-12-20
+Name: 25, dtype: object>",26,0.917,MCO,MOODY S CORP,1.293,2018-12-20,18.6,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              BLACKSTONE INC
+Ticker                        BX
+Identifier             09260D107
+SEDOL                    BKF2SL7
+Weight                      1.16
+Sector                         -
+Shares Held           5036319.00
+Local Currency               USD
+ETF_Rank                      21
+issuer                    09260D
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.29
+First_bar             2018-12-20
+Name: 20, dtype: object>",21,1.164,BX,BLACKSTONE INC,1.288,2018-12-20,13.2,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              BLACKROCK INC
+Ticker                      BLK
+Identifier            09290D101
+SEDOL                   BMZBBT7
+Weight                     1.99
+Sector                        -
+Shares Held           966441.00
+Local Currency              USD
+ETF_Rank                     12
+issuer                   09290D
+dup                       False
+asof                23-Sep-2026
+Beta_2019_2021             1.28
+First_bar            2018-12-20
+Name: 11, dtype: object>",12,1.986,BLK,BLACKROCK INC,1.278,2018-12-20,13.7,"candidate, not in top 5 beta","BlackRock, Inc.",,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              WELLS FARGO + CO
+Ticker                         WFC
+Identifier               949746101
+SEDOL                      2649100
+Weight                        3.22
+Sector                           -
+Shares Held            20289649.00
+Local Currency                 USD
+ETF_Rank                         7
+issuer                      949746
+dup                          False
+asof                   23-Sep-2026
+Beta_2019_2021                1.27
+First_bar               2018-12-20
+Name: 6, dtype: object>",7,3.219,WFC,WELLS FARGO + CO,1.273,2018-12-20,14.6,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              JPMORGAN CHASE + CO
+Ticker                            JPM
+Identifier                  46625H100
+SEDOL                         2190385
+Weight                          11.66
+Sector                              -
+Shares Held               17834952.00
+Local Currency                    USD
+ETF_Rank                            2
+issuer                         46625H
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   1.26
+First_bar                  2018-12-20
+Name: 1, dtype: object>",2,11.661,JPM,JPMORGAN CHASE + CO,1.264,2018-12-20,18.0,"candidate, not in top 5 beta",JPMorgan Chase & Co.,2736.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name               US BANCORP
+Ticker                    USB
+Identifier          902973304
+SEDOL                 2736035
+Weight                   1.18
+Sector                      -
+Shares Held       10453798.00
+Local Currency            USD
+ETF_Rank                   20
+issuer                 902973
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.26
+First_bar          2018-12-20
+Name: 19, dtype: object>",20,1.184,USB,US BANCORP,1.256,2018-12-20,17.4,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              GOLDMAN SACHS GROUP INC
+Ticker                                 GS
+Identifier                      38141G104
+SEDOL                             2407966
+Weight                               3.54
+Sector                                  -
+Shares Held                    1953319.00
+Local Currency                        USD
+ETF_Rank                                6
+issuer                             38141G
+dup                                 False
+asof                          23-Sep-2026
+Beta_2019_2021                       1.24
+First_bar                      2018-12-20
+Name: 5, dtype: object>",6,3.543,GS,GOLDMAN SACHS GROUP INC,1.241,2018-12-20,13.8,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              VISA INC CLASS A SHARES
+Ticker                                  V
+Identifier                      92826C839
+SEDOL                             B2PZN04
+Weight                               8.01
+Sector                                  -
+Shares Held                   11433935.00
+Local Currency                        USD
+ETF_Rank                                3
+issuer                             92826C
+dup                                 False
+asof                          23-Sep-2026
+Beta_2019_2021                       1.18
+First_bar                      2018-12-20
+Name: 2, dtype: object>",3,8.007,V,VISA INC CLASS A SHARES,1.177,2018-12-20,13.8,"candidate, not in top 5 beta",Visa Inc.,2646.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              S+P GLOBAL INC
+Ticker                      SPGI
+Identifier             78409V104
+SEDOL                    BYV2325
+Weight                      1.60
+Sector                         -
+Shares Held           2026013.00
+Local Currency               USD
+ETF_Rank                      13
+issuer                    78409V
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.17
+First_bar             2018-12-20
+Name: 12, dtype: object>",13,1.595,SPGI,S+P GLOBAL INC,1.171,2018-12-20,15.2,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              SCHWAB (CHARLES) CORP
+Ticker                             SCHW
+Identifier                    808513105
+SEDOL                           2779397
+Weight                             2.10
+Sector                                -
+Shares Held                 10906973.00
+Local Currency                      USD
+ETF_Rank                             10
+issuer                           808513
+dup                               False
+asof                        23-Sep-2026
+Beta_2019_2021                     1.13
+First_bar                    2018-12-20
+Name: 9, dtype: object>",10,2.102,SCHW,SCHWAB (CHARLES) CORP,1.126,2018-12-20,13.2,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              BANK OF NEW YORK MELLON CORP
+Ticker                                     BNY
+Identifier                           064058100
+SEDOL                                  B1Z77F6
+Weight                                    1.32
+Sector                                       -
+Shares Held                         4552373.00
+Local Currency                             USD
+ETF_Rank                                    17
+issuer                                  064058
+dup                                      False
+asof                               23-Sep-2026
+Beta_2019_2021                            1.09
+First_bar                           2018-12-20
+Name: 16, dtype: object>",17,1.318,BNY,BANK OF NEW YORK MELLON CORP,1.088,2018-12-20,16.1,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name                CHUBB LTD
+Ticker                     CB
+Identifier          H1467J104
+SEDOL                 B3BQMF6
+Weight                   1.53
+Sector                      -
+Shares Held        2355787.00
+Local Currency            USD
+ETF_Rank                   16
+issuer                 H1467J
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.04
+First_bar          2018-12-20
+Name: 15, dtype: object>",16,1.53,CB,CHUBB LTD,1.043,2018-12-20,16.8,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              CME GROUP INC
+Ticker                      CME
+Identifier            12572Q105
+SEDOL                   2965839
+Weight                     1.27
+Sector                        -
+Shares Held          2412834.00
+Local Currency              USD
+ETF_Rank                     18
+issuer                   12572Q
+dup                       False
+asof                23-Sep-2026
+Beta_2019_2021             0.97
+First_bar            2018-12-20
+Name: 17, dtype: object>",18,1.266,CME,CME GROUP INC,0.975,2018-12-20,18.4,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              ARTHUR J GALLAGHER + CO
+Ticker                                AJG
+Identifier                      363576109
+SEDOL                             2359506
+Weight                               0.77
+Sector                                  -
+Shares Held                    1719826.00
+Local Currency                        USD
+ETF_Rank                               29
+issuer                             363576
+dup                                 False
+asof                          23-Sep-2026
+Beta_2019_2021                       0.97
+First_bar                      2018-12-20
+Name: 28, dtype: object>",29,0.765,AJG,ARTHUR J GALLAGHER + CO,0.965,2018-12-20,15.2,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              BERKSHIRE HATHAWAY INC CL B
+Ticker                                  BRK.B
+Identifier                          084670702
+SEDOL                                 2073390
+Weight                                  12.28
+Sector                                      -
+Shares Held                       12496188.00
+Local Currency                            USD
+ETF_Rank                                    1
+issuer                                 084670
+dup                                     False
+asof                              23-Sep-2026
+Beta_2019_2021                           0.91
+First_bar                          2018-12-20
+Name: 0, dtype: object>",1,12.277,BRK.B,BERKSHIRE HATHAWAY INC CL B,0.915,2018-12-20,11.6,"candidate, not in top 5 beta",Berkshire Hathaway Inc. (Class B),2253.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              TRAVELERS COS INC/THE
+Ticker                              TRV
+Identifier                    89417E109
+SEDOL                           2769503
+Weight                             0.98
+Sector                                -
+Shares Held                  1399551.00
+Local Currency                      USD
+ETF_Rank                             25
+issuer                           89417E
+dup                               False
+asof                        23-Sep-2026
+Beta_2019_2021                     0.90
+First_bar                    2018-12-20
+Name: 24, dtype: object>",25,0.977,TRV,TRAVELERS COS INC/THE,0.905,2018-12-20,15.3,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              MARSH + MCLENNAN COS
+Ticker                            MRSH
+Identifier                   571748102
+SEDOL                          2567741
+Weight                            1.06
+Sector                               -
+Shares Held                 3201679.00
+Local Currency                     USD
+ETF_Rank                            24
+issuer                          571748
+dup                              False
+asof                       23-Sep-2026
+Beta_2019_2021                    0.90
+First_bar                   2018-12-20
+Name: 23, dtype: object>",24,1.057,MRSH,MARSH + MCLENNAN COS,0.902,2018-12-20,13.4,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              INTERCONTINENTAL EXCHANGE IN
+Ticker                                     ICE
+Identifier                           45866F104
+SEDOL                                  BFSSDS9
+Weight                                    1.14
+Sector                                       -
+Shares Held                         3766522.00
+Local Currency                             USD
+ETF_Rank                                    23
+issuer                                  45866F
+dup                                      False
+asof                               23-Sep-2026
+Beta_2019_2021                            0.85
+First_bar                           2018-12-20
+Name: 22, dtype: object>",23,1.141,ICE,INTERCONTINENTAL EXCHANGE IN,0.854,2018-12-20,12.3,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              AON PLC CLASS A
+Ticker                        AON
+Identifier              G0403H108
+SEDOL                     BLP1HW5
+Weight                       0.78
+Sector                          -
+Shares Held            1422926.00
+Local Currency                USD
+ETF_Rank                       28
+issuer                     G0403H
+dup                         False
+asof                  23-Sep-2026
+Beta_2019_2021               0.84
+First_bar              2018-12-20
+Name: 27, dtype: object>",28,0.776,AON,AON PLC CLASS A,0.842,2018-12-20,16.7,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Financials,XLF,1.19,True,"<bound method NDFrame.asof of Name              PROGRESSIVE CORP
+Ticker                         PGR
+Identifier               743315103
+SEDOL                      2705024
+Weight                        1.53
+Sector                           -
+Shares Held             3900580.00
+Local Currency                 USD
+ETF_Rank                        15
+issuer                      743315
+dup                          False
+asof                   23-Sep-2026
+Beta_2019_2021                0.75
+First_bar               2018-12-20
+Name: 14, dtype: object>",15,1.535,PGR,PROGRESSIVE CORP,0.748,2018-12-20,12.1,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              BLOOM ENERGY CORP  A
+Ticker                              BE
+Identifier                   093712107
+SEDOL                          BDD1BB8
+Weight                            1.50
+Sector                               -
+Shares Held                 1659631.00
+Local Currency                     USD
+ETF_Rank                            22
+issuer                          093712
+dup                              False
+asof                       23-Sep-2026
+Beta_2019_2021                    2.00
+First_bar                   2018-12-20
+Name: 21, dtype: object>",22,1.496,BE,BLOOM ENERGY CORP  A,2.0,2018-12-20,44.5,ADDED,Bloom Energy Corporation,3829.0,"Bloom Energy (GICS Industrials, electrical equipment)","Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              BOEING CO/THE
+Ticker                       BA
+Identifier            097023105
+SEDOL                   2108601
+Weight                     2.92
+Sector                        -
+Shares Held          4453799.00
+Local Currency              USD
+ETF_Rank                      8
+issuer                   097023
+dup                       False
+asof                23-Sep-2026
+Beta_2019_2021             1.75
+First_bar            2018-12-20
+Name: 7, dtype: object>",8,2.918,BA,BOEING CO/THE,1.754,2018-12-20,24.3,ADDED,The Boeing Company,1280.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              UNITED RENTALS INC
+Ticker                           URI
+Identifier                 911363109
+SEDOL                        2134781
+Weight                          1.19
+Sector                             -
+Shares Held                350759.00
+Local Currency                   USD
+ETF_Rank                          31
+issuer                        911363
+dup                            False
+asof                     23-Sep-2026
+Beta_2019_2021                  1.65
+First_bar                 2018-12-20
+Name: 30, dtype: object>",31,1.186,URI,UNITED RENTALS INC,1.647,2018-12-20,22.2,ADDED,"United Rentals, Inc.",494.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              PARKER HANNIFIN CORP
+Ticker                              PH
+Identifier                   701094104
+SEDOL                          2671501
+Weight                            2.26
+Sector                               -
+Shares Held                  710493.00
+Local Currency                     USD
+ETF_Rank                            10
+issuer                          701094
+dup                              False
+asof                       23-Sep-2026
+Beta_2019_2021                    1.53
+First_bar                   2018-12-20
+Name: 9, dtype: object>",10,2.261,PH,PARKER HANNIFIN CORP,1.531,2018-12-20,18.4,ADDED,Parker-Hannifin Corporation,608.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              TRANSDIGM GROUP INC
+Ticker                            TDG
+Identifier                  893641100
+SEDOL                         B11FJK3
+Weight                           1.13
+Sector                              -
+Shares Held                 311496.00
+Local Currency                    USD
+ETF_Rank                           33
+issuer                         893641
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   1.44
+First_bar                  2018-12-20
+Name: 32, dtype: object>",33,1.128,TDG,TRANSDIGM GROUP INC,1.436,2018-12-20,24.4,ADDED,TransDigm Group Incorporated,490.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name                 RTX CORP
+Ticker                    RTX
+Identifier          75513E101
+SEDOL                 BM5M5Y3
+Weight                   4.78
+Sector                      -
+Shares Held        7594675.00
+Local Currency            USD
+ETF_Rank                    3
+issuer                 75513E
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.40
+First_bar          2018-12-20
+Name: 2, dtype: object>",3,4.783,RTX,RTX CORP,1.398,2018-12-20,71.0,"candidate, not in top 5 beta",RTX Corporation,930.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              CINTAS CORP
+Ticker                   CTAS
+Identifier          172908105
+SEDOL                 2197137
+Weight                   1.22
+Sector                      -
+Shares Held        1939300.00
+Local Currency            USD
+ETF_Rank                   30
+issuer                 172908
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.29
+First_bar          2018-12-20
+Name: 29, dtype: object>",30,1.22,CTAS,CINTAS CORP,1.286,2018-12-20,16.9,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              EATON CORP PLC
+Ticker                       ETN
+Identifier             G29183103
+SEDOL                    B8KQN82
+Weight                      3.15
+Sector                         -
+Shares Held           2188643.00
+Local Currency               USD
+ETF_Rank                       6
+issuer                    G29183
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.28
+First_bar             2018-12-20
+Name: 5, dtype: object>",6,3.147,ETN,EATON CORP PLC,1.282,2018-12-20,23.3,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              EMERSON ELECTRIC CO
+Ticker                            EMR
+Identifier                  291011104
+SEDOL                         2313405
+Weight                           1.59
+Sector                              -
+Shares Held                3143197.00
+Local Currency                    USD
+ETF_Rank                           21
+issuer                         291011
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   1.25
+First_bar                  2018-12-20
+Name: 20, dtype: object>",21,1.592,EMR,EMERSON ELECTRIC CO,1.253,2018-12-20,19.0,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              GENERAL ELECTRIC
+Ticker                          GE
+Identifier               369604301
+SEDOL                      BL59CR9
+Weight                        6.13
+Sector                           -
+Shares Held             5846709.00
+Local Currency                 USD
+ETF_Rank                         2
+issuer                      369604
+dup                          False
+asof                   23-Sep-2026
+Beta_2019_2021                1.24
+First_bar               2018-12-20
+Name: 1, dtype: object>",2,6.127,GE,GENERAL ELECTRIC,1.235,2018-12-20,14.7,"candidate, not in top 5 beta",General Electric (GE Aerospace),1430.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              NORFOLK SOUTHERN CORP
+Ticker                              NSC
+Identifier                    655844108
+SEDOL                           2641894
+Weight                             1.31
+Sector                                -
+Shares Held                  1265677.00
+Local Currency                      USD
+ETF_Rank                             27
+issuer                           655844
+dup                               False
+asof                        23-Sep-2026
+Beta_2019_2021                     1.20
+First_bar                    2018-12-20
+Name: 26, dtype: object>",27,1.306,NSC,NORFOLK SOUTHERN CORP,1.2,2018-12-20,18.0,"candidate, not in top 5 beta",Norfolk Southern Corporation,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name                 CSX CORP
+Ticker                    CSX
+Identifier          126408103
+SEDOL                 2160753
+Weight                   1.61
+Sector                      -
+Shares Held       10438816.00
+Local Currency            USD
+ETF_Rank                   19
+issuer                 126408
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.19
+First_bar          2018-12-20
+Name: 18, dtype: object>",19,1.614,CSX,CSX CORP,1.193,2018-12-20,16.4,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name               DEERE + CO
+Ticker                     DE
+Identifier          244199105
+SEDOL                 2261203
+Weight                   3.29
+Sector                      -
+Shares Held        1414638.00
+Local Currency            USD
+ETF_Rank                    5
+issuer                 244199
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.16
+First_bar          2018-12-20
+Name: 4, dtype: object>",5,3.289,DE,DEERE + CO,1.161,2018-12-20,13.6,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name               FEDEX CORP
+Ticker                    FDX
+Identifier          31428X106
+SEDOL                 2142784
+Weight                   1.18
+Sector                      -
+Shares Held        1239825.00
+Local Currency            USD
+ETF_Rank                   32
+issuer                 31428X
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.15
+First_bar          2018-12-20
+Name: 31, dtype: object>",32,1.184,FDX,FEDEX CORP,1.151,2018-12-20,15.1,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              AUTOMATIC DATA PROCESSING
+Ticker                                  ADP
+Identifier                        053015103
+SEDOL                               2065308
+Weight                                 1.93
+Sector                                    -
+Shares Held                      2238574.00
+Local Currency                          USD
+ETF_Rank                                 12
+issuer                               053015
+dup                                   False
+asof                            23-Sep-2026
+Beta_2019_2021                         1.13
+First_bar                        2018-12-20
+Name: 11, dtype: object>",12,1.934,ADP,AUTOMATIC DATA PROCESSING,1.127,2018-12-20,15.2,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              QUANTA SERVICES INC
+Ticker                            PWR
+Identifier                  74762E102
+SEDOL                         2150204
+Weight                           1.76
+Sector                              -
+Shares Held                 847207.00
+Local Currency                    USD
+ETF_Rank                           15
+issuer                         74762E
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   1.12
+First_bar                  2018-12-20
+Name: 14, dtype: object>",15,1.762,PWR,QUANTA SERVICES INC,1.119,2018-12-20,16.0,"candidate, not in top 5 beta","Quanta Services, Inc.",,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              HONEYWELL INTERNATIONAL INC
+Ticker                                    HON
+Identifier                          438516205
+SEDOL                                 BN7RHC5
+Weight                                   1.24
+Sector                                      -
+Shares Held                        1785979.00
+Local Currency                            USD
+ETF_Rank                                   29
+issuer                                 438516
+dup                                     False
+asof                              23-Sep-2026
+Beta_2019_2021                           1.11
+First_bar                          2018-12-20
+Name: 28, dtype: object>",29,1.244,HON,HONEYWELL INTERNATIONAL INC,1.112,2018-12-20,15.1,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              ILLINOIS TOOL WORKS
+Ticker                            ITW
+Identifier                  452308109
+SEDOL                         2457552
+Weight                           1.31
+Sector                              -
+Shares Held                1460433.00
+Local Currency                    USD
+ETF_Rank                           26
+issuer                         452308
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   1.09
+First_bar                  2018-12-20
+Name: 25, dtype: object>",26,1.308,ITW,ILLINOIS TOOL WORKS,1.087,2018-12-20,16.6,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              CATERPILLAR INC
+Ticker                        CAT
+Identifier              149123101
+SEDOL                     2180201
+Weight                       6.89
+Sector                          -
+Shares Held            2590286.00
+Local Currency                USD
+ETF_Rank                        1
+issuer                     149123
+dup                         False
+asof                  23-Sep-2026
+Beta_2019_2021               1.07
+First_bar              2018-12-20
+Name: 0, dtype: object>",1,6.892,CAT,CATERPILLAR INC,1.073,2018-12-20,14.3,"candidate, not in top 5 beta",Caterpillar Inc.,2608.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              UNION PACIFIC CORP
+Ticker                           UNP
+Identifier                 907818108
+SEDOL                        2914734
+Weight                          3.02
+Sector                             -
+Shares Held               3347677.00
+Local Currency                   USD
+ETF_Rank                           7
+issuer                        907818
+dup                            False
+asof                     23-Sep-2026
+Beta_2019_2021                  1.04
+First_bar                 2018-12-20
+Name: 6, dtype: object>",7,3.022,UNP,UNION PACIFIC CORP,1.038,2018-12-20,13.0,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              CUMMINS INC
+Ticker                    CMI
+Identifier          231021106
+SEDOL                 2240202
+Weight                   1.33
+Sector                      -
+Shares Held         775740.00
+Local Currency            USD
+ETF_Rank                   24
+issuer                 231021
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.02
+First_bar          2018-12-20
+Name: 23, dtype: object>",24,1.334,CMI,CUMMINS INC,1.022,2018-12-20,21.1,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              JOHNSON CONTROLS INTERNATION
+Ticker                                     JCI
+Identifier                           G51502105
+SEDOL                                  BY7QL61
+Weight                                    1.63
+Sector                                       -
+Shares Held                         3413380.00
+Local Currency                             USD
+ETF_Rank                                    17
+issuer                                  G51502
+dup                                      False
+asof                               23-Sep-2026
+Beta_2019_2021                            0.97
+First_bar                           2018-12-20
+Name: 16, dtype: object>",17,1.632,JCI,JOHNSON CONTROLS INTERNATION,0.974,2018-12-20,13.3,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              TRANE TECHNOLOGIES PLC
+Ticker                                TT
+Identifier                     G8994E103
+SEDOL                            BK9ZQ96
+Weight                              1.78
+Sector                                 -
+Shares Held                   1239819.00
+Local Currency                       USD
+ETF_Rank                              13
+issuer                            G8994E
+dup                                False
+asof                         23-Sep-2026
+Beta_2019_2021                      0.97
+First_bar                     2018-12-20
+Name: 12, dtype: object>",13,1.776,TT,TRANE TECHNOLOGIES PLC,0.972,2018-12-20,11.4,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              GENERAL DYNAMICS CORP
+Ticker                               GD
+Identifier                    369550108
+SEDOL                           2365161
+Weight                             1.61
+Sector                                -
+Shares Held                  1430964.00
+Local Currency                      USD
+ETF_Rank                             20
+issuer                           369550
+dup                               False
+asof                        23-Sep-2026
+Beta_2019_2021                     0.95
+First_bar                    2018-12-20
+Name: 19, dtype: object>",20,1.61,GD,GENERAL DYNAMICS CORP,0.947,2018-12-20,10.9,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name               PACCAR INC
+Ticker                   PCAR
+Identifier          693718108
+SEDOL                 2665861
+Weight                   1.09
+Sector                      -
+Shares Held        2966074.00
+Local Currency            USD
+ETF_Rank                   34
+issuer                 693718
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.94
+First_bar          2018-12-20
+Name: 33, dtype: object>",34,1.089,PCAR,PACCAR INC,0.937,2018-12-20,14.2,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name                    3M CO
+Ticker                    MMM
+Identifier          88579Y101
+SEDOL                 2595708
+Weight                   1.62
+Sector                      -
+Shares Held        2906127.00
+Local Currency            USD
+ETF_Rank                   18
+issuer                 88579Y
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.85
+First_bar          2018-12-20
+Name: 17, dtype: object>",18,1.622,MMM,3M CO,0.845,2018-12-20,12.9,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              UNITED PARCEL SERVICE CL B
+Ticker                                   UPS
+Identifier                         911312106
+SEDOL                                2517382
+Weight                                  1.33
+Sector                                     -
+Shares Held                       4222593.00
+Local Currency                           USD
+ETF_Rank                                  25
+issuer                                911312
+dup                                    False
+asof                             23-Sep-2026
+Beta_2019_2021                          0.84
+First_bar                         2018-12-20
+Name: 24, dtype: object>",25,1.326,UPS,UNITED PARCEL SERVICE CL B,0.842,2018-12-20,14.4,"candidate, not in top 5 beta",,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              WASTE MANAGEMENT INC
+Ticker                              WM
+Identifier                   94106L109
+SEDOL                          2937667
+Weight                            1.43
+Sector                               -
+Shares Held                 2094734.00
+Local Currency                     USD
+ETF_Rank                            23
+issuer                          94106L
+dup                              False
+asof                       23-Sep-2026
+Beta_2019_2021                    0.78
+First_bar                   2018-12-20
+Name: 22, dtype: object>",23,1.427,WM,WASTE MANAGEMENT INC,0.784,2018-12-20,11.1,"candidate, not in top 5 beta","Waste Management, Inc.",,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              GE VERNOVA INC
+Ticker                       GEV
+Identifier             36828A101
+SEDOL                    BP6H4Y1
+Weight                      4.68
+Sector                         -
+Shares Held           1500814.00
+Local Currency               USD
+ETF_Rank                       4
+issuer                    36828A
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021               NaN
+First_bar                    NaT
+Name: 3, dtype: object>",4,4.681,GEV,GE VERNOVA INC,,,,excluded: no full 2019-2021 data or spliced history (>100% 1-day move),,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Industrials,XLI,1.097,True,"<bound method NDFrame.asof of Name              HOWMET AEROSPACE INC
+Ticker                             HWM
+Identifier                   443201108
+SEDOL                          BKLJ8V2
+Weight                            1.68
+Sector                               -
+Shares Held                 2247252.00
+Local Currency                     USD
+ETF_Rank                            16
+issuer                          443201
+dup                              False
+asof                       23-Sep-2026
+Beta_2019_2021                     NaN
+First_bar                   2020-04-01
+Name: 15, dtype: object>",16,1.685,HWM,HOWMET AEROSPACE INC,,2020-04-01,19.0,excluded: no full 2019-2021 data or spliced history (>100% 1-day move),,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xli.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              IQVIA HOLDINGS INC
+Ticker                           IQV
+Identifier                 46266C105
+SEDOL                        BDR73G1
+Weight                          0.72
+Sector                             -
+Shares Held               1161728.00
+Local Currency                   USD
+ETF_Rank                          31
+issuer                        46266C
+dup                            False
+asof                     23-Sep-2026
+Beta_2019_2021                  1.27
+First_bar                 2018-12-20
+Name: 30, dtype: object>",31,0.719,IQV,IQVIA HOLDINGS INC,1.267,2018-12-20,16.5,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              INTUITIVE SURGICAL INC
+Ticker                              ISRG
+Identifier                     46120E602
+SEDOL                            2871301
+Weight                              2.29
+Sector                                 -
+Shares Held                   2493459.00
+Local Currency                       USD
+ETF_Rank                              11
+issuer                            46120E
+dup                                False
+asof                         23-Sep-2026
+Beta_2019_2021                      1.25
+First_bar                     2018-12-20
+Name: 10, dtype: object>",11,2.293,ISRG,INTUITIVE SURGICAL INC,1.253,2018-12-20,17.4,sector not selected,"Intuitive Surgical, Inc.",,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              HCA HEALTHCARE INC
+Ticker                           HCA
+Identifier                 40412C101
+SEDOL                        B4MGBG6
+Weight                          1.05
+Sector                             -
+Shares Held               1039102.00
+Local Currency                   USD
+ETF_Rank                          24
+issuer                        40412C
+dup                            False
+asof                     23-Sep-2026
+Beta_2019_2021                  1.23
+First_bar                 2018-12-20
+Name: 23, dtype: object>",24,1.047,HCA,HCA HEALTHCARE INC,1.233,2018-12-20,22.6,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              ELEVANCE HEALTH INC
+Ticker                            ELV
+Identifier                  036752103
+SEDOL                         BSPHGL4
+Weight                           1.41
+Sector                              -
+Shares Held                1530695.00
+Local Currency                    USD
+ETF_Rank                           19
+issuer                         036752
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   1.21
+First_bar                  2018-12-20
+Name: 18, dtype: object>",19,1.409,ELV,ELEVANCE HEALTH INC,1.206,2018-12-20,17.1,sector not selected,"Elevance Health, Inc.",,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              THE CIGNA GROUP
+Ticker                         CI
+Identifier              125523100
+SEDOL                     BHJ0775
+Weight                       1.16
+Sector                          -
+Shares Held            1865009.00
+Local Currency                USD
+ETF_Rank                       21
+issuer                     125523
+dup                         False
+asof                  23-Sep-2026
+Beta_2019_2021               1.18
+First_bar              2018-12-20
+Name: 20, dtype: object>",21,1.155,CI,THE CIGNA GROUP,1.175,2018-12-20,16.2,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              STRYKER CORP
+Ticker                     SYK
+Identifier           863667101
+SEDOL                  2853688
+Weight                    1.56
+Sector                       -
+Shares Held         2463638.00
+Local Currency             USD
+ETF_Rank                    18
+issuer                  863667
+dup                      False
+asof               23-Sep-2026
+Beta_2019_2021            1.17
+First_bar           2018-12-20
+Name: 17, dtype: object>",18,1.555,SYK,STRYKER CORP,1.172,2018-12-20,13.4,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              BOSTON SCIENTIFIC CORP
+Ticker                               BSX
+Identifier                     101137107
+SEDOL                            2113434
+Weight                              1.05
+Sector                                 -
+Shares Held                  10228913.00
+Local Currency                       USD
+ETF_Rank                              23
+issuer                            101137
+dup                                False
+asof                         23-Sep-2026
+Beta_2019_2021                      1.08
+First_bar                     2018-12-20
+Name: 22, dtype: object>",23,1.054,BSX,BOSTON SCIENTIFIC CORP,1.078,2018-12-20,14.8,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name               HUMANA INC
+Ticker                    HUM
+Identifier          444859102
+SEDOL                 2445063
+Weight                   0.73
+Sector                      -
+Shares Held         847539.00
+Local Currency            USD
+ETF_Rank                   30
+issuer                 444859
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           1.07
+First_bar          2018-12-20
+Name: 29, dtype: object>",30,0.733,HUM,HUMANA INC,1.067,2018-12-20,14.9,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              EDWARDS LIFESCIENCES CORP
+Ticker                                   EW
+Identifier                        28176E108
+SEDOL                               2567116
+Weight                                 0.82
+Sector                                    -
+Shares Held                      4068251.00
+Local Currency                          USD
+ETF_Rank                                 27
+issuer                               28176E
+dup                                   False
+asof                            23-Sep-2026
+Beta_2019_2021                         1.05
+First_bar                        2018-12-20
+Name: 26, dtype: object>",27,0.816,EW,EDWARDS LIFESCIENCES CORP,1.048,2018-12-20,17.6,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              AGILENT TECHNOLOGIES INC
+Ticker                                   A
+Identifier                       00846U101
+SEDOL                              2520153
+Weight                                0.76
+Sector                                   -
+Shares Held                     1993390.00
+Local Currency                         USD
+ETF_Rank                                29
+issuer                              00846U
+dup                                  False
+asof                           23-Sep-2026
+Beta_2019_2021                        1.02
+First_bar                       2018-12-20
+Name: 28, dtype: object>",29,0.761,A,AGILENT TECHNOLOGIES INC,1.024,2018-12-20,15.2,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              ILLUMINA INC
+Ticker                    ILMN
+Identifier           452327109
+SEDOL                  2613990
+Weight                    0.63
+Sector                       -
+Shares Held         1065747.00
+Local Currency             USD
+ETF_Rank                    35
+issuer                  452327
+dup                      False
+asof               23-Sep-2026
+Beta_2019_2021            0.99
+First_bar           2018-12-20
+Name: 34, dtype: object>",35,0.628,ILMN,ILLUMINA INC,0.993,2018-12-20,16.1,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              MEDTRONIC PLC
+Ticker                      MDT
+Identifier            G5960L103
+SEDOL                   BTN1Y11
+Weight                     1.86
+Sector                        -
+Shares Held          9034777.00
+Local Currency              USD
+ETF_Rank                     15
+issuer                   G5960L
+dup                       False
+asof                23-Sep-2026
+Beta_2019_2021             0.97
+First_bar            2018-12-20
+Name: 14, dtype: object>",15,1.863,MDT,MEDTRONIC PLC,0.971,2018-12-20,12.8,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              IDEXX LABORATORIES INC
+Ticker                              IDXX
+Identifier                     45168D104
+SEDOL                            2459202
+Weight                              0.67
+Sector                                 -
+Shares Held                    556058.00
+Local Currency                       USD
+ETF_Rank                              33
+issuer                            45168D
+dup                                False
+asof                         23-Sep-2026
+Beta_2019_2021                      0.96
+First_bar                     2018-12-20
+Name: 32, dtype: object>",33,0.67,IDXX,IDEXX LABORATORIES INC,0.964,2018-12-20,12.1,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              CARDINAL HEALTH INC
+Ticker                            CAH
+Identifier                  14149Y108
+SEDOL                         2175672
+Weight                           0.84
+Sector                              -
+Shares Held                1641517.00
+Local Currency                    USD
+ETF_Rank                           26
+issuer                         14149Y
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   0.93
+First_bar                  2018-12-20
+Name: 25, dtype: object>",26,0.839,CAH,CARDINAL HEALTH INC,0.926,2018-12-20,14.3,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              WATERS CORP
+Ticker                    WAT
+Identifier          941848103
+SEDOL                 2937689
+Weight                   0.67
+Sector                      -
+Shares Held         693406.00
+Local Currency            USD
+ETF_Rank                   32
+issuer                 941848
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.91
+First_bar          2018-12-20
+Name: 31, dtype: object>",32,0.673,WAT,WATERS CORP,0.907,2018-12-20,12.7,sector not selected,Waters Corporation,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              CENCORA INC
+Ticker                    COR
+Identifier          03073E105
+SEDOL                 2795393
+Weight                   0.97
+Sector                      -
+Shares Held        1346871.00
+Local Currency            USD
+ETF_Rank                   25
+issuer                 03073E
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.91
+First_bar          2018-12-20
+Name: 24, dtype: object>",25,0.971,COR,CENCORA INC,0.907,2018-12-20,11.8,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              ABBOTT LABORATORIES
+Ticker                            ABT
+Identifier                  002824100
+SEDOL                         2002305
+Weight                           2.92
+Sector                              -
+Shares Held               12213321.00
+Local Currency                    USD
+ETF_Rank                            9
+issuer                         002824
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   0.86
+First_bar                  2018-12-20
+Name: 8, dtype: object>",9,2.919,ABT,ABBOTT LABORATORIES,0.861,2018-12-20,10.9,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              THERMO FISHER SCIENTIFIC INC
+Ticker                                     TMO
+Identifier                           883556102
+SEDOL                                  2886907
+Weight                                    4.01
+Sector                                       -
+Shares Held                         2609711.00
+Local Currency                             USD
+ETF_Rank                                     6
+issuer                                  883556
+dup                                      False
+asof                               23-Sep-2026
+Beta_2019_2021                            0.86
+First_bar                           2018-12-20
+Name: 5, dtype: object>",6,4.009,TMO,THERMO FISHER SCIENTIFIC INC,0.86,2018-12-20,10.5,sector not selected,Thermo Fisher Scientific Inc.,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              VERTEX PHARMACEUTICALS INC
+Ticker                                  VRTX
+Identifier                         92532F100
+SEDOL                                2931034
+Weight                                  2.13
+Sector                                     -
+Shares Held                       1788924.00
+Local Currency                           USD
+ETF_Rank                                  13
+issuer                                92532F
+dup                                    False
+asof                             23-Sep-2026
+Beta_2019_2021                          0.82
+First_bar                         2018-12-20
+Name: 12, dtype: object>",13,2.133,VRTX,VERTEX PHARMACEUTICALS INC,0.825,2018-12-20,20.7,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name                AMGEN INC
+Ticker                   AMGN
+Identifier          031162100
+SEDOL                 2023607
+Weight                   3.58
+Sector                      -
+Shares Held        3815863.00
+Local Currency            USD
+ETF_Rank                    7
+issuer                 031162
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.79
+First_bar          2018-12-20
+Name: 6, dtype: object>",7,3.578,AMGN,AMGEN INC,0.794,2018-12-20,10.9,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              DANAHER CORP
+Ticker                     DHR
+Identifier           235851102
+SEDOL                  2250870
+Weight                    2.26
+Sector                       -
+Shares Held         4415916.00
+Local Currency             USD
+ETF_Rank                    12
+issuer                  235851
+dup                      False
+asof               23-Sep-2026
+Beta_2019_2021            0.79
+First_bar           2018-12-20
+Name: 11, dtype: object>",12,2.259,DHR,DANAHER CORP,0.79,2018-12-20,9.7,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name               ABBVIE INC
+Ticker                   ABBV
+Identifier          00287Y109
+SEDOL                 B92SR70
+Weight                   7.63
+Sector                      -
+Shares Held       12472611.00
+Local Currency            USD
+ETF_Rank                    3
+issuer                 00287Y
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.77
+First_bar          2018-12-20
+Name: 2, dtype: object>",3,7.635,ABBV,ABBVIE INC,0.766,2018-12-20,16.3,sector not selected,AbbVie Inc.,1528.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              ELI LILLY + CO
+Ticker                       LLY
+Identifier             532457108
+SEDOL                    2516152
+Weight                     15.01
+Sector                         -
+Shares Held           5647621.00
+Local Currency               USD
+ETF_Rank                       1
+issuer                    532457
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              0.73
+First_bar             2018-12-20
+Name: 0, dtype: object>",1,15.01,LLY,ELI LILLY + CO,0.733,2018-12-20,15.7,sector not selected,Eli Lilly and Company,3170.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              CVS HEALTH CORP
+Ticker                        CVS
+Identifier              126650100
+SEDOL                     2577609
+Weight                       1.79
+Sector                          -
+Shares Held            9027159.00
+Local Currency                USD
+ETF_Rank                       16
+issuer                     126650
+dup                         False
+asof                  23-Sep-2026
+Beta_2019_2021               0.73
+First_bar              2018-12-20
+Name: 15, dtype: object>",16,1.79,CVS,CVS HEALTH CORP,0.726,2018-12-20,9.1,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              BRISTOL MYERS SQUIBB CO
+Ticker                                BMY
+Identifier                      110122108
+SEDOL                             2126335
+Weight                               2.04
+Sector                                  -
+Shares Held                   14417810.00
+Local Currency                        USD
+ETF_Rank                               14
+issuer                             110122
+dup                                 False
+asof                          23-Sep-2026
+Beta_2019_2021                       0.66
+First_bar                      2018-12-20
+Name: 13, dtype: object>",14,2.036,BMY,BRISTOL MYERS SQUIBB CO,0.657,2018-12-20,13.3,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              JOHNSON + JOHNSON
+Ticker                          JNJ
+Identifier                478160104
+SEDOL                       2475833
+Weight                        10.57
+Sector                            -
+Shares Held             17009433.00
+Local Currency                  USD
+ETF_Rank                          2
+issuer                       478160
+dup                           False
+asof                    23-Sep-2026
+Beta_2019_2021                 0.65
+First_bar                2018-12-20
+Name: 1, dtype: object>",2,10.572,JNJ,JOHNSON + JOHNSON,0.645,2018-12-20,8.0,sector not selected,Johnson & Johnson,1913.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name               PFIZER INC
+Ticker                    PFE
+Identifier          717081103
+SEDOL                 2684703
+Weight                   2.62
+Sector                      -
+Shares Held       40229125.00
+Local Currency            USD
+ETF_Rank                   10
+issuer                 717081
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.64
+First_bar          2018-12-20
+Name: 9, dtype: object>",10,2.618,PFE,PFIZER INC,0.64,2018-12-20,10.9,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              BECTON DICKINSON AND CO
+Ticker                                BDX
+Identifier                      075887109
+SEDOL                             2087807
+Weight                               0.81
+Sector                                  -
+Shares Held                    1922478.00
+Local Currency                        USD
+ETF_Rank                               28
+issuer                             075887
+dup                                 False
+asof                          23-Sep-2026
+Beta_2019_2021                       0.57
+First_bar                      2018-12-20
+Name: 27, dtype: object>",28,0.81,BDX,BECTON DICKINSON AND CO,0.574,2018-12-20,11.8,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              GILEAD SCIENCES INC
+Ticker                           GILD
+Identifier                  375558103
+SEDOL                         2369174
+Weight                           3.06
+Sector                              -
+Shares Held                8751704.00
+Local Currency                    USD
+ETF_Rank                            8
+issuer                         375558
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   0.50
+First_bar                  2018-12-20
+Name: 7, dtype: object>",8,3.059,GILD,GILEAD SCIENCES INC,0.505,2018-12-20,9.7,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Health Care,XLV,0.815,False,"<bound method NDFrame.asof of Name              MODERNA INC
+Ticker                   MRNA
+Identifier          60770K107
+SEDOL                 BGSXTS3
+Weight                   1.10
+Sector                      -
+Shares Held        2620631.00
+Local Currency            USD
+ETF_Rank                   22
+issuer                 60770K
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.17
+First_bar          2018-12-20
+Name: 21, dtype: object>",22,1.102,MRNA,MODERNA INC,0.173,2018-12-20,27.8,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlv.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              AIRBNB INC CLASS A
+Ticker                          ABNB
+Identifier                 009066101
+SEDOL                        BMGYYH4
+Weight                          1.72
+Sector                             -
+Shares Held               2508066.00
+Local Currency                   USD
+ETF_Rank                          15
+issuer                        009066
+dup                            False
+asof                     23-Sep-2026
+Beta_2019_2021                   NaN
+First_bar                 2020-12-10
+Name: 14, dtype: object>",15,1.721,ABNB,AIRBNB INC CLASS A,,2020-12-10,13.3,excluded: no full 2019-2021 data or spliced history (>100% 1-day move),"Airbnb, Inc.",,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              CARNIVAL CORP LTD
+Ticker                          CCL
+Identifier                G2004J103
+SEDOL                       BVV7RC7
+Weight                         0.76
+Sector                            -
+Shares Held              7614970.00
+Local Currency                  USD
+ETF_Rank                         27
+issuer                       G2004J
+dup                           False
+asof                    23-Sep-2026
+Beta_2019_2021                 1.75
+First_bar                2018-12-20
+Name: 26, dtype: object>",27,0.762,CCL,CARNIVAL CORP LTD,1.751,2018-12-20,39.3,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              TAPESTRY INC
+Ticker                     TPR
+Identifier           876030107
+SEDOL                  BF09HX3
+Weight                    0.60
+Sector                       -
+Shares Held         1192025.00
+Local Currency             USD
+ETF_Rank                    32
+issuer                  876030
+dup                      False
+asof               23-Sep-2026
+Beta_2019_2021            1.69
+First_bar           2018-12-20
+Name: 31, dtype: object>",32,0.604,TPR,TAPESTRY INC,1.693,2018-12-20,29.7,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              DARDEN RESTAURANTS INC
+Ticker                               DRI
+Identifier                     237194105
+SEDOL                            2289874
+Weight                              0.67
+Sector                                 -
+Shares Held                    678778.00
+Local Currency                       USD
+ETF_Rank                              29
+issuer                            237194
+dup                                False
+asof                         23-Sep-2026
+Beta_2019_2021                      1.58
+First_bar                     2018-12-20
+Name: 28, dtype: object>",29,0.665,DRI,DARDEN RESTAURANTS INC,1.575,2018-12-20,31.4,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              ULTA BEAUTY INC
+Ticker                       ULTA
+Identifier              90384S303
+SEDOL                     B28TS42
+Weight                       0.64
+Sector                          -
+Shares Held             256995.00
+Local Currency                USD
+ETF_Rank                       30
+issuer                     90384S
+dup                         False
+asof                  23-Sep-2026
+Beta_2019_2021               1.37
+First_bar              2018-12-20
+Name: 29, dtype: object>",30,0.641,ULTA,ULTA BEAUTY INC,1.367,2018-12-20,29.6,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              EXPEDIA GROUP INC
+Ticker                         EXPE
+Identifier                30212P303
+SEDOL                       B748CK2
+Weight                         0.81
+Sector                            -
+Shares Held               684492.00
+Local Currency                  USD
+ETF_Rank                         26
+issuer                       30212P
+dup                           False
+asof                    23-Sep-2026
+Beta_2019_2021                 1.37
+First_bar                2018-12-20
+Name: 25, dtype: object>",26,0.813,EXPE,EXPEDIA GROUP INC,1.366,2018-12-20,27.4,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              PULTEGROUP INC
+Ticker                       PHM
+Identifier             745867101
+SEDOL                    2708841
+Weight                      0.61
+Sector                         -
+Shares Held           1120653.00
+Local Currency               USD
+ETF_Rank                      31
+issuer                    745867
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.33
+First_bar             2018-12-20
+Name: 30, dtype: object>",31,0.61,PHM,PULTEGROUP INC,1.329,2018-12-20,24.5,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              GENERAL MOTORS CO
+Ticker                           GM
+Identifier                37045V100
+SEDOL                       B665KZ5
+Weight                         2.02
+Sector                            -
+Shares Held              5245645.00
+Local Currency                  USD
+ETF_Rank                         11
+issuer                       37045V
+dup                           False
+asof                    23-Sep-2026
+Beta_2019_2021                 1.30
+First_bar                2018-12-20
+Name: 10, dtype: object>",11,2.016,GM,GENERAL MOTORS CO,1.295,2018-12-20,19.9,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              ROSS STORES INC
+Ticker                       ROST
+Identifier              778296103
+SEDOL                     2746711
+Weight                       2.06
+Sector                          -
+Shares Held            1917716.00
+Local Currency                USD
+ETF_Rank                       10
+issuer                     778296
+dup                         False
+asof                  23-Sep-2026
+Beta_2019_2021               1.26
+First_bar              2018-12-20
+Name: 9, dtype: object>",10,2.059,ROST,ROSS STORES INC,1.26,2018-12-20,20.1,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              WILLIAMS SONOMA INC
+Ticker                            WSM
+Identifier                  969904101
+SEDOL                         2967589
+Weight                           0.74
+Sector                              -
+Shares Held                 703928.00
+Local Currency                    USD
+ETF_Rank                           28
+issuer                         969904
+dup                             False
+asof                      23-Sep-2026
+Beta_2019_2021                   1.25
+First_bar                  2018-12-20
+Name: 27, dtype: object>",28,0.736,WSM,WILLIAMS SONOMA INC,1.253,2018-12-20,24.8,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              MARRIOTT INTERNATIONAL  CL A
+Ticker                                     MAR
+Identifier                           571903202
+SEDOL                                  2210614
+Weight                                    2.06
+Sector                                       -
+Shares Held                         1278330.00
+Local Currency                             USD
+ETF_Rank                                     9
+issuer                                  571903
+dup                                      False
+asof                               23-Sep-2026
+Beta_2019_2021                            1.24
+First_bar                           2018-12-20
+Name: 8, dtype: object>",9,2.062,MAR,MARRIOTT INTERNATIONAL  CL A,1.238,2018-12-20,19.5,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              LOWE S COS INC
+Ticker                       LOW
+Identifier             548661107
+SEDOL                    2536763
+Weight                      2.94
+Sector                         -
+Shares Held           3352055.00
+Local Currency               USD
+ETF_Rank                       8
+issuer                    548661
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.21
+First_bar             2018-12-20
+Name: 7, dtype: object>",8,2.943,LOW,LOWE S COS INC,1.213,2018-12-20,24.8,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              BOOKING HOLDINGS INC
+Ticker                            BKNG
+Identifier                   09857L108
+SEDOL                          BDRXDB4
+Weight                            3.21
+Sector                               -
+Shares Held                 4491966.00
+Local Currency                     USD
+ETF_Rank                             6
+issuer                          09857L
+dup                              False
+asof                       23-Sep-2026
+Beta_2019_2021                    1.20
+First_bar                   2018-12-20
+Name: 5, dtype: object>",6,3.213,BKNG,BOOKING HOLDINGS INC,1.201,2018-12-20,18.8,sector not selected,Booking Holdings Inc.,1276.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              FORD MOTOR CO
+Ticker                        F
+Identifier            345370860
+SEDOL                   2615468
+Weight                     1.39
+Sector                        -
+Shares Held         23415359.00
+Local Currency              USD
+ETF_Rank                     17
+issuer                   345370
+dup                       False
+asof                23-Sep-2026
+Beta_2019_2021             1.20
+First_bar            2018-12-20
+Name: 16, dtype: object>",17,1.39,F,FORD MOTOR CO,1.2,2018-12-20,23.4,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              DR HORTON INC
+Ticker                      DHI
+Identifier            23331A109
+SEDOL                   2250687
+Weight                     0.98
+Sector                        -
+Shares Held          1521629.00
+Local Currency              USD
+ETF_Rank                     25
+issuer                   23331A
+dup                       False
+asof                23-Sep-2026
+Beta_2019_2021             1.19
+First_bar            2018-12-20
+Name: 24, dtype: object>",25,0.979,DHI,DR HORTON INC,1.195,2018-12-20,20.2,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              BEST BUY CO INC
+Ticker                        BBY
+Identifier              086516101
+SEDOL                     2094670
+Weight                       0.49
+Sector                          -
+Shares Held            1184425.00
+Local Currency                USD
+ETF_Rank                       33
+issuer                     086516
+dup                         False
+asof                  23-Sep-2026
+Beta_2019_2021               1.18
+First_bar              2018-12-20
+Name: 32, dtype: object>",33,0.493,BBY,BEST BUY CO INC,1.184,2018-12-20,16.8,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              GENUINE PARTS CO
+Ticker                         GPC
+Identifier               372460105
+SEDOL                      2367480
+Weight                        0.49
+Sector                           -
+Shares Held              824159.00
+Local Currency                 USD
+ETF_Rank                        34
+issuer                      372460
+dup                          False
+asof                   23-Sep-2026
+Beta_2019_2021                1.16
+First_bar               2018-12-20
+Name: 33, dtype: object>",34,0.487,GPC,GENUINE PARTS CO,1.16,2018-12-20,20.9,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              TJX COMPANIES INC
+Ticker                          TJX
+Identifier                872540109
+SEDOL                       2989301
+Weight                         3.99
+Sector                            -
+Shares Held              6604219.00
+Local Currency                  USD
+ETF_Rank                          5
+issuer                       872540
+dup                           False
+asof                    23-Sep-2026
+Beta_2019_2021                 1.15
+First_bar                2018-12-20
+Name: 4, dtype: object>",5,3.987,TJX,TJX COMPANIES INC,1.148,2018-12-20,20.4,sector not selected,"The TJX Companies, Inc.",1008.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              HILTON WORLDWIDE HOLDINGS IN
+Ticker                                     HLT
+Identifier                           43300A203
+SEDOL                                  BYVMW06
+Weight                                    1.90
+Sector                                       -
+Shares Held                         1345506.00
+Local Currency                             USD
+ETF_Rank                                    14
+issuer                                  43300A
+dup                                      False
+asof                               23-Sep-2026
+Beta_2019_2021                            1.14
+First_bar                           2018-12-20
+Name: 13, dtype: object>",14,1.896,HLT,HILTON WORLDWIDE HOLDINGS IN,1.143,2018-12-20,25.6,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              STARBUCKS CORP
+Ticker                      SBUX
+Identifier             855244109
+SEDOL                    2842255
+Weight                      2.94
+Sector                         -
+Shares Held           6815236.00
+Local Currency               USD
+ETF_Rank                       7
+issuer                    855244
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.13
+First_bar             2018-12-20
+Name: 6, dtype: object>",7,2.943,SBUX,STARBUCKS CORP,1.13,2018-12-20,16.2,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              HOME DEPOT INC
+Ticker                        HD
+Identifier             437076102
+SEDOL                    2434209
+Weight                      5.15
+Sector                         -
+Shares Held           3781661.00
+Local Currency               USD
+ETF_Rank                       3
+issuer                    437076
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.09
+First_bar             2018-12-20
+Name: 2, dtype: object>",3,5.148,HD,HOME DEPOT INC,1.088,2018-12-20,19.8,sector not selected,"The Home Depot, Inc.",1360.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              NIKE INC  CL B
+Ticker                       NKE
+Identifier             654106103
+SEDOL                    2640147
+Weight                      1.19
+Sector                         -
+Shares Held           7186547.00
+Local Currency               USD
+ETF_Rank                      22
+issuer                    654106
+dup                        False
+asof                 23-Sep-2026
+Beta_2019_2021              1.02
+First_bar             2018-12-20
+Name: 21, dtype: object>",22,1.189,NKE,NIKE INC  CL B,1.018,2018-12-20,15.5,sector not selected,"Nike, Inc.",,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name               GARMIN LTD
+Ticker                   GRMN
+Identifier          H2906T109
+SEDOL                 B3Z5T14
+Weight                   1.31
+Sector                      -
+Shares Held         991522.00
+Local Currency            USD
+ETF_Rank                   18
+issuer                 H2906T
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.96
+First_bar          2018-12-20
+Name: 17, dtype: object>",18,1.308,GRMN,GARMIN LTD,0.96,2018-12-20,17.0,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              CHIPOTLE MEXICAN GRILL INC
+Ticker                                   CMG
+Identifier                         169656105
+SEDOL                                B0X7DZ3
+Weight                                  1.14
+Sector                                     -
+Shares Held                       7565012.00
+Local Currency                           USD
+ETF_Rank                                  23
+issuer                                169656
+dup                                    False
+asof                             23-Sep-2026
+Beta_2019_2021                          0.95
+First_bar                         2018-12-20
+Name: 22, dtype: object>",23,1.135,CMG,CHIPOTLE MEXICAN GRILL INC,0.949,2018-12-20,15.2,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              O REILLY AUTOMOTIVE INC
+Ticker                               ORLY
+Identifier                      67103H107
+SEDOL                             B65LWX6
+Weight                               1.91
+Sector                                  -
+Shares Held                    4836187.00
+Local Currency                        USD
+ETF_Rank                               13
+issuer                             67103H
+dup                                 False
+asof                          23-Sep-2026
+Beta_2019_2021                       0.91
+First_bar                      2018-12-20
+Name: 12, dtype: object>",13,1.906,ORLY,O REILLY AUTOMOTIVE INC,0.914,2018-12-20,15.4,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              YUM  BRANDS INC
+Ticker                        YUM
+Identifier              988498101
+SEDOL                     2098876
+Weight                       1.05
+Sector                          -
+Shares Held            1631471.00
+Local Currency                USD
+ETF_Rank                       24
+issuer                     988498
+dup                         False
+asof                  23-Sep-2026
+Beta_2019_2021               0.91
+First_bar              2018-12-20
+Name: 23, dtype: object>",24,1.053,YUM,YUM  BRANDS INC,0.908,2018-12-20,23.3,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              MCDONALD S CORP
+Ticker                        MCD
+Identifier              580135101
+SEDOL                     2550707
+Weight                       4.29
+Sector                          -
+Shares Held            3925825.00
+Local Currency                USD
+ETF_Rank                        4
+issuer                     580135
+dup                         False
+asof                  23-Sep-2026
+Beta_2019_2021               0.91
+First_bar              2018-12-20
+Name: 3, dtype: object>",4,4.292,MCD,MCDONALD S CORP,0.905,2018-12-20,18.1,sector not selected,McDonald's Corporation,1301.0,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              AUTOZONE INC
+Ticker                     AZO
+Identifier           053332102
+SEDOL                  2065955
+Weight                    1.27
+Sector                       -
+Shares Held           97599.00
+Local Currency             USD
+ETF_Rank                    19
+issuer                  053332
+dup                      False
+asof               23-Sep-2026
+Beta_2019_2021            0.88
+First_bar           2018-12-20
+Name: 18, dtype: object>",19,1.273,AZO,AUTOZONE INC,0.877,2018-12-20,15.9,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name                 EBAY INC
+Ticker                   EBAY
+Identifier          278642103
+SEDOL                 2293819
+Weight                   1.20
+Sector                      -
+Shares Held        2394298.00
+Local Currency            USD
+ETF_Rank                   21
+issuer                 278642
+dup                     False
+asof              23-Sep-2026
+Beta_2019_2021           0.74
+First_bar          2018-12-20
+Name: 20, dtype: object>",21,1.198,EBAY,EBAY INC,0.736,2018-12-20,10.0,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24
+Consumer Discretionary,XLY,0.999,False,"<bound method NDFrame.asof of Name              TRACTOR SUPPLY COMPANY
+Ticker                              TSCO
+Identifier                     892356106
+SEDOL                            2900335
+Weight                              0.46
+Sector                                 -
+Shares Held                   3114919.00
+Local Currency                       USD
+ETF_Rank                              35
+issuer                            892356
+dup                                False
+asof                         23-Sep-2026
+Beta_2019_2021                      0.74
+First_bar                     2018-12-20
+Name: 34, dtype: object>",35,0.461,TSCO,TRACTOR SUPPLY COMPANY,0.736,2018-12-20,11.7,sector not selected,,,,"Top 4 of XLE/XLF/XLI/XLY/XLV/XLB by beta to SPY 2019-2021; per sector: top 30 holdings not already listed (no 2nd share classes), full Alpaca history 2019-2021 without a >100% 1-day move, 5 highest 2019-2021 beta (tiebreak ETF weight)",https://www.ssga.com/us/en/intermediary/etfs/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xly.xlsx,2026-09-24

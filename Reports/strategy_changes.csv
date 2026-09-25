@@ -1,0 +1,32 @@
+Date,Symbol,Status,Reason,Rank,Score,Sector,Old_Weight,New_Weight,Check,View
+2026-09-21,ANET,hold,kept at mid-week check (rank 12),12.0,53.1005,Technology,0.1013,0.1013,mid-week,last rebalance
+2026-09-21,FTNT,hold,kept at mid-week check (rank 7),7.0,59.4363,Technology,0.1283,0.1283,mid-week,last rebalance
+2026-09-21,GTLB,hold,kept at mid-week check (rank 1),1.0,66.0172,Technology,0.1037,0.1037,mid-week,last rebalance
+2026-09-21,HOOD,hold,kept at mid-week check (rank 8),8.0,57.3325,Financials,0.0775,0.0775,mid-week,last rebalance
+2026-09-21,MRK,hold,kept at mid-week check (rank 18),18.0,43.3701,Health Care,0.1604,0.1604,mid-week,last rebalance
+2026-09-21,TEAM,hold,kept at mid-week check (rank 3),3.0,62.7696,Technology,0.0602,0.0602,mid-week,last rebalance
+2026-09-21,TWLO,hold,kept at mid-week check (rank 4),4.0,62.1446,Technology,0.0905,0.0905,mid-week,last rebalance
+2026-09-21,TEM,hold,kept at mid-week check (rank 6),6.0,60.0858,Health Care,0.062,0.062,mid-week,last rebalance
+2026-09-21,APA,drop,"mid-week exit: rank 34 (worse than 30); sold, cash until the weekly rebalance",34.0,27.6185,Energy,0.1368,0.0,mid-week,last rebalance
+2026-09-21,RBRK,hold,kept at mid-week check (rank 2),2.0,62.9779,Technology,0.0793,0.0793,mid-week,last rebalance
+2026-09-24,AAPL,not selected,skipped: sector cap (Technology already 4),20.0,43.7418,Technology,0.0,0.0,,if rebalanced at latest close
+2026-09-24,ANET,drop,skipped: sector cap (Technology already 4),16.0,46.9649,Technology,0.1013,0.0,,if rebalanced at latest close
+2026-09-24,AMD,add,selected (rank 4),4.0,64.5997,Technology,0.0,0.0915,,if rebalanced at latest close
+2026-09-24,BIIB,add,selected (rank 17),17.0,46.3889,Health Care,0.0,0.166,,if rebalanced at latest close
+2026-09-24,CVLT,not selected,skipped: sector cap (Technology already 4),15.0,51.0212,Technology,0.0,0.0,,if rebalanced at latest close
+2026-09-24,FTNT,drop,skipped: sector cap (Technology already 4),9.0,57.4918,Technology,0.1283,0.0,,if rebalanced at latest close
+2026-09-24,GTLB,drop,skipped: sector cap (Technology already 4),7.0,61.9526,Technology,0.1037,0.0,,if rebalanced at latest close
+2026-09-24,HOOD,hold,selected (rank 19),19.0,44.8366,Financials,0.0775,0.0875,,if rebalanced at latest close
+2026-09-24,MRK,drop,rank 30 worse than 20 (picks only from ranks 1-20),30.0,35.2859,Health Care,0.1604,0.0,,if rebalanced at latest close
+2026-09-24,META,add,selected (rank 10),10.0,54.1993,Communication Services,0.0,0.1283,,if rebalanced at latest close
+2026-09-24,MU,not selected,skipped: sector cap (Technology already 4),11.0,54.0972,Technology,0.0,0.0,,if rebalanced at latest close
+2026-09-24,PANW,add,selected (rank 5; sector cap relaxed: fewer than 10 fit the cap within the top 20),5.0,63.1413,Technology,0.0,0.1022,,if rebalanced at latest close
+2026-09-24,SNOW,not selected,skipped: sector cap (Technology already 4),12.0,53.0065,Technology,0.0,0.0,,if rebalanced at latest close
+2026-09-24,TEAM,hold,selected (rank 3),3.0,65.2002,Technology,0.0602,0.0678,,if rebalanced at latest close
+2026-09-24,VEEV,not selected,skipped: sector cap (Technology already 4),14.0,51.8301,Technology,0.0,0.0,,if rebalanced at latest close
+2026-09-24,ZS,add,selected (rank 6; sector cap relaxed: fewer than 10 fit the cap within the top 20),6.0,63.1413,Technology,0.0,0.1045,,if rebalanced at latest close
+2026-09-24,MDB,not selected,skipped: sector cap (Technology already 4),18.0,44.9551,Technology,0.0,0.0,,if rebalanced at latest close
+2026-09-24,TWLO,hold,selected (rank 2),2.0,66.9771,Technology,0.0905,0.0949,,if rebalanced at latest close
+2026-09-24,SMCI,not selected,skipped: sector cap (Technology already 4),13.0,52.4918,Technology,0.0,0.0,,if rebalanced at latest close
+2026-09-24,TEM,hold,selected (rank 8),8.0,58.5335,Health Care,0.062,0.0694,,if rebalanced at latest close
+2026-09-24,RBRK,hold,selected (rank 1),1.0,67.6144,Technology,0.0793,0.0879,,if rebalanced at latest close

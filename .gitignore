@@ -1,0 +1,40 @@
+# Python / Jupyter
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Secrets: API keys live only in .env (see .env.example for the names)
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Personal holdings and paper-account snapshots (never commit)
+my_positions.csv
+Reports/paper_*.csv
+
+# Run state, logs, per-run API call counts, caches, large regenerated data
+Reports/run_state.json
+Reports/logs/
+Reports/cache/
+Reports/*.pkl
+Reports/*.png
+Reports/signal_analysis.csv
+Reports/news_cleaned_df.csv
+Reports/balance_sheet.csv
+Reports/fetch_run_log.csv
+*.log
+
+# Backups (dated file backups and whole-folder copies)
+*.bak-20*
+*.bak
+Stock Analysis Backup*/
+*Backup 20*/
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/
+.cursor/
