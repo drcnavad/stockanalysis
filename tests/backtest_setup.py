@@ -1,6 +1,8 @@
 """Shared, read-only set-up for the regression tests: the walk-forward data and ranking inputs of the 2026-09-24 mid-week
 test (rebalance frequency, variant D) plus an INDEPENDENT re-implementation of the mid-week rules (not using the engine's
-mid-week code). Reads Reports/cache/bars_daily_long.pkl only (no network, writes nothing)."""
+mid-week code) and of the earnings rule (E5). Reads Reports/cache/bars_daily_long.pkl and Reports/earnings_date.csv only
+(no network, writes nothing)."""
+import os
 import warnings
 
 import numpy as np
@@ -83,25 +85,63 @@ def targets_t20(reb, max_rank=20, n=10):
     return pd.DataFrame(out, index=idx, columns=U), pd.DataFrame(relaxed)
 
 
-def buffered_midweek(N=3, M=15, exit_all=None, t20=False):
+def block_matrix(days=5, path=None):
+    """INDEPENDENT earnings block (no engine earnings code): True at (session t, stock j) when an earnings date E of j in
+    Reports/earnings_date.csv satisfies t < E <= t + days (calendar days)."""
+    e = pd.read_csv(path or os.path.join(be.REPORTS_DIR, "earnings_date.csv"))
+    dates = {}
+    for sym, d in zip(e["Symbol"].astype(str).str.strip().str.upper(), pd.to_datetime(e["Earnings Date"], errors="coerce")):
+        if pd.notna(d):
+            dates.setdefault(sym, set()).add(d.normalize())
+    days_idx = idx.normalize()
+    B = np.zeros((len(idx), len(U)), bool)
+    for j, sym in enumerate(U):
+        for d in dates.get(sym, ()):
+            B[:, j] |= (days_idx < d) & (days_idx >= d - pd.Timedelta(days=days))
+    return B
+
+
+def select_t20(t, held, block, max_rank=20, n=10):
+    """INDEPENDENT T20 selection at session t with the earnings rule: names not held (held[j] == 0) and blocked at t are
+    left out of ranks 1..max_rank before the capped walk and the relaxed fill. Returns the weight vector."""
+    cands = [j for j in order_at(t)[:max_rank] if not (block[t, j] and held[j] <= 0)]
+    picked, per = [], {}
+    for j in cands:
+        if len(picked) < n and per.get(SECT[j], 0) < CAP:
+            picked.append(j); per[SECT[j]] = per.get(SECT[j], 0) + 1
+    for j in cands:
+        if len(picked) < n and j not in picked:
+            picked.append(j)
+    cur = np.zeros(len(U))
+    if picked:
+        inv = 1 / V_[t, picked]
+        cur[picked] = inv / inv.sum() * (len(picked) / n)
+        if not REG_[t]:
+            cur *= 0.5
+    return cur
+
+
+def buffered_midweek(N=3, M=15, exit_all=None, t20=False, block=None):
     """Friday full selection; at Mon/Wed checks: while a non-held name is in the top N and a held name ranks worse than M
     (or no longer qualifies), swap the worst-ranked held name for the best entrant (max CAP per sector); the entrant takes
     that weight. Then (exit_all) every remaining holding ranked worse than exit_all (or unranked) is sold -> cash until
-    Friday. t20: Friday selection = targets_t20 and the mid-week swap ignores the sector cap.
-    Returns (targets, swap log, sell log)."""
+    Friday. t20: Friday selection = targets_t20 and the mid-week swap ignores the sector cap. block (with t20; from
+    block_matrix): earnings rule - the Friday selection uses select_t20 with the real holdings and blocked names are not
+    mid-week entrants. Returns (targets, swap log, sell log)."""
     base = (targets_t20(weekly)[0] if t20 else targets(weekly)).to_numpy(float)
+    blk = np.zeros((len(idx), len(U)), bool) if block is None else block
     cap = 10 ** 6 if t20 else CAP
     W, MW = weekly.to_numpy(bool), midweek.to_numpy(bool)
     out = np.zeros_like(base); cur = np.zeros(len(U)); log, sells = [], []
     for t in range(len(idx)):
         if W[t]:
-            cur = base[t].copy()
+            cur = base[t].copy() if block is None else select_t20(t, cur, block)
         elif MW[t] and cur.sum() > 0:
             order = order_at(t); rank = {j: r + 1 for r, j in enumerate(order)}
             while True:
                 held = np.where(cur > 0)[0]
                 weak = sorted([j for j in held if rank.get(j, 10 ** 6) > M], key=lambda j: -rank.get(j, 10 ** 6))
-                entrants = [j for j in order[:N] if cur[j] == 0]
+                entrants = [j for j in order[:N] if cur[j] == 0 and not blk[t, j]]
                 pair = next(((e, h) for e in entrants for h in weak
                              if sum(SECT[k] == SECT[e] for k in held if k != h) < cap), None)
                 if not weak or pair is None:

@@ -36,89 +36,97 @@ It never places orders. Alpaca account endpoints are only called with `--sync-pa
 PAPER account); otherwise only Alpaca market-data bars are used. Notebooks run by hand still work;
 the sentiment notebook then refuses a second NewsAPI run within 24 h unless `PIPELINE_FORCE_NEWS=1`.
 
-## How to use (live rules C6-U96-T20-MW30)
+## How to use (live rules C6-U96-T20-MW30-E5)
 
 The strategy makes a decision at three closes a week. Run `python run_all.py` each time **after 3:15 PM CT** (it waits for the
 final bar if needed):
 
 | When | What it decides | Trade at |
 |------|-----------------|----------|
-| **Friday** (the week's last session) after the close | full rebalance: the new top 10 from ranks 1–20 (max 4 per sector, relaxed to fill 10) | Monday open |
+| **Friday** (the week's last session) after the close | full rebalance: the new top 10 from ranks 1–20 | Monday open |
 | **Monday** after the close | mid-week check: swap + rank-30 exit | Tuesday open |
 | **Wednesday** after the close | mid-week check: swap + rank-30 exit | Thursday open |
 | next morning, before the open: `python paper_trade.py --account-size N --positions my.csv` | dry-run order list (nothing is sent) | — |
 
 Holidays: the rebalance moves to the week's last session (e.g. Thursday before Good Friday); a Monday/Wednesday holiday moves the
-check to the next session (e.g. Tuesday after MLK day) — the output always names the close and the open it applies to.
+check to the next session. The output always names the close and the open it applies to.
 
-**Friday selection (T20, live from 2026-09-25, user decision):** only stocks ranked **1–20** can be bought. Walk ranks 1..20 with the
-max-4-per-sector limit; if fewer than 10 fit, fill the free slots from the unused ranks 1..20 in rank order **ignoring the sector
-limit** (a 5th or 6th Tech stock is fine). Nothing worse than rank 20 is ever picked; if fewer than 10 stocks qualify at all
-(score > 0), the rest stays cash (rare). Weights (∝ 1/volatility) and the soft QQQ filter are unchanged.
+**The rules** (`backtest_engine.WINNER`; the ranking uses price bars only, news and fundamentals are shown for context):
+1. **Score** = 0.5 × Technical_Score (MA/RSI/MACD/Force Index/OBV/Bollinger/Fibonacci) + 0.5 × relative strength (stock vs its
+   sector ETF and sector ETF vs SPY over 21/63/126 days). Rank all 96 stocks by score; only score > 0 qualifies.
+2. **Friday:** walk ranks 1–20 with max 4 per sector; if fewer than 10 fit, fill the free slots from the unused ranks 1–20 ignoring
+   the sector limit. Nothing worse than rank 20 is bought (fewer qualifying → the rest stays cash). Weights ∝ 1/63-day volatility.
+   If QQQ closes at/below its 200-day average, every weight is halved.
+3. **Mon/Wed swap:** if a stock you do NOT hold is in the **top 3** and a holding has fallen **below rank 15** (or no longer
+   qualifies), sell the worst-ranked holding and buy the new stock with the same dollars (any sector; can repeat).
+4. **Mon/Wed exit:** after the swap step, sell any holding ranked **worse than 30**; the cash waits for Friday.
+5. **Earnings rule (E5, live from 2026-09-25, user decision, not a tested rule):** at the Friday rebalance and the Mon/Wed checks, a
+   stock that is **not held** is not bought when **decision date < next earnings date ≤ decision date + 5 calendar days**
+   (dates from `Reports/earnings_date.csv`). Its slot goes to the next eligible stock in ranks 1–20 (same rules as step 2), else cash.
+   A top-3 swap candidate with earnings that close is skipped. **Held stocks are never sold because of earnings.** The reason reads
+   `earnings in 3 days (Wed Sep 30): not bought` in `strategy_changes.csv` / `strategy_decisions.csv`, the app and the alert.
 
-**Mid-week swap rule:** if a stock you do NOT hold ranks in the **top 3** and a stock you hold has fallen **below rank 15** (or no
-longer qualifies, score ≤ 0), sell the worst-ranked holding and buy the new stock **with the same dollar amount** at the next open.
-With T20 the top-3 stock always qualifies, whatever its sector; several swaps can happen at one check.
-
-**Mid-week exit (rank-30 safety net, MW30, live from 2026-09-25, user decision):** after the swap step, any holding ranked
-**worse than 30** (or no longer ranked) is sold at the next open and the **cash stays idle until the Friday rebalance**.
-Nothing else is traded mid-week.
-
-The ranking uses price bars only (Technical_Score from OHLCV + relative strength from closes); news sentiment and fundamentals are
-shown for context but are not part of the score. At the end the run prints e.g.
-`Mid-week check at the Mon Sep 28 close: SELL X (rank 22) and BUY Y (rank 2) at the Tue Sep 29 open, same dollar amount.` or
-`No swap (...)`, plus the next decision. The same lines are in `Reports/strategy_midweek_check.csv` and in the app's **This week** box
-(Dashboard tab). On other days (Tue/Thu or a rerun) it shows this week's latest decision and the session it applies to.
-`paper_trade.py` (auto) turns a Mon/Wed swap into SELL-all-of-X / BUY-Y-for-the-same-dollars and a rank-30 exit into a SELL-only
-order (the cash waits for Friday); `--target midweek` forces that. Exit lines read e.g.
-`Mid-week check at the Mon Sep 21 close: SELL APA (rank 34, worse than 30) at the Tue Sep 22 open, hold the cash until the Friday rebalance.`
+At the end the run prints e.g. `Mid-week check at the Mon Sep 28 close: SELL X (rank 22) and BUY Y (rank 2) at the Tue Sep 29 open,
+same dollar amount.` or `No swap (...)` plus the next decision; the Friday line adds `Not bought (earnings within 5 days): ...` when
+the rule skipped a stock. The same lines are in `Reports/strategy_midweek_check.csv` and the app's **This week** box.
 
 **Holdings alert (top of the app, and the ALERT line of `python run_all.py`):** one plain line per action, tickers link to
-the app (`http://localhost:8501/?symbol=XXX`), e.g. `Swap at the Tue Sep 29 open: sell X and buy Y (rank 2), same dollar amount.`
-(Mon/Wed check day), `Sell TRGP (rank 45) at the Tue Sep 29 open, hold cash until Friday.` (Mon/Wed check day, rank-30 exit; shown
-next to any swap line), `With today's ranks the swap rule would sell ANET and buy RBRK (rank 1).` / `With today's ranks the rank-30
-exit would sell ...` (other days, for reference),
-`No swap with today's ranks. Next check: Mon Sep 28.`, or `Full rebalance at the Mon Sep 28 open: sell ...; buy ...` (Friday).
-It uses the strategy's holdings unless **`my_positions.csv`** exists in the project folder — then it checks YOUR holdings with
-the same rules (top 3 in, below rank 15 out, then sell anything worse than rank 30; stocks outside the 96 count as not ranked, so
-the exit flags them). If this week's Mon/Wed check called for a swap or an exit that your file shows as not done, the alert says so
-(`The Wed Sep 23 check called for selling ...`). Format = the one
-`paper_trade.py --positions` reads: `Symbol,Shares` (Shares optional; an optional `Weight` column in % also works for the alert).
-Copy `my_positions.example.csv` (placeholder share counts) to `my_positions.csv` and edit it; the file is in `.gitignore`.
-The app shows a switch (your positions file / strategy holdings) under Details → Data freshness and settings when the file
-exists. `python run_all.py --sync-paper` or `alpaca_paper_account.ipynb` writes the file from your Alpaca paper account. Also: `python holdings_alert.py
-[--positions f.csv | --strategy]` and `python run_all.py --positions f.csv`.
+the app (`http://localhost:8501/?symbol=XXX`), e.g. `Swap at the Tue Sep 29 open: sell X and buy Y (rank 2), same dollar amount.`,
+`Sell TRGP (rank 45) at the Tue Sep 29 open, hold cash until Friday.`, `No swap or exit with today's ranks (MU rank 2 not bought:
+earnings in 2 days (Wed Sep 30)). Next check: ...` or `Full rebalance at the Mon Sep 28 open: sell ...; buy ...` (Friday).
+It uses the strategy's holdings unless **`my_positions.csv`** exists in the project folder; then it checks YOUR holdings with the
+same rules (stocks outside the 96 count as not ranked) and says so if this week's check called for a trade your file shows as not
+done. Format: `Symbol,Shares` (an optional `Weight` column in % also works). Copy `my_positions.example.csv` to `my_positions.csv`,
+or let `python run_all.py --sync-paper` / `alpaca_paper_account.ipynb` write it from your Alpaca paper account. Also:
+`python holdings_alert.py [--positions f.csv | --strategy]`.
 
-**Revert** (in `backtest_engine.py`, then `python run_all.py`; each step is independent):
-- picks from any rank with the hard max-4 limit (C6-U96-MW30): `WINNER["max_pick_rank"] = None` and `WINNER["cap_soft"] = False`
-- no rank-30 exit (plain mid-week swap): `WINNER["midweek_exit_below"] = None`
-- weekly-only (C6-U96): `WINNER["midweek_swap"] = None`
+**Revert a rule** (edit `WINNER` in `backtest_engine.py`, then `python run_all.py`; each step is independent):
+- no earnings rule: `WINNER["earnings_block_days"] = None`
+- no rank-30 exit: `WINNER["midweek_exit_below"] = None`
+- weekly-only: `WINNER["midweek_swap"] = None`
+- picks from any rank with the hard max-4 limit: `WINNER["max_pick_rank"] = None` and `WINNER["cap_soft"] = False`
+- universe: `sector_mapping.EXPANDED_UNIVERSE = "high_beta_91"` (91 stocks) or `None` (the original 78)
 
-Backtests (2022-04 → 2026-09-24, 0.1%/side, never-seen = 2022-04 → 2024-09; last 1y / 2y vs QQQ +24.9% / +54.2%):
+Tracking rows (`strategy_tracking.csv`) keep the rule label they were written with and are chain-linked across rule changes. After
+any rule change the decision history is recomputed with the new rules from the start of the window.
 
-| Rules | Total | Sharpe | Max DD | Never-seen Sharpe | Last 1y | Last 2y |
+## Backtest
+
+`backtest.ipynb` (or `python run_all.py --backtests`) runs the live rules with the same engine as the pipeline on the cached bars
+(no API quota): walk-forward 2022-04-01 → latest bar, decisions at the close, next-open fills, 0.1% cost per side. It writes
+`Reports/backtest_summary.csv` and `Reports/backtest_per_stock.csv` (shown in the app) and has a short section to compare one rule
+variant (`VARIANT = {...}` in its first cell). Results (last 1y / 2y vs QQQ +24.9% / +54.2%, SPY +17.3% / +37.4%):
+
+| Rules | Total | Sharpe | Max DD | Never-seen Sharpe (2022-04 → 2024-09) | Last 1y | Last 2y |
 |-------|-------|--------|--------|-------------------|---------|---------|
 | C6-U96 weekly only | +390.6% | 1.40 | −32.6% | 0.66 | | |
 | C6-U96-MW (`Reports/rebalance_frequency_test.csv`, variant D) | +438.08% | 1.4649 | −31.84% | 0.8414 | +41.8% | +232.7% |
 | C6-U96-MW30 (`Reports/sell_rule_test.csv`, S3) | +421.59% | 1.4695 | −32.18% | 0.8172 | +45.3% | +228.9% |
-| **C6-U96-T20-MW30 (live)** — user decision, not a pre-tested rule | +414.07% | 1.3716 | −32.19% | 0.5958 | +54.4% | +267.5% |
+| C6-U96-T20-MW30 (user decision) | +414.07% | 1.3716 | −32.19% | 0.5958 | +54.4% | +267.5% |
+| **C6-U96-T20-MW30-E5 (live)**, PARTIAL (see below) | +399.90% | 1.3483 | −30.76% | 0.5958 | +52.8% | +257.3% |
 
-The live rules have the weakest never-seen result of the four (0.60): they lean on the recent Tech run (up to 6 Tech names). Mid-week trades
-per year: MW ≈16 swaps; MW30 ≈16 swaps + ≈29 exits; T20-MW30 ≈32 swaps (top-3 swaps ignore the sector limit) + ≈18 exits. `tests/test_midweek_repro.py` confirms the live
-engine reproduces all three mid-week variants exactly (the first two against the original tests, T20 against an independent
-re-implementation) and matches the pipeline's decision history; `tests/test_rank_audit.py` re-derives the ranks, picks (incl. T20
-relaxed-cap weeks) and recent mid-week checks (incl. ≥ 2 rank-30 sells) from raw bars.
+The earnings rule can only use the earnings dates on disk: `Reports/earnings_date.csv` starts at 2024-09-25 and (until the next
+online earnings run) has no dates for 18 of the 96 stocks, so the E5 row is **partial, for information only**; before late 2024 it is
+identical to T20-MW30. QQQ over the whole walk-forward: +110.1%, Sharpe 0.85. The stock list is hand-picked with hindsight, so expect
+weaker live results. `tests/test_midweek_repro.py` confirms the engine reproduces every row above exactly (the tested rows against the
+original tests, T20 and E5 against independent re-implementations) and matches the pipeline's decision history.
+
+Research behind the rules (kept as evidence, not needed to run anything): `rebalance_frequency_test.csv`, `sell_rule_test.csv`,
+`strategy_comparison_sector_caps.csv` (caps 2–8: not adopted), `strategy_vs_qqq_1y_2y.csv`, `universe_*.csv`
+([universe_expansion.md](universe_expansion.md)). Tested and not adopted: rank buffers, score-only exits, minimum holds,
+2-weekly/monthly rebalancing, MA50/ATR stops, absolute score thresholds, sector caps other than 4.
 
 ## Project layout
 
-- `run_all.py` / `run_all.ipynb` — the one command; `app.py` — Streamlit dashboard; `backtest_engine.py` — live rules (`WINNER`) and
-  the backtest engine; `sector_mapping.py` — universe and sectors; `holdings_alert.py`, `paper_trade.py` — alert and dry-run orders.
-- Notebooks: the pipeline steps below plus `strategy_backtest_v2/v3/v4.ipynb` (research, opt-in with `--backtests`).
-- `alpaca_paper.py` + `alpaca_paper_account.ipynb` — read-only view of the Alpaca PAPER account (see Paper account below).
-- `tests/` — `run_tests.py` runs `test_midweek_repro.py`, `test_rank_audit.py`, `test_runner.py`, `test_app.py`,
-  `test_paper_account.py` (mock server), `test_dashboard_http.py` (port 8599) (shared read-only setup in `backtest_setup.py`;
-  nothing is written to `Reports/`).
-- `Reports/` — every output (below) and `logs/`; `docs/` — this file and the per-notebook docs.
+- `run_all.py` / `run_all.ipynb`: the one command. `app.py`: Streamlit dashboard.
+- `backtest_engine.py`: live rules (`WINNER`), technical indicators, ranking, selection, mid-week and earnings rules, simulator,
+  and the backtest helpers used by `backtest.ipynb`.
+- `sector_mapping.py`: universe and sectors. `holdings_alert.py`: the alert. `paper_trade.py`: dry-run orders (and optional paper
+  submit). `alpaca_paper.py` + `alpaca_paper_account.ipynb`: read-only view of the Alpaca PAPER account.
+  `company_report_autofetch.py`: Alpha Vantage fundamentals.
+- Notebooks: the pipeline steps below and `backtest.ipynb`.
+- `tests/`: `python tests/run_tests.py` (see the file for the list). `Reports/`: every output and `logs/`. `docs/`: this file and
+  the per-notebook docs.
 
 ## Run order and outputs (all in `Reports/`)
 
@@ -128,12 +136,10 @@ relaxed-cap weeks) and recent mid-week checks (incl. ≥ 2 rank-30 sells) from r
 | 2 | `company_report_processing.ipynb` | `complete_company_analysis.xlsx` | scoring, visualization, app | – |
 | 3 | `company_report_scoring.ipynb` | `balance_sheet_weights.csv` | main | – |
 | 4 | `sentiment_analysis.ipynb` | `news_cleaned_df.csv`, `weighted_sentiment.csv`, `sentiment_history.csv` | main, app | NewsAPI, Finnhub (online mode) |
-| 5 | `earnings_date.ipynb` | `earnings_date.csv` | main, app, backtests | Finnhub (online mode) |
-| 6 | `main_signal_analysis.ipynb` | `signal_analysis.csv`, `strategy_picks.csv`, `strategy_changes.csv`, `strategy_holdings.csv`, `strategy_tracking.csv`, `strategy_decisions.csv`, `strategy_midweek_check.csv`, `benchmark_prices.csv`, `factor_history.csv` | app, `paper_trade.py` | – |
+| 5 | `earnings_date.ipynb` | `earnings_date.csv` | main (earnings rule), alert, app, backtest | Finnhub (online mode) |
+| 6 | `main_signal_analysis.ipynb` | `signal_analysis.csv`, `strategy_picks.csv`, `strategy_changes.csv`, `strategy_holdings.csv`, `strategy_tracking.csv`, `strategy_decisions.csv`, `strategy_midweek_check.csv`, `benchmark_prices.csv`, `factor_history.csv` | app, alert, `paper_trade.py` | – |
 | 7 | `company_report_visualization.ipynb` (opt-in) | inline charts (`COMPANY_SYMBOL=NVDA` env picks the stock) | you | – |
-| 8 | `strategy_backtest_v3.ipynb` (opt-in) | `strategy_comparison_v3.csv`, `strategy_walkforward_v3.png` | – | – |
-| 9 | `strategy_backtest_v4.ipynb` (opt-in) | `strategy_comparison_v4.csv`, `trade_diagnostics_v4.csv` (+ `_summary`, `_by_stock`), `strategy_walkforward_v4.png`, `trade_diagnostics_v4.png` | app | – |
-|   | `strategy_backtest_v2.ipynb` (opt-in, historical) | `strategy_comparison_v2.csv`, `strategy_equity_curves_v2.png`, … | – | – |
+| 8 | `backtest.ipynb` (opt-in, `--backtests`) | `backtest_summary.csv`, `backtest_per_stock.csv` | app | – |
 
 `app.py` (Streamlit) is the deployed file; git tracks it together with the reports it reads. The app maintains `daily_rank.csv`.
 
@@ -145,66 +151,21 @@ relaxed-cap weeks) and recent mid-week checks (incl. ≥ 2 rank-30 sells) from r
 | `PIPELINE_EARNINGS_MODE` | `online` / `offline` / `sample` | offline = normalize/dedupe the existing file; online merges new dates into the file (past dates are kept) |
 | `COMPANY_SYMBOL` | ticker | stock shown by the visualization notebook |
 
-## Live strategy (rules C6 on the 96-stock universe, picks from ranks 1–20, mid-week swap + rank-30 exit = tag **C6-U96-T20-MW30**, `backtest_engine.WINNER`)
+## History of the live rules
 
-**Live from 2026-09-25 (two user decisions): C6-U96-T20-MW30** = C6-U96-MW below + `WINNER["midweek_exit_below"] = 30` (MW30:
-sell-rule test variant S3; it missed the pre-declared switch rule only on the never-seen period, 0.82 vs 0.84) + `WINNER["max_pick_rank"]
-= 20`, `WINNER["cap_soft"] = True` (T20: "based on my gut", no pre-test; backtest shown above for information). Rules in *How to use*.
-Tracking rows up to 2026-09-24 keep their labels (`C6`); rows from the next session are `C6-U96-T20-MW30`, chain-linked (no jump). As with
-every rule change, the decision history is recomputed with the new rules from the start of the window, so it shows e.g. APA sold at the
-Mon Sep 21 check (rank 34) — you actually still hold what you bought; the Friday 9/25 rebalance re-aligns everything.
-`signal_analysis.csv` `rules_version` = `v4-mw30-t20`; `strategy_midweek_check.csv` has `Action` SELL rows for exits.
-
-**Live since 2026-09-24 (user decision): C6-U96-MW** = C6-U96 below + `WINNER["midweek_swap"] = {"enter_top": 3, "exit_below": 15,
-"days": ["Mon", "Wed"]}` (see *How to use*). Chosen from the rebalance-frequency test (`Reports/rebalance_frequency_test.csv`):
-weekly-only +391% / Sharpe 1.40 / never-seen 0.66; Mon/Wed/Fri full rebalance (+184%) and daily rebalance (+169%) did worse after
-costs; "top 3 in, below 15 out" = +438% / 1.46 / never-seen 0.84 (picked by the user). Trading: ≈217 trades/yr vs ≈213 weekly-only. Tracking rows up to
-2026-09-24 keep their labels (`C6`); MW was superseded by C6-U96-T20-MW30 before any `C6-U96-MW` tracking row was written.
-`strategy_decisions.csv` now also holds the mid-week swap days (column `Check` = weekly / mid-week); `signal_analysis.csv` has
-`Midweek_Check` = 1 on check sessions and `rules_version` `v4-mw`.
-
-**Live since 2026-09-24 (user decision, later the same day): C6-U96** = C6-U91 + 5 emerging-tech names, all Technology (XLK):
-CRDO (Credo), NBIS (Nebius), LITE (Lumentum), CLS (Celestica), RBRK (Rubrik) → 96 tradable + QQQ
-(`sector_mapping.EXPANDED_UNIVERSE = "u96"`). Same C6 rules (ranks 1–10, max 4 per sector, soft QQQ regime, RS vs sector ETF).
-**Hindsight caveat:** these 5 were picked on 2026-09-24 news after big run-ups, so any backtest including them is flattered.
-Even so, the backtest did not improve: total +391%, Sharpe 1.40, max DD −32.6%, never-seen Sharpe 0.66, last 1y +47.0%, last 2y +237.6%
-(U91: +410%, 1.45, −31.3%, 0.72, +46.4%, +242.9%; 78: +452%, 1.47, −28.6%, 0.92, +27.2%, +220.9%) — `Reports/universe_u96_comparison.csv`.
-Short histories: the 200-bar eligibility rule applies (RBRK ranks from 2025-02-11, NBIS from 2025-08-08); NBIS bars before 2024-10-21
-(Yandex N.V. history incl. a flat zero-volume 2022–24 halt) are dropped via `sector_mapping.HISTORY_START`.
-Tracking rows up to 2026-09-24 keep the label `C6`; later rows are `C6-U96`, chain-linked (no jump).
-**Revert:** `EXPANDED_UNIVERSE = "high_beta_91"` (U91) or `None` (the 78), then `python run_all.py`.
-The online news step makes ≈97 NewsAPI calls (96 stocks + QQQ; free limit 100/day — retries on transient errors count too) + ≈97 Finnhub.
-
-Previous step (same day):
-
-**Live since 2026-09-24 (user decision): C6-U91** = the C6 rules below, unchanged (ranks 1–10, max 4 per sector, soft QQQ regime,
-relative strength vs the sector ETF — not the sector median), on the original 78 stocks **+ 13 names with 2019–21 beta ≥ 1.5**:
-APA OXY TRGP DVN FANG (Energy), COF C (Financials), BE BA URI PH (Industrials), FCX LYB (Materials) → 91 tradable + QQQ
-(`sector_mapping.EXPANDED_UNIVERSE = "high_beta_91"`). Backtest (stitched walk-forward 2022-04 → 2026-09-24): total +410%, Sharpe 1.45,
-max DD −31.3%, last 1y +46.4%, last 2y +242.9% (78: +452%, 1.47, −28.6%, +27.2%, +220.9%). **It failed the pre-declared never-seen test**
-(2022-04 → 2024-09 Sharpe 0.72 vs 0.92 for the 78; bootstrap P(Sharpe > 78) = 0.51, i.e. a tie) and was adopted by user choice for its
-recent strength. Tracking rows before the switch (2026-09-21 → 09-24) keep the label `C6`; U96 replaced U91 before any `C6-U91` row was written.
-(Revert to U91: `EXPANDED_UNIVERSE = "high_beta_91"`; to the 78: `None`; then `python run_all.py`.)
-New names have no cached news/fundamentals/earnings until the next online runs (sentiment 0, fundamentals "—", except COF/FANG/FCX
-fundamentals); (With U96 the online news fetch is ≈97 calls, see above.)
-
-**C6** – weekly (last NYSE session of the week, decided at the close, filled at the next open): top 10 stocks by
-Strategy Score = 0.5 × Technical_Score + 0.5 × relative strength (vs sector ETF and SPY), score > 0, **max 4 per sector**
-(walk down the ranks; a stock whose sector already has 4 picks is skipped),
-weights ∝ 1 / 63-day volatility. **Soft regime**: when QQQ closes at/below its 200-day SMA on the rebalance day, all weights are
-halved (rest in cash). Chosen with a rolling quarterly walk-forward (train 12 months, trade 3 months) in
-`strategy_backtest_v3.ipynb` (soft regime). `strategy_backtest_v4.ipynb` (2026-09-24) also tested rank buffers (hold until rank
-> 15/20/25), score-only exits, a 4-week minimum hold, 2-weekly/monthly rebalancing, MA50/ATR stops and an absolute score
-threshold — none beat the weekly rank rule. Sector caps were tested the same day and **not adopted (user decision)**: cap 2 (C6b)
-met the pre-declared rule by a hair and was live briefly, but cap 2 vs 4 is statistically tied and cap 2 lagged badly over the
-last 12 months; caps 5–8 and no cap had higher stitched Sharpe but failed the never-seen 2022–24 test
-(`Reports/strategy_comparison_sector_caps.csv`, `Reports/strategy_vs_qqq_1y_2y.csv`). See those notebooks for the full
-comparison and the selection-bias caveats.
-
-**Universe expansion (tested 2026-09-24; `u96` live, see above):** a fixed-rule expansion to at least 10 stocks per sector (largest SPDR
-sector-ETF holdings) is prepared behind the one-step switch `sector_mapping.EXPANDED_UNIVERSE` (`None` = original 78 stocks; `"high_beta_91"` = U91; live = `"u96"`).
-Options: `"u96"` (live), `"high_beta_91"`, `"high_beta_84"`, `"fast_sectors_98"` (+5 high-beta names in Energy/Financials/Industrials/Materials), `"existing_sectors"` (102), `"all_sectors"` (142).
-None beat the current universe in the backtest (see [universe_expansion.md](universe_expansion.md)).
+- **2026-09-25 E5** (user decision, no pre-test): no new buys with earnings within 5 calendar days. `rules_version` `v4-mw30-t20-e5`.
+- **2026-09-25 T20** (user decision, no pre-test): picks only from ranks 1–20, sector limit relaxed to fill 10 slots.
+- **2026-09-25 MW30** (user decision): rank-30 mid-week exit (sell-rule test S3; missed the pre-declared switch rule only on the
+  never-seen period, 0.82 vs 0.84).
+- **2026-09-24 MW** (user decision): Mon/Wed "top 3 in, below 15 out" swap (rebalance-frequency test variant D: +438%, 1.46,
+  never-seen 0.84 vs weekly-only +391%, 1.40, 0.66; full Mon/Wed/Fri or daily rebalancing did worse after costs).
+- **2026-09-24 U96** (user decision): + CRDO NBIS LITE CLS RBRK (Technology). Hindsight caveat: picked on that day's news after big
+  run-ups; the backtest still did not improve. NBIS bars before 2024-10-21 are dropped (`sector_mapping.HISTORY_START`); new
+  listings rank after 200 bars.
+- **2026-09-24 U91** (user decision): + 13 names with 2019–21 beta ≥ 1.5 (APA OXY TRGP DVN FANG COF C BE BA URI PH FCX LYB). It
+  failed the pre-declared never-seen test (Sharpe 0.72 vs 0.92 for the original 78).
+- **C6** (base rules): weekly top 10, max 4 per sector, soft QQQ regime, chosen with a rolling quarterly walk-forward.
+  The online news step makes ≈97 NewsAPI calls (96 stocks + QQQ; free limit 100/day) + ≈97 Finnhub.
 
 ## Paper trading
 
@@ -222,6 +183,9 @@ Add your Alpaca **paper** keys to `.env` (names in `.env.example`; values from A
 ALPACA_PAPER_KEY_ID=...
 ALPACA_PAPER_SECRET_KEY=...
 ```
+
+(`APCA_API_KEY_ID` / `APCA_API_SECRET_KEY` also work, and so does `ALPACA_API_KEY` / `ALPACA_SECRET_KEY` when that key ID starts with
+`PK`, i.e. is a paper key. A live key (`AK...`) is never used for the paper account.)
 
 Then open `alpaca_paper_account.ipynb` and Run All, or use the command line:
 

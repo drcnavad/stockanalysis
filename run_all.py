@@ -56,9 +56,7 @@ STEPS = [
     ("earnings", "notebook", "earnings_date.ipynb", "full"),
     ("main", "notebook", "main_signal_analysis.ipynb", "always"),
     ("visualization", "notebook", "company_report_visualization.ipynb", "visualization"),
-    ("backtest_v2", "notebook", "strategy_backtest_v2.ipynb", "backtests"),
-    ("backtest_v3", "notebook", "strategy_backtest_v3.ipynb", "backtests"),
-    ("backtest_v4", "notebook", "strategy_backtest_v4.ipynb", "backtests"),
+    ("backtest", "notebook", "backtest.ipynb", "backtests"),
     ("validate", "check", None, "always"),
 ]
 EXPECTED_CALLS = {"fundamentals": "Alpha Vantage <= 24", "sentiment": "NewsAPI 97 + Finnhub 97", "earnings": "Finnhub 97"}
@@ -81,8 +79,7 @@ REQUIRED = {
     "news_cleaned_df.csv": ["symbol", "date", "headline", "summary", "source", "sentiment_label"],
     "earnings_date.csv": ["Symbol", "Earnings Date", "Time"],
     "balance_sheet_weights.csv": ["Symbol", "Fundamental_Weight"],
-    "strategy_comparison_v3.csv": ["Strategy", "CAGR %", "Sharpe", "Max DD %", "Turnover x/yr", "Trades", "Segment"],
-    "strategy_comparison_v4.csv": ["Strategy", "CAGR %", "Sharpe", "Max DD %", "Turnover x/yr", "Trades", "Segment"],
+    "backtest_summary.csv": ["Strategy", "Period", "Total Return %", "CAGR %", "Sharpe", "Max DD %"],
 }
 XLSX_COLUMNS = ["Symbol", "Sector", "CurrentPrice", "FairValue_Composite", "PE_Ratio", "PB_Ratio", "RevenueGrowth_YoY",
                 "TTM_ROE", "TTM_NetProfitMargin", "Debt_to_Equity"]
@@ -318,7 +315,7 @@ def main(argv=None):
     p.add_argument("--only", choices=[s[0] for s in STEPS], help="run just this step")
     p.add_argument("--from", dest="start", choices=[s[0] for s in STEPS], help="start at this step (mode rules still apply)")
     p.add_argument("--visualization", action="store_true", help="also run company_report_visualization.ipynb")
-    p.add_argument("--backtests", action="store_true", help="also run strategy_backtest_v2/v3/v4 (slow; rewrites comparison CSVs)")
+    p.add_argument("--backtests", action="store_true", help="also run backtest.ipynb (≈10 s; rewrites Reports/backtest_*.csv)")
     p.add_argument("--keep-going", action="store_true", help="continue after a failed step (still exits 1)")
     p.add_argument("--list", action="store_true", help="list the steps and exit")
     p.add_argument("--sync-paper", action="store_true",

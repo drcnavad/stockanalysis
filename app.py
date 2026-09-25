@@ -64,6 +64,7 @@ MIDWEEK = WINNER.get("midweek_swap")                                 # Mon/Wed s
 EXIT_BELOW = WINNER.get("midweek_exit_below") if MIDWEEK else None   # mid-week exit below this rank
 MAX_PICK = WINNER.get("max_pick_rank")                               # picks only from ranks 1..MAX_PICK
 CAP_SOFT = bool(WINNER.get("cap_soft"))                              # sector limit relaxed to fill 10 slots
+EARNINGS = WINNER.get("earnings_block_days")                         # no new buys with earnings within N days (None = off)
 
 MIDWEEK_NOTE = (f"Mid-week swap: at the {' and '.join(MIDWEEK['days'])} closes (next session if a holiday), if a stock that is not "
                 f"held ranks in the top {MIDWEEK['enter_top']} and a held stock has fallen below rank {MIDWEEK['exit_below']}, "
@@ -79,6 +80,11 @@ PICK_NOTE = ((f"Picks only from ranks 1–{MAX_PICK}: walk ranks 1–{MAX_PICK} 
                 if MAX_PICK else (". " if CAP_SOFT else "")))
 _U91_TXT = ("the original 78 + 13 high-beta Energy/Financials/Industrials/Materials names added 2026-09-24 by user decision; "
             "they failed the never-seen 2022–24 test, Sharpe 0.72 vs 0.92")
+EARNINGS_NOTE = (f"Earnings rule (added 2026-09-25 by user decision, not tested): at the Friday rebalance and the mid-week checks a "
+                 f"stock that is not held is not bought if its next earnings date is within the next {EARNINGS} calendar days "
+                 f"(decision date < earnings <= decision date + {EARNINGS}); its slot goes to the next eligible stock in ranks "
+                 f"1–{MAX_PICK or 20}, else cash. Held stocks are never sold because of earnings; a mid-week top-3 candidate with "
+                 f"earnings that close is skipped. " if EARNINGS else "")
 UNIVERSE_NOTE = (f"Universe: {N_TRADABLE} stocks" + {
     "high_beta_91": f" ({_U91_TXT})",
     "u96": f" ({_U91_TXT}; + 5 emerging-tech names CRDO NBIS LITE CLS RBRK added the same day, picked with hindsight after big run-ups)",
@@ -88,10 +94,11 @@ UNIVERSE_NOTE = (f"Universe: {N_TRADABLE} stocks" + {
 def rules_text():
     """The full live rules in plain words (+ how to revert the recent changes)."""
     revert = ""
-    if MIDWEEK or MAX_PICK or CAP_SOFT:
+    if MIDWEEK or MAX_PICK or CAP_SOFT or EARNINGS:
         revert = ("Revert (in backtest_engine.py, then rerun `python run_all.py`): "
                   + ("picks from any rank with a hard sector limit: WINNER['max_pick_rank'] = None and WINNER['cap_soft'] = False; "
                      if (MAX_PICK or CAP_SOFT) else "")
+                  + ("no earnings rule: WINNER['earnings_block_days'] = None; " if EARNINGS else "")
                   + ("no mid-week exit: WINNER['midweek_exit_below'] = None; " if EXIT_BELOW else "")
                   + ("weekly-only: WINNER['midweek_swap'] = None. " if MIDWEEK else ""))
     return (f"Rules ({STRATEGY_TAG}): every week at the last trading day's close, hold the top 10 stocks by Strategy Score "
@@ -100,7 +107,7 @@ def rules_text():
             + "weights ∝ 1/63-day volatility; orders at the next open. Market filter: if QQQ closes at/below its 200-day "
             "average on the rebalance day, every position is halved (50% cash). Fundamentals and news are not part of the tested rules. "
             "Signals: Bullish (Buy) = enters the top 10, Hold = stays, Bearish (Sell) = leaves, Neutral = positive score but not held. "
-            + MIDWEEK_NOTE + EXIT_NOTE + UNIVERSE_NOTE + revert
+            + MIDWEEK_NOTE + EXIT_NOTE + EARNINGS_NOTE + UNIVERSE_NOTE + revert
             + "Daily update: `python run_all.py` (or run_all.ipynb); it picks the full or quick update by itself. ")
 
 
@@ -160,15 +167,14 @@ SIGNAL_CSV = os.path.join(REPORTS, "signal_analysis.csv")
 EARNINGS_CSV = os.path.join(REPORTS, "earnings_date.csv")
 RANK_CSV = os.path.join(REPORTS, "daily_rank.csv")
 PICKS_CSV = os.path.join(REPORTS, "strategy_picks.csv")
-COMPARISON_CSV = os.path.join(REPORTS, "strategy_comparison_v4.csv")
-DIAGNOSTICS_CSV = os.path.join(REPORTS, "trade_diagnostics_summary_v4.csv")
+BACKTEST_CSV = os.path.join(REPORTS, "backtest_summary.csv")          # written by backtest.ipynb
 CHANGES_CSV = os.path.join(REPORTS, "strategy_changes.csv")
 HOLDINGS_CSV = os.path.join(REPORTS, "strategy_holdings.csv")
 TRACKING_CSV = os.path.join(REPORTS, "strategy_tracking.csv")
 DECISIONS_CSV = os.path.join(REPORTS, "strategy_decisions.csv")
 MIDWEEK_CSV = os.path.join(REPORTS, "strategy_midweek_check.csv")
 BENCH_CSV = os.path.join(REPORTS, "benchmark_prices.csv")
-PER_STOCK_CSV = os.path.join(REPORTS, "strategy_per_stock_v2.csv")
+PER_STOCK_CSV = os.path.join(REPORTS, "backtest_per_stock.csv")        # written by backtest.ipynb
 NEWS_CSV = os.path.join(REPORTS, "news_cleaned_df.csv")
 COMPANY_XLSX = os.path.join(REPORTS, "complete_company_analysis.xlsx")
 POSITIONS_CSV = os.path.join(ROOT, "my_positions.csv")
@@ -190,10 +196,10 @@ FRESHNESS = {
     "complete_company_analysis.xlsx": ("fundamentals / fair value", 30),
     "balance_sheet_weights.csv": ("balance-sheet scores", 30),
     "balance_sheet.csv": ("raw quarterly fundamentals", 100),
-    "strategy_comparison_v4.csv": ("walk-forward backtest", 120),
+    "backtest_summary.csv": ("backtest of the live rules (backtest.ipynb)", 120),
 }
 APP_FILES = {"signal_analysis.csv", "strategy_picks.csv", "strategy_tracking.csv", "news_cleaned_df.csv", "earnings_date.csv",
-             "complete_company_analysis.xlsx", "strategy_comparison_v4.csv", "strategy_decisions.csv", "benchmark_prices.csv"}
+             "complete_company_analysis.xlsx", "backtest_summary.csv", "strategy_decisions.csv", "benchmark_prices.csv"}
 
 
 # =====================================================================================================================
@@ -603,6 +609,8 @@ def plain_reason(signal, reason, rank=None, score=None):
     r = f"{rank:.0f}" if rank is not None and pd.notna(rank) else "?"
     sc = f"{score:.1f}" if score is not None and pd.notna(score) else "?"
     m = re.search(r"rank (\d+)", reason)
+    if reason.startswith("earnings in"):
+        return f"rank {r}, not bought: {reason.split(': not bought')[0]} (no new buys within {EARNINGS or 5} days of earnings)"
     if reason.startswith("mid-week swap in"):
         rep_m = re.search(r"replaces (\S+)", reason)
         return (f"mid-week swap: jumped into the top {MIDWEEK['enter_top'] if MIDWEEK else 3} at rank "
@@ -1330,12 +1338,14 @@ def render_stock_more(p, ticker, tdata, has_strategy, chart, events, x_start, x_
             notes.append(f"Last 12 months: held on {held_share:.0f}% of sessions, "
                          f"{n_entries} Bullish (Buy) signal{'' if n_entries == 1 else 's'}.")
         ps = row_for(PER_STOCK_CSV, ticker)
-        if ps is not None:
+        if ps is not None and pd.notna(ps.get("First bar")):
+            trades = int(ps["Closed trades"])
             notes.append(
-                f"Per-stock backtest (v2 rules = C0 without the soft regime, from {ps['First bar']}, next-open fills, 0.1%/side): "
-                f"strategy {ps['Strategy %']:+.1f}% vs buy & hold {ps['Buy & Hold % (from first open)']:+.1f}%, "
-                f"max DD {ps['Max DD %']:.1f}%, exposure {ps['Exposure %']:.0f}%, {int(ps['Closed trades'])} closed trades"
-                + (f", win rate {ps['Win rate % (closed, net)']:.0f}%." if pd.notna(ps['Win rate % (closed, net)']) else "."))
+                f"Backtest of the live rules from {ps['First bar']} (next-open fills, 0.1%/side): {trades} closed trade"
+                f"{'' if trades == 1 else 's'}"
+                + (f", win rate {ps['Win rate %']:.0f}%, median trade {ps['Median trade %']:+.1f}%, median hold "
+                   f"{ps['Median hold (sessions)']:.0f} sessions" if trades else "")
+                + f"; held on {ps['Held % of sessions']:.0f}% of sessions; buy & hold of the stock {ps['Buy & hold %']:+.0f}%.")
         st.caption(" ".join(notes))
 
 
@@ -1474,13 +1484,14 @@ def render_rules_and_changes(p):
     views = [v for v in ("last rebalance", "if rebalanced at latest close") if v in set(changes["View"])]
     pick = st.radio("View", views, horizontal=True, key="changes_view", label_visibility="collapsed")
     sub = changes[changes["View"] == pick].copy()
+    earn = sub["Reason"].astype(str).str.startswith("earnings in")
     if not st.checkbox("Show Neutral (sector cap) names too", value=False, key="changes_all"):
-        sub = sub[sub["Status"] != "not selected"]
+        sub, earn = sub[(sub["Status"] != "not selected") | earn], earn[(sub["Status"] != "not selected") | earn]
     sub[["Old_Weight", "New_Weight"]] = (sub[["Old_Weight", "New_Weight"]] * 100).round(1)
     order = {"add": 0, "drop": 1, "hold": 2, "not selected": 3}
     sub = sub.sort_values(["Status", "Rank"], key=lambda s: s.map(order) if s.name == "Status" else s)
     sub["Signal"] = sub["Status"].map({"add": "Bullish (Buy)", "hold": "Hold", "drop": "Bearish (Sell)",
-                                       "not selected": "Neutral (sector cap)"})
+                                       "not selected": "Neutral (sector cap)"}).where(~earn, "Not bought (earnings)")
     sub["Why"] = [plain_reason(g, rs, rk, sc) for g, rs, rk, sc in zip(sub["Signal"], sub["Reason"], sub["Rank"], sub["Score"])]
     st.dataframe(sub[["Symbol", "Signal", "Why", "Rank", "Score", "Sector", "Old_Weight", "New_Weight"]]
                  .rename(columns={"Old_Weight": "Old portfolio weight %", "New_Weight": "New portfolio weight %"}).round(2),
@@ -1556,51 +1567,34 @@ def render_order_preview():
         st.warning(f"Order preview unavailable: {e}")
 
 
-BACKTEST_ROWS = ("QQQ buy & hold", "SPY buy & hold", "C6 current", "CAP2 ", "CAP3 ", "CAP5 ", "CAP-none", "E1 ", "E2 ", "E4 ",
-                 "E6 ", "E7 ", "E8 ", "E10 ", "E11 absolute")
-BACKTEST_COLS = ["Strategy", "CAGR %", "Total Return %", "Sharpe", "Max DD %", "Turnover x/yr", "Trades",
-                 "Win Rate % (closed, net)", "Median hold (sessions)"]
-DIAG_ROWS = ["Round trips (closed)", "Win rate % (net)", "% exits below buy price (raw open→open)", "Median hold (weeks)",
-             "Top 10% trades share of net P&L %"]
+BACKTEST_COLS = ["Strategy", "Start", "End", "Total Return %", "CAGR %", "Sharpe", "Max DD %", "Trades", "Win rate %",
+                 "Median trade %", "Median hold (sessions)"]
 
 
 def render_backtest():
-    """Walk-forward backtest table (medians, not averages) + what was tested and why the live rule was chosen."""
-    comp = read_report_csv(COMPARISON_CSV)
-    if comp is None:
-        st.caption("Reports/strategy_comparison_v4.csv not found.")
+    """Backtest of the live rules vs QQQ / SPY and one rule variant (Reports/backtest_summary.csv from backtest.ipynb)."""
+    bt = read_report_csv(BACKTEST_CSV)
+    if bt is None:
+        st.caption("Reports/backtest_summary.csv not found: run backtest.ipynb (or python run_all.py --backtests).")
         return
-    st.markdown(f"**Walk-forward backtest v4 (point-in-time, next-open fills, 0.1%/side)** · live rule = {STRATEGY_TAG}")
-    seg = st.selectbox("Segment", list(dict.fromkeys(comp["Segment"])), key="bt_segment")
-    keep = comp["Strategy"].str.startswith(BACKTEST_ROWS) & (comp["Segment"] == seg)
-    st.dataframe(comp.loc[keep, [c for c in BACKTEST_COLS if c in comp.columns]].sort_values("Sharpe", ascending=False).round(2),
+    st.markdown(f"**Backtest of the live rules ({STRATEGY_TAG})** · decisions at the close, next-open fills, 0.1% per side "
+                "· trade statistics are medians")
+    period = st.selectbox("Period", list(dict.fromkeys(bt["Period"])), key="bt_segment")
+    view = bt[bt["Period"] == period]
+    st.dataframe(view[[c for c in BACKTEST_COLS if c in view.columns]].dropna(axis=1, how="all").round(2),
                  width="stretch", hide_index=True)
-    diag = read_report_csv(DIAGNOSTICS_CSV)
-    if diag is not None and "Metric" in diag.columns:
-        d = diag[diag["Metric"].isin(DIAG_ROWS)].drop(columns=[c for c in ("Table", "Group") if c in diag.columns])
-        st.markdown("**Trade statistics of the C6 walk-forward (medians, not averages)**")
-        st.dataframe(d.dropna(axis=1, how="all"), width="stretch", hide_index=True)
     st.caption(
-        f"Live rule: {STRATEGY_TAG} (C6 rules, max {SECTOR_MAX} per sector"
-        f"{' relaxed to fill 10 slots from ranks 1–' + str(MAX_PICK) if MAX_PICK and CAP_SOFT else ''}"
-        f"{' + Mon/Wed mid-week swap' if MIDWEEK else ''}{' + rank-' + str(EXIT_BELOW) + ' exit' if EXIT_BELOW else ''}). "
-        "This v4 table was run on the original 78 stocks; "
-        + {"high_beta_91": "the 91-stock universe (C6-U91) is in Reports/universe_beta_median_comparison.csv. ",
-           "u96": "the 96-stock universe (C6-U96, hindsight-flattered) vs U91 and the 78 is in Reports/universe_u96_comparison.csv. "
-           }.get(EXPANSION, "")
-        + ("The Mon/Wed mid-week swap (top 3 in, below 15 out) was tested on the 96 stocks in "
-           "Reports/rebalance_frequency_test.csv: +438% total, Sharpe 1.46 vs +391%, 1.40 weekly-only (2022-04 → 2026-09, 0.1%/side). "
-           if MIDWEEK else "")
-        + ("Adding the rank-30 exit (Reports/sell_rule_test.csv, S3): +422%, Sharpe 1.47, never-seen 0.82 (plain mid-week 0.84). "
-           if EXIT_BELOW else "")
-        + ("Picks from ranks 1–20 with the relaxed sector limit (user decision, not a tested rule; tests/test_midweek_repro.py): "
-           "+414%, Sharpe 1.37, max DD −32.2%, never-seen 0.60, last 1y +54% vs QQQ +25%. " if MAX_PICK and CAP_SOFT else "")
-        + "Tested and not adopted: max 2 per sector (CAP2) — statistically tied with C6 but it lagged badly over the last "
-        "12 months; max 5–8 or no cap — higher returns lately but worse on the never-seen 2022–24 period. Holding longer "
-        "(rank buffers, 4-week minimum, score-only exits, stops, monthly) cut trading but lowered returns. About half of all "
-        "sells are below the buy price, which is normal for this kind of rule: winners are larger than losers, and most profit "
-        "comes from the few trades held 4+ weeks. The 2024-09→now part had already been seen, and the stock universe is "
-        "hand-picked with hindsight, so expect live results to be weaker.")
+        "Never-seen = 2022-04 → 2024-09, a period not used when the rules were chosen (the most honest number). "
+        + ("The Mon/Wed mid-week swap (top 3 in, below 15 out) was tested in Reports/rebalance_frequency_test.csv: +438% "
+           "total, Sharpe 1.46 vs +391%, 1.40 weekly-only. " if MIDWEEK else "")
+        + ("Adding the rank-30 exit (Reports/sell_rule_test.csv, S3): +422%, Sharpe 1.47, never-seen 0.82. " if EXIT_BELOW else "")
+        + ("Picks from ranks 1–20 with the relaxed sector limit was a user decision, not a tested rule. " if MAX_PICK and CAP_SOFT else "")
+        + ("Earnings rule: the earnings dates on disk start in late 2024 and miss some stocks, so its backtest is partial "
+           "(compare the 'Variant: earnings_block_days=None' rows); it was a user decision, not a tested rule. " if EARNINGS else "")
+        + "Tested and not adopted: max 2 per sector (tied with 4, lagged over the last 12 months); max 5–8 or no limit (worse "
+        "on the never-seen period); rank buffers, minimum holds, score-only exits, stops, monthly rebalancing (lower returns). "
+        "About half of all sells are below the buy price; most profit comes from the few trades held 4+ weeks. The stock list "
+        "is hand-picked with hindsight, so expect live results to be weaker.")
 
 
 def render_data_and_settings(p):

@@ -11,7 +11,7 @@ Rules enforced everywhere:
   * fundamentals / sentiment have no history -> treated as UNAVAILABLE in backtests
   * QQQ / SPY / sector ETFs are benchmarks and inputs, never traded by the strategies
 
-Market data only: uses alpaca_setup.data_client (historical bars). No trading endpoints.
+Market data only: market_data_client() (historical bars). No trading endpoints.
 """
 from __future__ import annotations
 
@@ -30,7 +30,6 @@ from pandas.tseries.holiday import (AbstractHolidayCalendar, GoodFriday, Holiday
 from pandas.tseries.offsets import CustomBusinessDay
 
 import sector_mapping
-import signal_analysis_functions as saf
 
 log = logging.getLogger("backtest_engine")
 
@@ -40,24 +39,18 @@ CACHE_DIR = REPORTS_DIR / "cache"
 EASTERN = ZoneInfo("America/New_York")
 
 COST = 0.001                 # per side
-BUY_CUTOFF, SELL_CUTOFF = 20, -25
 MIN_BARS = 200               # a stock is eligible once it has a full ma_200 (handles late IPOs consistently)
-IS_START, IS_END = "2024-09-17", "2025-09-16"
-OOS_START = "2025-09-17"
-DATA_START = "2023-06-01"    # warm-up for ma_200 and 252-bar rescaling windows
+DATA_START = "2023-06-01"    # warm-up for ma_200 and 252-bar rescaling windows (live pipeline)
+LONG_CACHE, LONG_START = "bars_daily_long.pkl", "2020-06-01"   # long bar history for the backtest and the tests
 RS_WINDOWS = (21, 63, 126)
 RS_WEIGHTS = {"stock_vs_sector": 0.6, "sector_vs_spy": 0.4}
 REGIME_SYMBOL, REGIME_MA = "SPY", 200
 
-# Strategy applied to the live signals.
-# v3 (strategy_backtest_v3.ipynb, rolling walk-forward 2022-04 -> now): C6 = v2 winner (weekly top-10 ranking)
-# + SOFT regime: at a rebalance where QQQ closes below its 200-day SMA, all weights are halved (rest in cash).
-# v4 / sector-cap sweep (2026-09-24, strategy_backtest_v4.ipynb + Reports/strategy_comparison_sector_caps.csv): cap 2 (C6b)
-# met the pre-declared rule by a hair (stitched Sharpe 1.48 vs 1.47, max DD -23.7% vs -28.6%) and was live briefly, but the
-# user chose to keep cap 4: cap 2 vs 4 is statistically tied (bootstrap P(better) 0.60) and cap 2 lagged badly over the last
-# 12 months; caps 5-8 / no cap had higher stitched Sharpe but failed the never-seen 2022-24 test. Buffers, score exits,
-# minimum holds, stops and thresholds did not beat the weekly rank rule.
-# Selection bias (hand-picked universe) still inflates absolute returns - see Reports/strategy_comparison_v4.csv.
+# The live rules (WINNER). History: C6 = weekly top-10 ranking + SOFT regime (at a rebalance where QQQ closes below its
+# 200-day average, all weights are halved) won the 2022-04 -> now walk-forward tests. Tested 2026-09-24 and not adopted:
+# max 2 per sector (statistically tied with 4, lagged the last 12 months; Reports/strategy_comparison_sector_caps.csv),
+# max 5-8 / no cap (failed the never-seen 2022-24 period), rank buffers, score exits, minimum holds, stops, thresholds.
+# The universe is hand-picked with hindsight, which inflates absolute backtest returns. Backtest: backtest.ipynb.
 WINNER = {
     "name": "C6: weekly top-10 ranking, max 4 per sector + soft QQQ regime",
     "tag": "C6",
@@ -93,6 +86,12 @@ WINNER = {
     # REVERT: "max_pick_rank": None and "cap_soft": False, then `python run_all.py` -> C6-U96-MW30.
     "max_pick_rank": 20,
     "cap_soft": True,
+    # Earnings rule (LIVE from 2026-09-25, user decision, not a tested rule): a stock that is NOT held is not bought when its
+    # next earnings date E is within the next N calendar days after the decision date d (d < E <= d + N), at the Friday
+    # rebalance and at the Mon/Wed swap. Its slot goes to the next eligible stock within ranks 1-20 (same T20 logic; none ->
+    # cash); a top-3 swap candidate with earnings is skipped. Held stocks are never sold because of earnings. Dates:
+    # Reports/earnings_date.csv. Tag gets "-E5". REVERT: "earnings_block_days": None, then `python run_all.py`.
+    "earnings_block_days": 5,
 }
 
 
@@ -118,6 +117,9 @@ if WINNER.get("midweek_swap"):                   # mid-week swap on top of the w
     if WINNER.get("midweek_exit_below"):         # mid-week exit to cash (live from 2026-09-25)
         WINNER["tag"] += str(WINNER["midweek_exit_below"])
         WINNER["name"] += f' + mid-week exit (sell if worse than rank {WINNER["midweek_exit_below"]}, cash until Friday)'
+if WINNER.get("earnings_block_days"):             # no new buys shortly before earnings (live from 2026-09-25)
+    WINNER["tag"] += f'-E{WINNER["earnings_block_days"]}'
+    WINNER["name"] += f' + no new buys with earnings in the next {WINNER["earnings_block_days"]} days'
 
 
 def winner_max_per_sector():
@@ -161,13 +163,26 @@ def next_sessions(after, n):
 
 
 # ----------------------------------------------------------------------------- data
+def market_data_client():
+    """Alpaca market-data client (historical bars only; no trading or account endpoints). Keys: ALPACA_API_KEY /
+    ALPACA_SECRET_KEY in .env."""
+    import os
+    from alpaca.data.historical import StockHistoricalDataClient
+    from dotenv import load_dotenv
+    load_dotenv(PROJECT_ROOT / ".env")
+    key, secret = os.getenv("ALPACA_API_KEY"), os.getenv("ALPACA_SECRET_KEY")
+    if not key or not secret:
+        raise EnvironmentError("Missing API keys. Make sure .env has ALPACA_API_KEY and ALPACA_SECRET_KEY")
+    return StockHistoricalDataClient(key, secret)
+
+
 def fetch_daily_bars(symbols, start=DATA_START, end=None, data_client=None, retries=3):
     """Split+dividend adjusted daily bars (long format). Market-data endpoint only."""
     from alpaca.data.enums import Adjustment
     from alpaca.data.requests import StockBarsRequest
     from alpaca.data.timeframe import TimeFrame
     if data_client is None:
-        from alpaca_setup import data_client
+        data_client = market_data_client()
     symbols = list(dict.fromkeys(symbols))
     # Free Alpaca plans cannot query the most recent 15 minutes of SIP data -> stop 16 minutes ago.
     end_ts = pd.Timestamp(end).to_pydatetime() if end else datetime.now(EASTERN) - timedelta(minutes=16)
@@ -224,7 +239,7 @@ def drop_partial_last_bar(bars, now=None, close_buffer_min=30):
     return bars, False
 
 
-def load_bars(refresh=True, cache_name="bars_daily.pkl", start=DATA_START):
+def load_bars(refresh=False, cache_name=LONG_CACHE, start=LONG_START):
     """All bars needed by the backtest (tradable + benchmarks + sector ETFs), cached under Reports/cache.
     The cache is refetched when asked, when it is missing, or when it starts later than `start`."""
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -238,21 +253,426 @@ def load_bars(refresh=True, cache_name="bars_daily.pkl", start=DATA_START):
     return bars, dropped
 
 
+# ----------------------------------------------------------------------------- technical indicators
+# (merged from signal_analysis_functions.py) calculate_technical_indicators (moving averages, RSI, MACD, Bollinger
+# bands, ATR, OBV, Force Index) -> one signal column per indicator (+1 buy / 0 / -1 sell) -> weighted_signal combines
+# them into combined_signal = Technical_Score. All rescaling is point-in-time (trailing windows only).
+pd.options.display.float_format = '{:.2f}'.format    # notebook display only (2 decimals, all columns)
+pd.set_option('display.max_columns', None)
+
+
+def apply_by_symbol(df, fn, ticker_col='Symbol'):
+    """Run fn on each symbol's rows and concatenate (keeps the Symbol column; avoids the deprecated
+    DataFrameGroupBy.apply-on-grouping-columns behaviour that drops it in pandas 3)."""
+    if df.empty:
+        return fn(df)
+    return pd.concat([fn(g) for _, g in df.groupby(ticker_col, sort=False)], ignore_index=False)
+
+# Point-in-time settings: every indicator below uses only data available at each row's date.
+SCALE_WINDOW = 252      # trailing window (bars) for rescaling Force Index / OBV (expanding until full)
+SCALE_MIN_PERIODS = 20
+OBV_SLOPE_DAYS = 3
+OBV_THRESHOLD = 1.0     # 3-day net signed volume must exceed 1x the 20-day average daily volume
+BB_WINDOW = 20          # same window as bb_middle/bb_upper/bb_lower in calculate_technical_indicators
+
+
+def pit_scale(series, window=SCALE_WINDOW, min_periods=SCALE_MIN_PERIODS):
+    """Point-in-time rescale to -100..100: value / trailing max(|value|) over `window` bars.
+
+    """
+    s = pd.Series(series, dtype=float)
+    denom = s.abs().rolling(window, min_periods=min_periods).max()
+    return (s / denom.replace(0, np.nan) * 100).clip(-100, 100)
+
+
+def wilder_rsi(close, period=14):
+    """RSI with Wilder smoothing; 100 when there are no losses, 50 when flat."""
+    delta = close.diff()
+    gain = delta.clip(lower=0)
+    loss = (-delta).clip(lower=0)
+    avg_gain = gain.ewm(alpha=1 / period, adjust=False, min_periods=period).mean()
+    avg_loss = loss.ewm(alpha=1 / period, adjust=False, min_periods=period).mean()
+    rs = avg_gain / avg_loss.replace(0, np.nan)
+    rsi = 100 - 100 / (1 + rs)
+    rsi = rsi.mask((avg_loss == 0) & (avg_gain > 0), 100.0)
+    rsi = rsi.mask((avg_loss == 0) & (avg_gain == 0), 50.0)
+    return rsi
+
+
+def calculate_technical_indicators(df):
+    """Indicators for ONE symbol (rows sorted by date). All values are point-in-time."""
+    df = df.copy()
+    # --- Moving Averages ---
+    for window in [10, 30, 50, 100, 200]:
+        df[f'ma_{window}'] = df['Close'].rolling(window=window).mean()
+
+    # --- RSI (Wilder) ---
+    df['rsi'] = wilder_rsi(df['Close'], 14)
+
+    # --- ATR (Wilder, 14) for stops / volatility sizing ---
+    prev_close = df['Close'].shift(1)
+    true_range = pd.concat([df['High'] - df['Low'], (df['High'] - prev_close).abs(),
+                            (df['Low'] - prev_close).abs()], axis=1).max(axis=1)
+    df['atr'] = true_range.ewm(alpha=1 / 14, adjust=False, min_periods=14).mean()
+
+    # --- Bollinger Bands ---
+    df['bb_middle'] = df['Close'].rolling(window=BB_WINDOW).mean()
+    df['bb_std'] = df['Close'].rolling(window=BB_WINDOW).std()
+    df['bb_upper'] = df['bb_middle'] + 2 * df['bb_std']
+    df['bb_lower'] = df['bb_middle'] - 2 * df['bb_std']
+
+    # --- MACD ---
+    ema_12 = df['Close'].ewm(span=12, adjust=False).mean()
+    ema_26 = df['Close'].ewm(span=26, adjust=False).mean()
+    df['macd'] = ema_12 - ema_26
+    df['macd_signal'] = df['macd'].ewm(span=9, adjust=False).mean()
+
+    # --- Force Index ---
+    # fi_raw keeps the sign/units; fi is rescaled point-in-time to -100..100 (trailing 252-bar max |fi|)
+    df['fi_raw'] = (df['Close'].diff() * df['Volume']).ewm(span=13, adjust=False).mean()
+    df['fi'] = pit_scale(df['fi_raw'])
+
+    # --- OBV ---
+    df['obv_std'] = (np.sign(df['Close'].diff()).fillna(0) * df['Volume']).cumsum()
+    roll_min = df['obv_std'].rolling(SCALE_WINDOW, min_periods=SCALE_MIN_PERIODS).min()
+    roll_max = df['obv_std'].rolling(SCALE_WINDOW, min_periods=SCALE_MIN_PERIODS).max()
+    df['obv'] = ((df['obv_std'] - roll_min) / (roll_max - roll_min).replace(0, np.nan)).fillna(0.5)  # 0..1, trailing window
+    avg_volume = df['Volume'].rolling(20, min_periods=5).mean()
+    df['obv_slope'] = df['obv_std'].diff(OBV_SLOPE_DAYS) / avg_volume.replace(0, np.nan)  # in "average days of volume"
+
+    # --- Adaptive Fibonacci levels from the most recent CONFIRMED swing high/low ---
+    # A 3-bar fractal at bar j needs bar j+1 to exist, so it is only known from bar j+1 onward:
+    # the swing value is placed on j+1 (shift(1)) and carried forward.
+    high, low = df['High'], df['Low']
+    is_swing_high = (high > high.shift(1)) & (high > high.shift(-1))
+    is_swing_low = (low < low.shift(1)) & (low < low.shift(-1))
+    last_high = high.where(is_swing_high).shift(1).ffill()
+    last_low = low.where(is_swing_low).shift(1).ffill()
+    last_high = last_high.fillna(high.cummax())
+    last_low = last_low.fillna(low.cummin())
+
+    diff = last_high - last_low
+    df['fib_0%'] = last_high
+    df['fib_23.6%'] = last_high - diff * 0.236
+    df['fib_38.2%'] = last_high - diff * 0.382
+    df['fib_50%'] = last_high - diff * 0.500
+    df['fib_61.8%'] = last_high - diff * 0.618
+    df['fib_76.4%'] = last_high - diff * 0.764
+    df['fib_100%'] = last_low
+
+    # --- Clean up --- (warm-up rows get 0; callers drop rows without a full ma_200)
+    df = df.fillna(0)
+    return df
+
+
+def generate_strict_signals(df):
+    """Moving-average signals (+1 when the close is 1% above an MA, -1 when 1% below; MA50/100/200 also need the
+    shorter MAs to agree) and the OBV momentum signal."""
+    # --- MA Signals ---
+    for ma in ['ma_10', 'ma_30', 'ma_50', 'ma_100', 'ma_200']:
+        buffer = df[ma] * 0.01  # Increased to 1% buffer for stricter BUY
+        df[f'signal_{ma}'] = np.where(df['Close'] > df[ma] + buffer, 1,
+                                      np.where(df['Close'] < df[ma] - buffer, -1, 0))
+        
+        # Additional strictness: For longer MAs, require shorter MA alignment
+        if ma == 'ma_50':
+            # For MA50 BUY, require MA10 > MA30 (short-term uptrend)
+            df.loc[(df['signal_ma_50'] == 1) & (df['ma_10'] <= df['ma_30']), 'signal_ma_50'] = 0
+            # STRICT: For MA50 SELL, require MA10 < MA30 (short-term downtrend)
+            df.loc[(df['signal_ma_50'] == -1) & (df['ma_10'] >= df['ma_30']), 'signal_ma_50'] = 0
+        elif ma == 'ma_100':
+            # For MA100 BUY, require MA30 > MA50 (medium-term uptrend)
+            df.loc[(df['signal_ma_100'] == 1) & (df['ma_30'] <= df['ma_50']), 'signal_ma_100'] = 0
+            # STRICT: For MA100 SELL, require MA30 < MA50 (medium-term downtrend)
+            df.loc[(df['signal_ma_100'] == -1) & (df['ma_30'] >= df['ma_50']), 'signal_ma_100'] = 0
+        elif ma == 'ma_200':
+            # For MA200 BUY, require MA50 > MA100 (long-term uptrend)
+            df.loc[(df['signal_ma_200'] == 1) & (df['ma_50'] <= df['ma_100']), 'signal_ma_200'] = 0
+            # STRICT: For MA200 SELL, require MA50 < MA100 (long-term downtrend)
+            df.loc[(df['signal_ma_200'] == -1) & (df['ma_50'] >= df['ma_100']), 'signal_ma_200'] = 0
+
+    # --- OBV momentum ---
+    # obv_slope = 3-day OBV change / 20-day average volume (computed in calculate_technical_indicators).
+    # Threshold is in the same units (1.0 = one average day of net buying), not on a 0-100 rescale.
+    if 'obv_slope' not in df.columns:
+        df['obv_slope'] = df.groupby('Symbol')['obv'].transform(lambda s: s.diff().rolling(OBV_SLOPE_DAYS).sum())
+    df['signal_obv'] = np.where(df['obv_slope'] > OBV_THRESHOLD, 1,
+                                np.where(df['obv_slope'] < -OBV_THRESHOLD, -1, 0))
+
+    return df
+
+def rsi_signals(group, lower=20, upper=85, ma_period=3, use_trend=True, oversold_threshold=30):
+    """RSI signals for one symbol: +1 when RSI is oversold (< 30) and the price is at/above its short MA,
+    -1 when RSI is overbought (> 70) and the price is at/below it."""
+    group = group.copy()
+    group['rsi_signal'] = 0
+    
+    # Rolling MA trend filter
+    if use_trend:
+        group['ma'] = group['Close'].rolling(ma_period).mean()  # no bfill (would use future bars)
+    else:
+        group['ma'] = group['Close'] * 0 + 1  # all True
+    
+    # --- BUY ---
+    # STRICT: RSI oversold in uptrend - price must be above MA (not in downtrend)
+    buy_condition = group['rsi'] < lower  # RSI < 20
+    trend_buy = group['Close'] > group['ma']  # Price above short-term MA (uptrend)
+    group.loc[buy_condition & trend_buy, 'rsi_signal'] = 1
+    
+    # STRICT: Moderate oversold (RSI 20-30) but ONLY if price is at least at MA level (not below)
+    # Removed the loose conditions that allowed buying 20-30% below MA
+    moderate_oversold = (group['rsi'] < oversold_threshold) & (group['rsi'] >= 20)
+    price_at_ma = group['Close'] >= group['ma']  # Price at or above MA (strict)
+    group.loc[moderate_oversold & price_at_ma, 'rsi_signal'] = 1
+    
+    # --- SELL ---
+    # STRICT: RSI overbought in downtrend - price must be below MA (not in uptrend)
+    sell_condition = group['rsi'] > upper  # RSI > 85
+    trend_sell = group['Close'] < group['ma']  # Price below short-term MA (downtrend)
+    group.loc[sell_condition & trend_sell, 'rsi_signal'] = -1
+    
+    # STRICT: Moderate overbought (RSI 70-85) but ONLY if price is at or below MA level (not above)
+    # This catches overbought conditions in downtrends
+    moderate_overbought = (group['rsi'] > 70) & (group['rsi'] <= upper)
+    price_at_or_below_ma = group['Close'] <= group['ma']  # Price at or below MA (strict)
+    group.loc[moderate_overbought & price_at_or_below_ma, 'rsi_signal'] = -1
+    
+    return group.drop(columns=['ma'])
+
+
+def fi_signals_strict(df, lookback=3, min_fi=2):
+    """
+    fi_signal = 1 for buy, -1 for sell, 0 for hold.
+    lookback = number of consecutive FI values needed
+    min_fi = minimum absolute FI value to count toward streak
+    """
+    df = df.copy()
+    df['fi_signal'] = 0
+
+    # Only consider FI values above threshold
+    df['fi_direction'] = df['fi'].apply(lambda x: 1 if x >= min_fi else -1 if x <= -min_fi else 0)
+    
+    # Compute streaks
+    df['fi_streak'] = df['fi_direction'].groupby((df['fi_direction'] != df['fi_direction'].shift()).cumsum()).cumcount() + 1
+    
+    # STRICT: For BUY, require price to be in uptrend (Close > MA10) to avoid buying in downtrends
+    # Calculate MA10 for trend confirmation if not already present
+    ma_10_was_present = 'ma_10' in df.columns
+    if not ma_10_was_present:
+        df['ma_10'] = df['Close'].rolling(window=10).mean()
+    
+    # Buy after lookback consecutive positives AND price above MA10 (uptrend confirmation)
+    buy_condition = (df['fi_direction'] == 1) & (df['fi_streak'] >= lookback)
+    trend_confirmation = df['Close'] > df['ma_10']  # Price in uptrend
+    df.loc[buy_condition & trend_confirmation, 'fi_signal'] = 1
+    
+    # STRICT: Sell after lookback consecutive negatives AND price below MA10 (downtrend confirmation)
+    sell_condition = (df['fi_direction'] == -1) & (df['fi_streak'] >= lookback)
+    downtrend_confirmation = df['Close'] < df['ma_10']  # Price in downtrend
+    df.loc[sell_condition & downtrend_confirmation, 'fi_signal'] = -1
+
+    # Clean up helper columns (drop ma_10 only if we created it)
+    if not ma_10_was_present and 'ma_10' in df.columns:
+        df = df.drop(columns=['ma_10'])
+    df = df.drop(columns=["fi_direction", "fi_streak"], errors='ignore')
+    return df
+
+def bollinger_signal_middle(df, bb_window=BB_WINDOW, rsi_col='rsi', close_col='Close', ma_period=20, ticker_col='Symbol'):
+    """
+    Generates BB+RSI signals using middle band as trend filter.
+    Now also detects oversold conditions when price is at/below lower Bollinger band.
+    """
+    def bb_middle_group(group):
+        """Bollinger middle-band signals for one symbol."""
+        group = group.copy()
+        
+        # Bollinger Bands (recalculate to ensure we have lower band)
+        group['bb_middle'] = group[close_col].rolling(bb_window).mean()
+        group['bb_std'] = group[close_col].rolling(bb_window).std()
+        group['bb_lower'] = group['bb_middle'] - 2 * group['bb_std']
+        group['bb_upper'] = group['bb_middle'] + 2 * group['bb_std']
+        
+        # Buy: price above middle band + RSI in healthy range (not overbought)
+        # STRICT: RSI must be < 60 (not just < 70) to avoid buying in overbought conditions
+        group['bb_signal'] = 0
+        healthy_rsi = (group[rsi_col] < 60) & (group[rsi_col] > 30)  # RSI in healthy range
+        price_above_middle = group[close_col] > group['bb_middle']
+        group.loc[price_above_middle & healthy_rsi, 'bb_signal'] = 1
+        
+        # Additional buy signal: price at or below lower Bollinger band + RSI oversold
+        # STRICT: RSI must be < 30 (not < 35) for stronger oversold confirmation
+        oversold_bb = (group[close_col] <= group['bb_lower']) & (group[rsi_col] < 30)
+        group.loc[oversold_bb, 'bb_signal'] = 1
+        
+        # STRICT: Sell: price below middle band + RSI in overbought range (not just > 30)
+        # Require RSI > 50 to ensure we're selling in overbought conditions, not just neutral
+        overbought_rsi = group[rsi_col] > 50  # RSI in overbought range
+        price_below_middle = group[close_col] < group['bb_middle']
+        group.loc[price_below_middle & overbought_rsi, 'bb_signal'] = -1
+        
+        # Additional sell signal: price at or above upper Bollinger band + RSI overbought
+        # STRICT: RSI must be > 70 (not just > 50) for stronger overbought confirmation
+        overbought_bb = (group[close_col] >= group['bb_upper']) & (group[rsi_col] > 70)
+        group.loc[overbought_bb, 'bb_signal'] = -1
+        
+        return group.drop(columns=['bb_middle', 'bb_std', 'bb_lower', 'bb_upper'])
+    
+    return apply_by_symbol(df, bb_middle_group, ticker_col)
+
+def macd_signals(group):
+    """MACD signals for one symbol: +1 on a cross above the signal line with MACD rising, -1 on a cross below with MACD falling."""
+    group = group.copy()
+    group['macd_trade'] = 0
+    
+    # MACD crossover conditions
+    cross_up = (group['macd'].shift(1) < group['macd_signal'].shift(1)) & (group['macd'] >= group['macd_signal'])
+    cross_down = (group['macd'].shift(1) > group['macd_signal'].shift(1)) & (group['macd'] <= group['macd_signal'])
+    
+    # STRICT: For BUY, require MACD histogram to be positive (MACD > Signal) and increasing
+    # This ensures we're buying on confirmed bullish momentum, not just a weak crossover
+    macd_positive = group['macd'] > group['macd_signal']  # Histogram positive
+    macd_increasing = group['macd'] > group['macd'].shift(1)  # MACD line increasing
+    
+    group.loc[cross_up & macd_positive & macd_increasing, 'macd_trade'] = 1
+    
+    # STRICT: For SELL, require MACD histogram to be negative (MACD < Signal) and decreasing
+    # This ensures we're selling on confirmed bearish momentum, not just a weak crossover
+    macd_negative = group['macd'] < group['macd_signal']  # Histogram negative
+    macd_decreasing = group['macd'] < group['macd'].shift(1)  # MACD line decreasing
+    
+    group.loc[cross_down & macd_negative & macd_decreasing, 'macd_trade'] = -1
+    
+    return group
+
+def fibonacci_signals(df, close_col='Close'):
+    """
+    Generates signals based on price position relative to Fibonacci retracement levels.
+    Buy signal when price is near key support levels (fib_61.8%, fib_50%, fib_38.2%).
+    Sell signal when price is near resistance levels (fib_0%, fib_23.6%).
+    """
+    df = df.copy()
+    df['fib_signal'] = 0
+    
+    # Calculate distance from each Fibonacci level (as percentage)
+    tolerance = 0.015  # Reduced to 1.5% tolerance for stricter matching
+    
+    # STRICT: Require trend confirmation - price should be above MA50 for BUY signals
+    # This ensures we're buying at support in an uptrend, not in a downtrend
+    ma_50_was_present = 'ma_50' in df.columns
+    if not ma_50_was_present:
+        df['ma_50'] = df[close_col].rolling(window=50).mean()
+    
+    # Buy signals: Price near support levels (fib_61.8%, fib_50%, fib_38.2%)
+    for fib_level in ['fib_61.8%', 'fib_50%', 'fib_38.2%']:
+        if fib_level in df.columns:
+            distance = abs((df[close_col] - df[fib_level]) / df[fib_level])
+            # Buy when price is near support and potentially bouncing up
+            near_support = distance <= tolerance
+            price_above_fib = df[close_col] >= df[fib_level] * 0.98  # Allow slight below
+            # STRICT: Require price above MA50 (uptrend) to avoid buying in downtrends
+            uptrend_confirmation = df[close_col] > df['ma_50']
+            df.loc[near_support & price_above_fib & uptrend_confirmation, 'fib_signal'] = 1
+    
+    # Sell signals: Price near resistance levels (fib_0%, fib_23.6%)
+    for fib_level in ['fib_0%', 'fib_23.6%']:
+        if fib_level in df.columns:
+            distance = abs((df[close_col] - df[fib_level]) / df[fib_level])
+            # Sell when price is near resistance and potentially reversing
+            near_resistance = distance <= tolerance
+            price_below_fib = df[close_col] <= df[fib_level] * 1.02  # Allow slight above
+            # STRICT: Require price below MA50 (downtrend) to avoid selling in uptrends
+            # Note: ma_50 is still available here since we haven't dropped it yet
+            downtrend_confirmation = df[close_col] < df['ma_50']
+            df.loc[near_resistance & price_below_fib & downtrend_confirmation, 'fib_signal'] = -1
+    
+    # Clean up: drop ma_50 only if we created it (after both BUY and SELL signals are processed)
+    if not ma_50_was_present and 'ma_50' in df.columns:
+        df = df.drop(columns=['ma_50'])
+    
+    return df
+
+
+
+
+
+
+def weighted_signal(df, weights=None, signal_cols=None, final_col='combined_signal'):
+    """
+    Combine multiple signals with given weights into a final score.
+    Arguments:
+        df: dataframe with signal columns
+        weights: dict of {column_name: weight_in_percent}
+        signal_cols: list of columns to include (optional, inferred from weights if None)
+        final_col: name of output column
+    Returns:
+        df with new weighted score column
+    """
+    df = df.copy()
+    
+    # Default weights if not provided
+    # Optimized based on strictness updates and signal reliability
+    if weights is None:
+        weights = {
+            # Moving Averages - Trend indicators (Total: 38)
+            # Higher weights for MAs with trend alignment confirmations
+            'signal_ma_10': 3,      # Short-term, no alignment → Lower weight (less reliable)
+            'signal_ma_30': 6,      # Medium-term, no alignment → Moderate weight
+            'signal_ma_50': 10,     # Medium-term WITH MA10>MA30 alignment → High weight (very reliable)
+            'signal_ma_100': 8,     # Long-term WITH MA30>MA50 alignment → High weight (very reliable)
+            'signal_ma_200': 11,    # Major trend WITH MA50>MA100 alignment → Highest weight (most reliable)
+            
+            # Momentum Indicators (Total: 20)
+            # High weights for momentum indicators with trend confirmations
+            'rsi_signal': 10,       # Trend-confirmed RSI → Very high weight (most reliable momentum)
+            'macd_trade': 4,        # Crossovers lagged (pointed the wrong way in 1-year check) → Low weight
+            'fi_signal': 6,         # Streak + trend confirmed → Moderate weight (good reliability)
+            
+            # Volume & Volatility (Total: 7)
+            # Moderate weights - important but may generate fewer signals due to strictness
+            'signal_obv': 4,        # Threshold-based, might be too strict → Lower weight
+            'bb_signal': 3,         # RSI-filtered BB (pointed the wrong way in 1-year check) → Low weight
+            
+            # Support/Resistance (Total: 3)
+            # Lower weight - strict conditions may generate fewer signals
+            'fib_signal': 3         # Trend-confirmed Fibonacci (weak in 1-year check) → Low weight
+            }
+    
+    if signal_cols is None:
+        signal_cols = list(weights.keys())
+    
+    # Normalize weights to sum to 100
+    total_weight = sum(weights.values())
+    norm_weights = {k: v/total_weight for k,v in weights.items()}
+    
+    # Compute weighted score
+    df[final_col] = 0.0
+    
+    for col in signal_cols:
+        if col not in df.columns:
+            continue
+            
+        signal_value = df[col].fillna(0)
+        weight = norm_weights[col] * 100
+        df[final_col] += signal_value * weight
+    
+    return df
+
+
 # ----------------------------------------------------------------------------- signals
 def build_technical(bars, symbols=None):
     """Current technical rules recomputed from raw bars, point-in-time. Returns long df."""
     symbols = symbols or TRADABLE
     b = bars[bars["Symbol"].isin(symbols)]
-    df = pd.concat([saf.calculate_technical_indicators(g.reset_index(drop=True)) for _, g in b.groupby("Symbol")],
+    df = pd.concat([calculate_technical_indicators(g.reset_index(drop=True)) for _, g in b.groupby("Symbol")],
                    ignore_index=True)
     df["bar_n"] = df.groupby("Symbol").cumcount() + 1
-    df = saf.generate_strict_signals(df)
-    df = saf.apply_by_symbol(df, saf.rsi_signals)
-    df = saf.apply_by_symbol(df, saf.fi_signals_strict)
-    df = saf.bollinger_signal_middle(df)
-    df = saf.apply_by_symbol(df, saf.macd_signals)
-    df = saf.fibonacci_signals(df)
-    df = saf.weighted_signal(df).reset_index(drop=True)
+    df = generate_strict_signals(df)
+    df = apply_by_symbol(df, rsi_signals)
+    df = apply_by_symbol(df, fi_signals_strict)
+    df = bollinger_signal_middle(df)
+    df = apply_by_symbol(df, macd_signals)
+    df = fibonacci_signals(df)
+    df = weighted_signal(df).reset_index(drop=True)
     df["Technical_Score"] = pd.to_numeric(df["combined_signal"], errors="coerce").fillna(0.0)
     df["eligible"] = df["bar_n"] >= MIN_BARS
     return df.sort_values(["Symbol", "Date"]).reset_index(drop=True)
@@ -337,17 +757,6 @@ def relative_strength(close_w, symbols=None, vol_adjust=False, benchmark=None):
     return rs_score, sector_rs63
 
 
-def momentum_score(close_w, symbols, sector_neutral=False, lookback=252, skip=21):
-    """12-1 month momentum (return from t-252 to t-21), optionally minus the sector ETF's, as a
-    cross-sectional -100..100 score."""
-    mom = close_w.shift(skip) / close_w.shift(lookback) - 1
-    m = mom[symbols]
-    if sector_neutral:
-        etf = {s: sector_mapping.sector_etf_for(s) for s in symbols}
-        m = m - pd.DataFrame({s: mom[etf[s]] if etf[s] in mom else mom["SPY"] for s in symbols})
-    return (m.rank(axis=1, pct=True) * 2 - 1) * 100
-
-
 def regime_series(close_w, symbol=REGIME_SYMBOL, ma=REGIME_MA):
     """Market filter: True while the regime symbol (QQQ) closes above its moving average."""
     c = close_w[symbol]
@@ -363,53 +772,31 @@ def load_earnings(path=None):
     return e.dropna(subset=["Earnings Date"])
 
 
-def _calendar(dates, extra=10):
-    """The trading dates plus the next `extra` NYSE sessions (so events just after the data end are placed)."""
-    dates = pd.DatetimeIndex(dates)
-    return dates.append(next_sessions(dates[-1], extra))
-
-
-def earnings_matrices(dates, symbols, earnings):
-    """Returns (block, reaction, is_earn) boolean DataFrames on `dates` x `symbols`.
-
-    reaction[R, s]: first trading session that can react to the report (AM on E -> E, PM on E -> next session).
-    block[d, s]: decision on close d must be FLAT, because the position filled at open d+1 would be held
-                 through the reaction gap (close R-1 -> open R), i.e. d == R-2 in trading days.
-    is_earn[E, s]: earnings date itself (display flag).
-    """
-    cal = _calendar(dates)
-    idx = {s: i for i, s in enumerate(symbols)}
-    T, N = len(dates), len(symbols)
-    block = np.zeros((T, N), bool)
-    reaction = np.zeros((T, N), bool)
-    is_earn = np.zeros((T, N), bool)
-    for sym, day, tm in earnings[["Symbol", "Earnings Date", "Time"]].itertuples(index=False):
-        if sym not in idx:
+def earnings_days_ahead(dates, symbols, earnings, block_days):
+    """Days from each decision date d to the stock's next earnings date E when d < E <= d + block_days (calendar days);
+    NaN when there is none in that window or no date on file. `earnings` = load_earnings() frame."""
+    d = pd.DatetimeIndex(dates).normalize().values
+    out = np.full((len(d), len(symbols)), np.nan)
+    by_symbol = {s: np.sort(g.dropna().unique()) for s, g in earnings.groupby("Symbol")["Earnings Date"]}
+    for j, sym in enumerate(symbols):
+        e = by_symbol.get(sym)
+        if e is None or not len(e):
             continue
-        j = idx[sym]
-        k = cal.searchsorted(day)              # first session >= earnings date
-        if k >= len(cal):
-            continue
-        same_day = cal[k] == day
-        if tm == "AM":
-            r_idx = [k]
-        elif tm == "PM":
-            r_idx = [k + 1 if same_day else k]
-        else:                                  # unknown timing -> be conservative, block both
-            r_idx = [k, k + 1]
-        if same_day and k < T:
-            is_earn[k, j] = True
-        for r in r_idx:
-            if r < T:
-                reaction[r, j] = True
-            if 0 <= r - 2 < T:
-                block[r - 2, j] = True
-    mk = lambda a: pd.DataFrame(a, index=dates, columns=symbols)
-    return mk(block), mk(reaction), mk(is_earn)
+        k = np.searchsorted(e, d, side="right")                     # first earnings date strictly after d
+        nxt = e[np.minimum(k, len(e) - 1)]
+        days = (nxt - d) / np.timedelta64(1, "D")
+        out[:, j] = np.where((k < len(e)) & (days <= block_days), days, np.nan)
+    return pd.DataFrame(out, index=dates, columns=symbols)
+
+
+def earnings_note(days, d):
+    """'earnings in 3 days (Wed Sep 30)' for a decision on date d."""
+    days = int(days)
+    return f"earnings in {days} day{'' if days == 1 else 's'} ({pd.Timestamp(d) + pd.Timedelta(days=days):%a %b %d})"
 
 
 # ----------------------------------------------------------------------------- simulator
-def simulate(open_w, close_w, target, start, end=None, rebalance=None, cost=COST, dd_brake=None, vol_target=None):
+def simulate(open_w, close_w, target, start, end=None, rebalance=None, cost=COST):
     """Share-based daily simulation.
 
     target: weights decided at the close of each date (row d executes at the open of d+1).
@@ -417,10 +804,6 @@ def simulate(open_w, close_w, target, start, end=None, rebalance=None, cost=COST
                positions (0 -> w, sized at w * equity) or close positions (w -> 0), no resizing.
     Accounting starts flat with equity 1.0 just before the open of `start`; the order from the
     previous session's decision (close before `start`) is filled at `start`'s open.
-    dd_brake: optional (threshold, scale) - while the strategy's own drawdown at the previous close is
-              worse than -threshold, target weights are multiplied by `scale` (drawdown awareness).
-    vol_target: optional (annual_vol, lookback) - weights are scaled by min(1, annual_vol / realized
-              vol of the strategy's last `lookback` daily returns) (needs lookback days of history).
     """
     dates = open_w.index
     s0 = dates.searchsorted(pd.Timestamp(start))
@@ -443,15 +826,6 @@ def simulate(open_w, close_w, target, start, end=None, rebalance=None, cost=COST
         px_open = np.where(np.isnan(o), C[t - 1] if t > 0 else np.nan, o)
         V = cash + np.nansum(shares * np.nan_to_num(px_open))
         w = W[t - 1] if t > 0 else np.zeros(N)
-        if dd_brake is not None and eq:
-            peak_eq = max(1.0, max(eq))
-            if eq[-1] / peak_eq - 1 < -dd_brake[0]:
-                w = w * dd_brake[1]
-        if vol_target is not None and len(eq) > vol_target[1]:
-            rets = np.diff(np.asarray(eq[-(vol_target[1] + 1):])) / np.asarray(eq[-(vol_target[1] + 1):-1])
-            realized = rets.std() * np.sqrt(252)
-            if realized > 0:
-                w = w * min(1.0, vol_target[0] / realized)
         tradable = ~np.isnan(o)
         if reb[t - 1] if t > 0 else False:
             desired = np.where(tradable, w * V / np.where(tradable, o, 1.0), shares)
@@ -538,64 +912,7 @@ def metrics(res, name=None):
     return out
 
 
-# ----------------------------------------------------------------------------- strategy builders
-def threshold_states(score_w, eligible_w, close_w, atr_w, buy=BUY_CUTOFF, sell=SELL_CUTOFF,
-                     regime=None, atr_k=None):
-    """Per-stock state machine evaluated at each close (1 = want to hold).
-
-    Enter when score > buy (and eligible, and regime on if given, and - after a stop-out - only on a
-    fresh BUY, i.e. the score must first fall back to <= buy). Exit when score < sell or, if atr_k is
-    set, when close < highest close since entry - atr_k * ATR(14).
-    """
-    S = score_w.to_numpy(float)
-    E = eligible_w.reindex_like(score_w).astype("boolean").fillna(False).to_numpy(bool)
-    Cl = close_w.reindex_like(score_w).to_numpy(float)
-    A = atr_w.reindex_like(score_w).to_numpy(float)
-    R = (regime.reindex(score_w.index).astype("boolean").fillna(False).to_numpy(bool) if regime is not None
-         else np.ones(len(score_w), bool))
-    T, N = S.shape
-    state = np.zeros(N, bool)
-    fresh_ok = np.ones(N, bool)
-    peak = np.full(N, np.nan)
-    out = np.zeros((T, N))
-    for t in range(T):
-        s = S[t]
-        valid = E[t] & ~np.isnan(s) & ~np.isnan(Cl[t])
-        fresh_ok |= (s <= buy)
-        exit_sig = state & (s < sell)
-        if atr_k is not None:
-            peak = np.where(state, np.fmax(peak, Cl[t]), np.nan)
-            stop = state & (Cl[t] < peak - atr_k * A[t])
-            fresh_ok[stop] = False
-            exit_sig |= stop
-        state = state & ~exit_sig
-        enter = ~state & valid & (s > buy) & R[t] & fresh_ok
-        state = state | enter
-        if atr_k is not None:
-            peak = np.where(enter, Cl[t], peak)
-        out[t] = state
-    return pd.DataFrame(out, index=score_w.index, columns=score_w.columns)
-
-
-def cap_positions(states, score_w, k):
-    """Hold at most k names: keep current holdings while wanted, fill free slots by highest score."""
-    St = states.to_numpy(bool)
-    S = score_w.reindex_like(states).to_numpy(float)
-    T, N = St.shape
-    held = np.zeros(N, bool)
-    out = np.zeros((T, N))
-    for t in range(T):
-        held &= St[t]
-        free = k - held.sum()
-        if free > 0:
-            cand = np.where(St[t] & ~held)[0]
-            if len(cand):
-                cand = cand[np.argsort(-np.nan_to_num(S[t, cand], nan=-1e9))][:free]
-                held[cand] = True
-        out[t] = held
-    return pd.DataFrame(out, index=states.index, columns=states.columns)
-
-
+# ----------------------------------------------------------------------------- ranking and selection
 def _name_positions(cols):
     """Alphabetical position of each column name (final, deterministic tie-break)."""
     pos = np.empty(len(cols), int)
@@ -633,7 +950,7 @@ def deterministic_rank(score_w, eligible_w=None, tiebreak_w=None):
 
 def rank_targets(score_w, eligible_w, vol_w, n=10, regime=None, rebalance_days=None, min_score=0.0,
                  sector_cap=0.4, vol_sizing=True, buffer_rank=None, regime_scale=None, decision_log=None,
-                 tiebreak_w=None, max_pick_rank=None, cap_soft=False):
+                 tiebreak_w=None, max_pick_rank=None, cap_soft=False, buy_block=None, held_w=None, start_holdings=None):
     """Weekly top-N by score with sector cap and inverse-volatility weights.
 
     On rebalance days: candidates = eligible & score > min_score, best first, at most floor(sector_cap*n)
@@ -649,6 +966,9 @@ def rank_targets(score_w, eligible_w, vol_w, n=10, regime=None, rebalance_days=N
                 Scores are compared at 6 decimals so float noise never decides the order (see ranking_order).
     max_pick_rank: only names ranked 1..max_pick_rank may be picked (T20: 20); fewer than n candidates -> the rest is cash.
     cap_soft: after the capped walk, fill any free slots from the unused candidates in rank order ignoring the sector cap.
+    buy_block: optional frame of days until earnings (earnings_days_ahead; NaN = no block): such a stock is not bought unless
+               already held; its slot goes to the next candidate. held_w: holdings that count as "already held" (default:
+               this function's own carried holdings). start_holdings: holdings before the first date (default: none).
     """
     dates, cols = score_w.index, list(score_w.columns)
     S = score_w.to_numpy(float)
@@ -660,10 +980,16 @@ def rank_targets(score_w, eligible_w, vol_w, n=10, regime=None, rebalance_days=N
     reb = rebalance_days.reindex(dates).astype("boolean").fillna(False).to_numpy(bool)
     sectors = np.array([sector_mapping.symbol_sector.get(c, "Other") for c in cols])
     max_per_sector = max(1, int(np.floor(sector_cap * n)))
+    BB = buy_block.reindex(index=dates, columns=cols).to_numpy(float) if buy_block is not None else None
+    H = held_w.reindex(index=dates, columns=cols).fillna(0.0).to_numpy(float) if held_w is not None else None
     out = np.zeros((len(dates), len(cols)))
-    current = np.zeros(len(cols))
+    current = np.zeros(len(cols)) if start_holdings is None else np.asarray(start_holdings, float).copy()
     for t in range(len(dates)):
         if reb[t]:
+            blocked = set()
+            if BB is not None:                 # earnings rule: not held and earnings within the window -> not bought
+                held_now = H[t] > 0 if H is not None else current > 0
+                blocked = set(np.where(~np.isnan(BB[t]) & ~held_now)[0])
             base_ok = E[t] & ~np.isnan(S[t]) & ~np.isnan(Vv[t]) & (Vv[t] > 0)
             ok = base_ok & (S[t] > min_score)
             soft = regime_scale is not None
@@ -685,6 +1011,9 @@ def rank_targets(score_w, eligible_w, vol_w, n=10, regime=None, rebalance_days=N
                     break
                 if j in reason:
                     continue
+                if j in blocked:
+                    reason[j] = f"{earnings_note(BB[t, j], dates[t])}: not bought"
+                    continue
                 if per_sector.get(sectors[j], 0) >= max_per_sector:
                     reason[j] = f"skipped: sector cap ({sectors[j]} already {max_per_sector})"
                     continue
@@ -695,7 +1024,7 @@ def rank_targets(score_w, eligible_w, vol_w, n=10, regime=None, rebalance_days=N
                 for j in cands:
                     if len(picked) >= n:
                         break
-                    if j in picked:
+                    if j in picked or j in blocked:
                         continue
                     picked.append(j)
                     per_sector[sectors[j]] = per_sector.get(sectors[j], 0) + 1
@@ -778,13 +1107,14 @@ def midweek_check_days(dates, days=("Mon", "Wed"), rebalance_days=None):
     return pd.Series(dates.isin(list(mapped)) & ~weekly, index=dates)
 
 
-def midweek_swap_pairs(cur, order, rank, sectors, enter_top=3, exit_below=15, cap=4):
+def midweek_swap_pairs(cur, order, rank, sectors, enter_top=3, exit_below=15, cap=4, skip=None):
     """The mid-week swap rule on one check day (used by apply_midweek_swaps and by holdings_alert for real positions).
 
     cur: weight array (modified in place: each entrant takes the sold holding's weight); order: qualifying column indices,
     best first; rank: {index: rank}; sectors: sector per column. While a held name ranks worse than exit_below (or has no
     rank) and a NOT-held name is in order[:enter_top], take the best entrant and the worst-ranked holding whose removal
-    leaves the entrant's sector below cap (ties among unranked holdings: column order). Returns [(entrant, sold, weight)].
+    leaves the entrant's sector below cap (ties among unranked holdings: column order). skip: top-N names that may not be
+    bought (earnings rule); they are passed over, not replaced by rank N+1. Returns [(entrant, sold, weight)].
     """
     swaps = []
     while True:
@@ -792,7 +1122,7 @@ def midweek_swap_pairs(cur, order, rank, sectors, enter_top=3, exit_below=15, ca
         weak = sorted([j for j in held if rank.get(j, 1e6) > exit_below], key=lambda j: -rank.get(j, 1e6))
         if not weak:
             break
-        entrants = [j for j in order[:enter_top] if cur[j] == 0]
+        entrants = [j for j in order[:enter_top] if cur[j] == 0 and not (skip and j in skip)]
         done = False
         for e in entrants:
             for h in weak:
@@ -823,7 +1153,7 @@ def midweek_exit_sells(cur, rank, exit_all_below):
 
 def apply_midweek_swaps(base, score_w, eligible_w, vol_w, rebalance_days, check_days, enter_top=3, exit_below=15,
                         sector_cap=0.4, n=10, min_score=0.0, tiebreak_w=None, decision_log=None, check_log=None,
-                        exit_all_below=None, cap_soft=False):
+                        exit_all_below=None, cap_soft=False, buy_block=None, reselect=None):
     """Weekly targets (``base`` from rank_targets) + mid-week swaps on ``check_days``.
 
     On a check day: rank = position among qualifying names (eligible, score > min_score, valid vol), same order as
@@ -837,6 +1167,9 @@ def apply_midweek_swaps(base, score_w, eligible_w, vol_w, rebalance_days, check_
     its weight stays in cash until the next weekly rebalance (variant S3 of Reports/sell_rule_test.csv).
     cap_soft (T20): the sector cap is ignored at mid-week swaps - a non-held top-3 stock always replaces the worst-ranked
     holding below exit_below.
+    buy_block (earnings rule): days-until-earnings frame; a top-N candidate with earnings in the window is skipped.
+    reselect(t, held) -> (weights, log rows): redo the weekly selection with the REAL holdings (needed when the earnings
+    rule is on, because "already held" then matters); its rows replace rank_targets' rows for that date.
     decision_log: rows (like rank_targets) for check days WITH a swap or exit (hold / add / drop).
     check_log: one dict per check day and swap (Action 'SWAP') and per exit (Action 'SELL'), or one 'NO SWAP' row with a Note.
     """
@@ -851,14 +1184,19 @@ def apply_midweek_swaps(base, score_w, eligible_w, vol_w, rebalance_days, check_
     name_pos = _name_positions(cols)
     sectors = np.array([sector_mapping.symbol_sector.get(c, "Other") for c in cols])
     cap = 10 ** 6 if cap_soft else max(1, int(np.floor(sector_cap * n)))
+    BB = buy_block.reindex(index=dates, columns=cols).to_numpy(float) if buy_block is not None else None
     out = np.zeros_like(B)
     cur = np.zeros(len(cols))
+    replaced = {}                                 # date -> re-selected weekly log rows (earnings rule)
     by_date = {}
     if decision_log is not None:                  # weekly rows written by rank_targets, to re-base them on the swapped holdings
         for k, row in enumerate(decision_log):
             by_date.setdefault(row["Date"], []).append(k)
     for t in range(len(dates)):
-        if reb[t]:
+        if reb[t] and reselect is not None:
+            cur, rows = reselect(t, cur.copy())
+            replaced[dates[t]] = rows
+        elif reb[t]:
             if decision_log is not None and t > 0 and not np.array_equal(cur, B[t - 1]):
                 _rebase_weekly_log(decision_log, dates[t], by_date.get(dates[t], []), cur, B[t], cols, sectors, S[t], E[t], Vv[t],
                                    None if TB is None else TB[t], name_pos, min_score, n)
@@ -868,7 +1206,8 @@ def apply_midweek_swaps(base, score_w, eligible_w, vol_w, rebalance_days, check_
             order = ranking_order(np.where(ok)[0], S[t], None if TB is None else TB[t], name_pos)
             rank = {j: r + 1 for r, j in enumerate(order)}
             before = cur.copy()
-            swaps = midweek_swap_pairs(cur, order, rank, sectors, enter_top, exit_below, cap)
+            skip = {j for j in order[:enter_top] if cur[j] == 0 and not np.isnan(BB[t, j])} if BB is not None else set()
+            swaps = midweek_swap_pairs(cur, order, rank, sectors, enter_top, exit_below, cap, skip=skip)
             exits = midweek_exit_sells(cur, rank, exit_all_below)
             if check_log is not None:
                 if swaps or exits:
@@ -884,9 +1223,10 @@ def apply_midweek_swaps(base, score_w, eligible_w, vol_w, rebalance_days, check_
                 else:
                     held = np.where(before > 0)[0]
                     worst = max((rank.get(j, 1e6) for j in held), default=np.nan)
-                    entrants = [cols[j] for j in order[:enter_top] if before[j] == 0]
+                    entrants = [cols[j] for j in order[:enter_top] if before[j] == 0 and j not in skip]
                     if not entrants:
-                        note = f"all top-{enter_top} stocks are already held"
+                        note = (f"no new top-{enter_top} stock can be bought" if skip
+                                else f"all top-{enter_top} stocks are already held")
                     elif worst <= exit_below:
                         note = (f"no held stock is below rank {exit_below} (worst held rank {int(worst)}; "
                                 f"new top-{enter_top}: {', '.join(entrants)})")
@@ -896,6 +1236,9 @@ def apply_midweek_swaps(base, score_w, eligible_w, vol_w, rebalance_days, check_
                         ent_txt = ", ".join(f"{cols[j]} rank {rank[j]} {sectors[j]}" for j in order[:enter_top] if before[j] == 0)
                         note = (f"max {cap} per sector blocks it: new top-{enter_top} {ent_txt} - that sector already has {cap} "
                                 f"holdings and the weak holdings below rank {exit_below} ({weak_txt}) are in other sectors")
+                    if skip:
+                        note += "; " + ", ".join(f"{cols[j]} (rank {rank[j]}) not bought: {earnings_note(BB[t, j], dates[t])}"
+                                                 for j in order[:enter_top] if j in skip)
                     if exit_all_below:
                         note += f"; no holding is worse than rank {exit_all_below}"
                     check_log.append({"Date": dates[t], "Action": "NO SWAP", "Sell": "", "Sell_Rank": np.nan,
@@ -927,6 +1270,18 @@ def apply_midweek_swaps(base, score_w, eligible_w, vol_w, rebalance_days, check_
                                          "Rank": r, "Score": S[t, j], "Sector": sectors[j],
                                          "Old_Weight": before[j], "New_Weight": cur[j]})
         out[t] = cur
+    if replaced and decision_log is not None:     # swap in the re-selected weekly rows, keeping the log's order
+        new_log, done = [], set()                 # (rebalance days never have mid-week rows)
+        for row in decision_log:
+            d = row["Date"]
+            if d in replaced:
+                if d not in done:
+                    new_log.extend(replaced[d])
+                    done.add(d)
+                continue
+            new_log.append(row)
+        new_log += [r for d, rows in replaced.items() if d not in done for r in rows]
+        decision_log[:] = new_log
     return pd.DataFrame(out, index=dates, columns=cols)
 
 
@@ -968,27 +1323,45 @@ def _rebase_weekly_log(decision_log, date, idx, held_before, new, cols, sectors,
 
 
 def winner_targets(score_w, eligible_w, vol_w, regime, rebalance_days, tiebreak_w=None, decision_log=None,
-                   check_log=None, midweek=None, exit_all_below="winner", selection=None):
+                   check_log=None, midweek=None, exit_all_below="winner", selection=None, earnings_block_days="winner",
+                   earnings=None):
     """Live WINNER targets: weekly rank_targets + (if WINNER['midweek_swap']) mid-week swaps + (if
     WINNER['midweek_exit_below']) mid-week exits to cash.
 
     Returns (targets, check_days). check_days is all-False when the mid-week swap is off. ``midweek`` overrides
     WINNER['midweek_swap'] (pass False to force plain weekly); ``exit_all_below`` overrides WINNER['midweek_exit_below']
-    (None = no mid-week exit); ``selection`` = dict(max_pick_rank=..., cap_soft=...) overrides the T20 keys."""
+    (None = no mid-week exit); ``selection`` = dict(max_pick_rank=..., cap_soft=...) overrides the T20 keys;
+    ``earnings_block_days`` overrides WINNER['earnings_block_days'] (None = no earnings rule); ``earnings`` = earnings dates
+    (default: load_earnings(), i.e. Reports/earnings_date.csv)."""
     mw = WINNER.get("midweek_swap") if midweek is None else midweek
     if exit_all_below == "winner":
         exit_all_below = WINNER.get("midweek_exit_below")
+    if earnings_block_days == "winner":
+        earnings_block_days = WINNER.get("earnings_block_days")
     args = winner_rank_args(regime)
     args.update(selection or {})
+    block = None
+    if earnings_block_days:
+        block = earnings_days_ahead(score_w.index, list(score_w.columns),
+                                    load_earnings() if earnings is None else earnings, earnings_block_days)
     base = rank_targets(score_w, eligible_w, vol_w, rebalance_days=rebalance_days, decision_log=decision_log,
-                        tiebreak_w=tiebreak_w, **args)
+                        tiebreak_w=tiebreak_w, buy_block=block, **args)
     if not mw:
         return base, pd.Series(False, index=base.index)
+
+    def reselect(t, held):
+        """Friday selection with the REAL holdings (after mid-week changes): needed for the earnings rule."""
+        rows = [] if decision_log is not None else None
+        day = score_w.index[[t]]
+        one = rank_targets(score_w.iloc[[t]], eligible_w, vol_w, rebalance_days=pd.Series(True, index=day),
+                           decision_log=rows, tiebreak_w=tiebreak_w, buy_block=block.iloc[[t]], start_holdings=held, **args)
+        return one.iloc[0].to_numpy(float), rows or []
     checks = midweek_check_days(base.index, mw.get("days", ("Mon", "Wed")), rebalance_days)
     tgt = apply_midweek_swaps(base, score_w, eligible_w, vol_w, rebalance_days, checks, mw["enter_top"], mw["exit_below"],
                               WINNER["sector_cap"], WINNER["n"], WINNER["min_score"], tiebreak_w=tiebreak_w,
                               decision_log=decision_log, check_log=check_log, exit_all_below=exit_all_below,
-                              cap_soft=args["cap_soft"])
+                              cap_soft=args["cap_soft"], buy_block=block,
+                              reselect=reselect if block is not None else None)
     return tgt, checks
 
 
@@ -1010,74 +1383,6 @@ def next_decision(latest, days=None):
         if any(c.dayofweek in codes for c in pd.date_range(prev + pd.Timedelta(days=1), d, freq="D")):
             return d, "mid-week check", sess[i + 1]
     return sess[1], "full rebalance", sess[2]
-
-
-def monthly_rebalance_days(dates):
-    """Last trading day of each calendar month."""
-    d = pd.Series(dates, index=dates)
-    return d.groupby(d.dt.to_period("M").values).transform("max").eq(d)
-
-
-def pead_targets(reaction_w, close_w, open_w, threshold=0.05, hold=20, k=10, block=None):
-    """Post-earnings drift: if the reaction session return (close R / close R-1 - 1) >= threshold,
-    buy at the next open (decision at close R) and hold `hold` sessions; max k names, 1/k each."""
-    ret = close_w / close_w.shift(1) - 1
-    trig = (reaction_w.reindex_like(close_w).astype("boolean").fillna(False).astype(bool) & (ret >= threshold)).to_numpy(bool)
-    T, N = trig.shape
-    Bk = block.reindex_like(close_w).astype("boolean").fillna(False).to_numpy(bool) if block is not None else np.zeros((T, N), bool)
-    age = np.full(N, -1)
-    out = np.zeros((T, N))
-    R_ = ret.to_numpy(float)
-    for t in range(T):
-        held = age >= 0
-        age[held] += 1
-        age[(age >= hold) | (held & Bk[t])] = -1
-        free = k - (age >= 0).sum()
-        cand = np.where(trig[t] & (age < 0))[0]
-        if free > 0 and len(cand):
-            cand = cand[np.argsort(-R_[t, cand])][:free]
-            age[cand] = 0
-        out[t] = (age >= 0) / k
-    return pd.DataFrame(out, index=close_w.index, columns=close_w.columns)
-
-
-def buy_and_hold_target(close_w, symbols, start):
-    """Equal weight on the session before `start` (filled at start's open), never rebalanced."""
-    dates = close_w.index
-    d0 = dates[max(dates.searchsorted(pd.Timestamp(start)) - 1, 0)]
-    alive = [s for s in symbols if pd.notna(close_w.at[d0, s])]
-    t = pd.DataFrame(0.0, index=dates, columns=close_w.columns)
-    t.loc[d0:, alive] = 1.0 / len(alive)
-    return t, alive
-
-
-# ----------------------------------------------------------------------------- overlays
-def atr_stop_overlay(target, close_w, atr_w, rebalance_days, k=3.0):
-    """Exit a holding when close < highest close since entry - k*ATR; stay out until the next rebalance."""
-    cols = list(target.columns)
-    W = target.to_numpy(float).copy()
-    Cl = close_w.reindex(index=target.index, columns=cols).to_numpy(float)
-    A = atr_w.reindex(index=target.index, columns=cols).to_numpy(float)
-    reb = rebalance_days.reindex(target.index).astype("boolean").fillna(False).to_numpy(bool)
-    peak = np.full(len(cols), np.nan)
-    stopped = np.zeros(len(cols), bool)
-    for t in range(len(W)):
-        if reb[t]:
-            stopped[:] = False
-        held = (W[t] > 0) & ~stopped
-        peak = np.where(held, np.fmax(peak, Cl[t]), np.nan)
-        hit = held & (Cl[t] < peak - k * A[t])
-        stopped |= hit
-        W[t, stopped] = 0.0
-    return pd.DataFrame(W, index=target.index, columns=cols)
-
-
-def blend_with_core(target, core_symbol="QQQ", core_weight=0.5, columns=None):
-    """(1 - core_weight) x strategy + core_weight in a core ETF (e.g. 50% QQQ + 50% strategy)."""
-    cols = columns if columns is not None else list(target.columns) + [core_symbol]
-    out = target.reindex(columns=cols).fillna(0.0) * (1 - core_weight)
-    out[core_symbol] = out.get(core_symbol, 0.0) + core_weight
-    return out
 
 
 # ----------------------------------------------------------------------------- live helpers
@@ -1121,3 +1426,103 @@ def forward_tracking(target, open_w, close_w, first_decision, benchmarks=("QQQ",
         t[b] = 1.0
         out[b] = simulate(open_w, close_w, t, start)["equity"]
     return out.rename_axis("Date").reset_index()
+
+
+# ----------------------------------------------------------------------------- backtest of the live rules (backtest.ipynb)
+WALK_FORWARD_START = "2022-04-01"                              # first trading day of the backtest
+NEVER_SEEN_END = "2024-09-16"                                  # 2022-04 -> 2024-09 was never used to choose the rules
+
+
+def backtest_inputs(refresh=False):
+    """Prices, scores, eligibility, volatility, market filter and decision calendar for the live-rules backtest, from
+    Reports/cache/bars_daily_long.pkl (refresh=True downloads the bars again: Alpaca market data, no quota; the pinned test
+    numbers in tests/ assume the cached bars). Same set-up as tests/backtest_setup.py."""
+    bars, _ = load_bars(refresh=refresh, cache_name=LONG_CACHE, start=LONG_START)
+    U = TRADABLE
+    tech = build_technical(bars, symbols=U)
+    close, opn = wide(bars, "Close"), wide(bars, "Open")
+    idx = close.index
+    tech_score = wide(tech, "Technical_Score").reindex(index=idx, columns=U)
+    rs, _ = relative_strength(close, U)
+    return {"close": close, "open": opn, "score": 0.5 * tech_score + 0.5 * rs, "tiebreak": rs,
+            "eligible": bool_wide(tech, "eligible", idx, U),
+            "vol": close[U].pct_change(fill_method=None).rolling(63).std(),
+            "regime": regime_series(close, "QQQ"), "weekly": weekly_rebalance_days(idx, live=True)}
+
+
+def run_rules(inp, start=WALK_FORWARD_START, **overrides):
+    """Backtest WINNER (optionally with some keys changed, e.g. run_rules(inp, midweek_exit_below=None)) from `start`.
+    Returns {"res": simulate() output, "targets", "checks": mid-week check log, "decisions": decision log}."""
+    saved = dict(WINNER)
+    try:
+        WINNER.update(overrides)
+        checks, decisions = [], []
+        tgt, _ = winner_targets(inp["score"], inp["eligible"], inp["vol"], inp["regime"], inp["weekly"],
+                                tiebreak_w=inp["tiebreak"], check_log=checks, decision_log=decisions)
+    finally:
+        WINNER.clear()
+        WINNER.update(saved)
+    full = tgt.reindex(index=inp["close"].index, columns=inp["close"].columns).fillna(0.0)
+    res = simulate(inp["open"], inp["close"], full, start, rebalance=inp["weekly"], cost=COST)
+    return {"res": res, "targets": tgt, "checks": pd.DataFrame(checks), "decisions": pd.DataFrame(decisions)}
+
+
+
+def buy_and_hold(inp, symbol, start=WALK_FORWARD_START):
+    """simulate() result of holding 100% of one symbol (e.g. QQQ) from `start`."""
+    t = pd.DataFrame(0.0, index=inp["close"].index, columns=inp["close"].columns)
+    t[symbol] = 1.0
+    return simulate(inp["open"], inp["close"], t, start)
+
+
+def curve_metrics(eq):
+    """Total %, CAGR %, Sharpe and max DD % of one equity curve."""
+    m = metrics({"equity": eq, "exposure": eq * 0 + 1, "turnover": eq * 0, "trades": pd.DataFrame({"Return": []}),
+                 "open_positions": pd.DataFrame()})
+    return {k: m[k] for k in ("Total Return %", "CAGR %", "Sharpe", "Max DD %")}
+
+
+def period_rows(name, eq):
+    """One row per standard period: the whole walk-forward, the never-seen 2022-04 -> 2024-09 part, and the last 2 years /
+    last 1 year (close-to-close, e.g. close 2025-09-24 -> close 2026-09-24)."""
+    rows, last = [], eq.index[-1]
+
+    def add(period, seg):
+        rows.append({"Strategy": name, "Period": period, "Start": seg.index[0].date(), "End": seg.index[-1].date(),
+                     **curve_metrics(seg)})
+    add("Walk-forward", eq)
+    add("Never-seen 2022-04 → 2024-09", eq.loc[:NEVER_SEEN_END])
+    for years in (2, 1):
+        start_close = eq.index[eq.index <= last - pd.DateOffset(years=years)][-1]
+        add(f"Last {years} year" + ("s" if years > 1 else ""), eq.loc[start_close:] / eq.loc[start_close])
+    return rows
+
+
+def trade_stats(res, dates):
+    """Trades (incl. open), win rate, median trade and median hold of one simulation (medians, not averages)."""
+    tr = res["trades"]
+    hold = dates.searchsorted(tr["Exit"]) - dates.searchsorted(tr["Entry"]) if len(tr) else np.array([])
+    return {"Trades": len(tr) + len(res["open_positions"]),
+            "Win rate %": (tr["Return"] > 0).mean() * 100 if len(tr) else np.nan,
+            "Median trade %": tr["Return"].median() * 100 if len(tr) else np.nan,
+            "Median hold (sessions)": float(np.median(hold)) if len(hold) else np.nan}
+
+
+def per_stock_table(run, inp, start=WALK_FORWARD_START):
+    """Per stock over the backtest: closed trades, win rate, median trade %, median hold, share of sessions held, and the
+    stock's own buy & hold return from the first open on/after `start` (for comparison)."""
+    tr, dates = run["res"]["trades"], inp["close"].index
+    held = run["targets"].loc[start:] > 0
+    rows = []
+    for sym in TRADABLE:
+        t = tr[tr["Symbol"] == sym]
+        first = inp["open"][sym].loc[start:].first_valid_index()
+        last_close = inp["close"][sym].dropna()
+        bh = (last_close.iloc[-1] / inp["open"].at[first, sym] - 1) * 100 if first is not None else np.nan
+        stats = trade_stats({"trades": t, "open_positions": pd.DataFrame()}, dates)
+        rows.append({"Symbol": sym, "Sector": sector_mapping.symbol_sector.get(sym, "Other"),
+                     "Closed trades": len(t), "Win rate %": stats["Win rate %"], "Median trade %": stats["Median trade %"],
+                     "Median hold (sessions)": stats["Median hold (sessions)"],
+                     "Held % of sessions": held[sym].mean() * 100 if sym in held else 0.0,
+                     "Buy & hold %": bh, "First bar": first.date() if first is not None else None})
+    return pd.DataFrame(rows)

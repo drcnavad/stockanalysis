@@ -17,12 +17,14 @@ sells are sent before buys as DAY market orders (whole shares). Live trading is 
 Targets come from Reports/strategy_picks.csv (written by main_signal_analysis.ipynb):
   - `current`     = Strategy_Weight (portfolio decided at the last weekly rebalance)
   - `provisional` = Provisional_Weight (what the rules would pick at the latest close)
-  - `midweek`     = the decisions of the latest Mon/Wed mid-week check (Reports/strategy_midweek_check.csv, rules C6-U96-MW30):
+  - `midweek`     = the decisions of the latest Mon/Wed mid-week check (Reports/strategy_midweek_check.csv, live rules):
                     swap = SELL all shares of the stock that fell below rank 15 and BUY the new top-3 stock with the same dollars
                     (without --positions the dollars = the old stock's target weight x account size); exit = SELL all shares of
                     a stock ranked worse than 30, SELL-ONLY (the cash stays idle until the Friday rebalance). Nothing else is traded.
   - `auto` (default) = provisional on a rebalance day (the decision day itself); midweek when the latest bar is a Mon/Wed
                     check that produced a swap or an exit; otherwise current.
+Earnings rule (backtest_engine.WINNER["earnings_block_days"] = 5): the targets already leave out stocks that were not held and
+have earnings within 5 calendar days of the decision, so this script needs no earnings check of its own.
 """
 import argparse
 import math
@@ -192,13 +194,23 @@ def read_positions_csv(path):
     return dict(zip(pos["symbol"].astype(str).str.upper().str.strip(), pd.to_numeric(pos[qty], errors="coerce").fillna(0)))
 
 
+def paper_trading_client():
+    """Alpaca TradingClient for the PAPER environment only (keys: see alpaca_paper.paper_keys; never a live account)."""
+    from alpaca.trading.client import TradingClient
+
+    from alpaca_paper import paper_keys
+    key, secret, _ = paper_keys()
+    if not key or not secret:
+        raise SystemExit("No Alpaca PAPER keys in .env (ALPACA_PAPER_KEY_ID / ALPACA_PAPER_SECRET_KEY).")
+    return TradingClient(key, secret, paper=True)
+
+
 def submit_paper(orders):
     """Send the BUY/SELL rows as DAY market orders to the Alpaca PAPER account (sells first)."""
     from alpaca.trading.enums import OrderSide, TimeInForce
     from alpaca.trading.requests import MarketOrderRequest
 
-    from alpaca_setup import get_trading_client
-    client = get_trading_client(paper=True)
+    client = paper_trading_client()
     results = []
     for r in orders[orders["Side"].isin(["SELL", "BUY"])].itertuples():
         req = MarketOrderRequest(symbol=r.Symbol, qty=r.Shares, time_in_force=TimeInForce.DAY,
@@ -209,6 +221,17 @@ def submit_paper(orders):
         except Exception as e:  # keep going; report every failure
             results.append((r.Symbol, r.Side, r.Shares, f"FAILED: {e}"))
     return pd.DataFrame(results, columns=["Symbol", "Side", "Shares", "Status"])
+
+
+def earnings_rule_note():
+    """One line on the earnings rule for the printout ('' when it is off or the engine is not importable)."""
+    try:
+        from backtest_engine import WINNER
+    except Exception:
+        return ""
+    n = WINNER.get("earnings_block_days")
+    return (f"Earnings rule: stocks not held with earnings within {n} days are not bought (already applied to the targets; "
+            "see Reports/strategy_changes.csv).") if n else ""
 
 
 def main(argv=None):
@@ -235,10 +258,10 @@ def main(argv=None):
     positions = read_positions_csv(a.positions) if a.positions else {}
     account_size = a.account_size
     if a.submit:
-        client_positions = __import__("alpaca_setup").get_trading_client(paper=True).get_all_positions()
-        positions = {pos.symbol: float(pos.qty) for pos in client_positions}
+        client = paper_trading_client()
+        positions = {pos.symbol: float(pos.qty) for pos in client.get_all_positions()}
         if account_size is None:
-            account_size = __import__("alpaca_setup").get_account_summary(paper=True)["equity"]
+            account_size = float(client.get_account().equity)
     account_size = account_size or 100_000.0
 
     orders, meta, targets = plan_orders(a.target, account_size, positions, min_value=a.min_value, fractional=a.fractional)
@@ -249,6 +272,7 @@ def main(argv=None):
             print(("MID-WEEK EXIT: " if act == "SELL" else "MID-WEEK SWAP: ") + m)
         if not positions and (meta["swaps"]["Action"] == "SWAP").any():
             print("(no --positions given: the buy is sized at the sold stock's target weight x account size)")
+    print(earnings_rule_note())
     print(f"Account size ${account_size:,.2f}; prices = latest close (actual fills will differ)\n")
     print(orders.to_string(index=False))
     buys, sells = orders.loc[orders.Side == "BUY", "Est_Value"].sum(), orders.loc[orders.Side == "SELL", "Est_Value"].sum()

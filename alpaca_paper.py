@@ -37,6 +37,9 @@ HISTORY_CSV = os.path.join(REPORTS, "paper_account_history.csv")
 
 PAPER_BASE_URL = "https://paper-api.alpaca.markets/v2"       # the ONLY accepted endpoint
 KEY_ENV, SECRET_ENV = "ALPACA_PAPER_KEY_ID", "ALPACA_PAPER_SECRET_KEY"
+# Also accepted, in this order, if the names above are empty: Alpaca's standard names, then the market-data names
+# ALPACA_API_KEY / ALPACA_SECRET_KEY - but only if that key ID is a PAPER key (paper key IDs start with "PK").
+FALLBACK_NAMES = [("APCA_API_KEY_ID", "APCA_API_SECRET_KEY"), ("ALPACA_API_KEY", "ALPACA_SECRET_KEY")]
 ALLOWED_PATHS = ("/account", "/positions", "/orders")          # read-only endpoints
 _LOCAL_TEST_URL = re.compile(r"http://(127\.0\.0\.1|localhost):\d{2,5}/v2")   # tests only (mock server on this machine)
 CT = ZoneInfo("America/Chicago")
@@ -56,17 +59,31 @@ def check_base_url(url, allow_local_test=False):
     raise PaperAccountError(f"refused base URL {url!r}: only {PAPER_BASE_URL} (Alpaca PAPER) is allowed")
 
 
+def paper_keys():
+    """(key_id, secret, source names) of the Alpaca PAPER keys from .env; ("", "", note) if none. Values are never printed."""
+    load_dotenv(os.path.join(ROOT, ".env"))
+    for key_name, secret_name in [(KEY_ENV, SECRET_ENV)] + FALLBACK_NAMES:
+        key, secret = os.getenv(key_name, "").strip(), os.getenv(secret_name, "").strip()
+        if key and secret and (key_name == KEY_ENV or key.startswith("PK")):
+            return key, secret, f"{key_name} / {secret_name}"
+    other = os.getenv("ALPACA_API_KEY", "").strip()
+    why = " (ALPACA_API_KEY is not a paper key, not used)" if other and not other.startswith("PK") else ""
+    return "", "", f"{KEY_ENV} / {SECRET_ENV} are missing or empty in .env{why}"
+
+
 class PaperAccount:
     """Read-only client for the Alpaca PAPER trading API."""
 
     def __init__(self, key_id=None, secret_key=None, base_url=PAPER_BASE_URL, timeout=15, _allow_local_test=False):
         self.base_url = check_base_url(base_url, allow_local_test=_allow_local_test)
+        note = "keys passed in"
         if key_id is None or secret_key is None:
-            load_dotenv(os.path.join(ROOT, ".env"))
-            key_id = key_id if key_id is not None else os.getenv(KEY_ENV, "")
-            secret_key = secret_key if secret_key is not None else os.getenv(SECRET_ENV, "")
+            env_key, env_secret, note = paper_keys()
+            key_id = key_id if key_id is not None else env_key
+            secret_key = secret_key if secret_key is not None else env_secret
         if not key_id or not secret_key:
-            raise PaperAccountError(f"{KEY_ENV} / {SECRET_ENV} are missing or empty in .env")
+            raise PaperAccountError(note if "missing" in note else f"{KEY_ENV} / {SECRET_ENV} are missing or empty in .env")
+        self.key_source = note
         self._headers = {"APCA-API-KEY-ID": key_id, "APCA-API-SECRET-KEY": secret_key, "Accept": "application/json"}
         self.timeout = timeout
 

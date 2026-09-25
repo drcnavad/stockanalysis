@@ -1,4 +1,4 @@
-"""Holdings alert for the live rules C6-U96-T20-MW30 (presentation only - the strategy logic lives in backtest_engine).
+"""Holdings alert for the live rules C6-U96-T20-MW30-E5 (presentation only - the strategy logic lives in backtest_engine).
 
 Reads the pipeline outputs (Reports/signal_analysis.csv, Reports/strategy_midweek_check.csv) and, if present, the user's real
 holdings in my_positions.csv (project root; same format as `paper_trade.py --positions`: Symbol,Shares - Shares optional,
@@ -12,8 +12,10 @@ Tickers link to the app (http://localhost:8501/?symbol=XXX). The swap rule is ba
 function the strategy uses: top 3 in, below rank 15 out, weight inheritance; max 4 per sector unless WINNER['cap_soft'] (T20,
 live: a top-3 stock always qualifies)), followed by the mid-week exit
 backtest_engine.midweek_exit_sells (WINNER["midweek_exit_below"] = 30: any holding worse than rank 30 is sold, cash until the
-Friday rebalance; None = off). Stocks outside the 96-stock universe count as not ranked (below rank 15 and worse than 30).
-No network calls.
+Friday rebalance; None = off). Earnings rule (WINNER["earnings_block_days"] = 5): a stock that is not held is not bought
+when its next earnings date (Reports/earnings_date.csv) is within 5 calendar days after the decision date; the alert names
+such skipped stocks ("MU rank 2 not bought: earnings in 5 days (Wed Sep 30)"). Held stocks are never sold for earnings.
+Stocks outside the 96-stock universe count as not ranked (below rank 15 and worse than 30). No network calls.
 
     python holdings_alert.py                 # print the alert (uses my_positions.csv if it exists)
     python holdings_alert.py --positions f.csv | --strategy
@@ -63,6 +65,16 @@ def cash_until(d):
     return f"{be.next_decision(d, days=())[0]:%A}"
 
 
+def load_earnings_dates():
+    """Earnings dates for the earnings rule, or None when the rule is off or Reports/earnings_date.csv is missing."""
+    if not be.WINNER.get("earnings_block_days"):
+        return None
+    try:
+        return be.load_earnings()
+    except (OSError, ValueError, KeyError):
+        return None
+
+
 def read_positions(path):
     """DataFrame[Symbol, Shares, Weight] from a positions CSV (Symbol required; Shares/Qty and Weight optional)."""
     pos = pd.read_csv(path)
@@ -94,9 +106,10 @@ def last_completed_session(now=None):
 class _Day:
     """Ranks / scores of one session: qualifying order (score > 0, ranked) as the strategy walks it."""
 
-    def __init__(self, day_df, symbols):
-        """Ranks and scores of one day, indexed like the engine's symbol columns."""
+    def __init__(self, day_df, symbols, earnings=None):
+        """Ranks and scores of one day, indexed like the engine's symbol columns. earnings = load_earnings_dates()."""
         d = day_df.drop_duplicates("Symbol").set_index("Symbol")
+        self.date = pd.Timestamp(day_df["Date"].iloc[0])
         self.symbols = list(symbols)
         self.col = {s: i for i, s in enumerate(self.symbols)}
         rk = d["Strategy_Rank"].reindex(self.symbols)
@@ -108,6 +121,14 @@ class _Day:
         self.close = d["Close"].reindex(self.symbols) if "Close" in d.columns else pd.Series(np.nan, index=self.symbols)
         self.weight = d["Strategy_Weight"].reindex(self.symbols).fillna(0.0)
         self.sectors = np.array([sm.symbol_sector.get(s, "Other") for s in self.symbols])
+        self.earn_days = {}                                            # column -> days to earnings (earnings rule)
+        if earnings is not None:
+            ahead = be.earnings_days_ahead([self.date], self.symbols, earnings, be.WINNER["earnings_block_days"]).iloc[0]
+            self.earn_days = {self.col[s]: v for s, v in ahead.items() if pd.notna(v)}
+
+    def earnings_txt(self, sym):
+        """'MU rank 2 not bought: earnings in 5 days (Wed Sep 30)'."""
+        return f"{sym} {self.rank_txt(sym)} not bought: {be.earnings_note(self.earn_days[self.col[sym]], self.date)}"
 
     def rank_of(self, sym):
         """Rank of a symbol on this day (None = not ranked)."""
@@ -130,20 +151,43 @@ class _Day:
 def evaluate(day, held):
     """Run the strategy's mid-week rule on `held` {symbol: weight} with this day's ranks: the swap step, then (if
     WINNER['midweek_exit_below']) the exit step. Returns (swaps, weak, entrants, exits); exits = [symbol] sold to cash,
-    worst rank first."""
+    worst rank first. Top-3 names blocked by the earnings rule are not entrants (see blocked_entrants)."""
     top, below, cap, _ = rule_params()
     cur = np.zeros(len(day.symbols))
     for s, w in held.items():
         cur[day.col[s]] = w if w > 0 else 1e-9
     before = cur.copy()
-    pairs = be.midweek_swap_pairs(cur, day.order, day.rank, day.sectors, top, below, cap)
+    pairs = be.midweek_swap_pairs(cur, day.order, day.rank, day.sectors, top, below, cap, skip=set(day.earn_days))
     swaps = [(day.symbols[h], day.symbols[e], before[h]) for e, h, _ in pairs]
     exits = [day.symbols[j] for j, _ in be.midweek_exit_sells(cur, day.rank, exit_below())]
     exits = sorted(exits, key=lambda s: -(day.rank_of(s) or 1e9))
     weak = [day.symbols[j] for j in np.where(before > 0)[0] if day.rank.get(j, 1e9) > below]
     weak = sorted(weak, key=lambda s: -(day.rank_of(s) or 1e9))
-    entrants = [day.symbols[j] for j in day.order[:top] if before[j] == 0]
+    entrants = [day.symbols[j] for j in day.order[:top] if before[j] == 0 and j not in day.earn_days]
     return swaps, weak, entrants, exits
+
+
+def blocked_entrants(day, held):
+    """Top-3 names not held that the earnings rule stops from being bought, as ['MU rank 2 not bought: earnings in ...']."""
+    top = rule_params()[0]
+    return [day.earnings_txt(day.symbols[j]) for j in day.order[:top]
+            if j in day.earn_days and held.get(day.symbols[j], 0) <= 0]
+
+
+def blocked_picks(day, new, old):
+    """Friday: names ranked above the last pick (within ranks 1..max_pick_rank) that were passed over for earnings."""
+    worst = max([day.rank_of(s) or 0 for s in new], default=0)
+    limit = be.WINNER.get("max_pick_rank") or worst
+    if len(new) < be.WINNER.get("n", 10):
+        worst = limit
+    return [day.earnings_txt(day.symbols[j]) for j in day.order
+            if j in day.earn_days and day.symbols[j] not in old and day.symbols[j] not in new
+            and day.rank[j] <= min(worst, limit)]
+
+
+def earnings_suffix(items):
+    """' (MU rank 2 not bought: earnings in 5 days (Wed Sep 30))' or ''."""
+    return f" ({'; '.join(items)})" if items else ""
 
 
 def T(sym):
@@ -176,7 +220,8 @@ def build_alert(sig=None, positions_path=None, use_positions=True, now=None, mid
     universe = list(sm.tradable_symbols)
     extra = [s for s in (positions["Symbol"] if positions is not None else []) if s not in universe]
     symbols = universe + extra
-    dday = _Day(sig[sig["Date"] == D], symbols)
+    earnings = load_earnings_dates()
+    dday = _Day(sig[sig["Date"] == D], symbols, earnings)
     first = sig[sig["Date"] == D].iloc[0]
     is_reb, is_chk = int(first["Rebalance_Day"]) == 1, int(first["Midweek_Check"]) == 1 and mw_on
     fill = be.next_sessions(D, 1)[0]
@@ -228,13 +273,17 @@ def build_alert(sig=None, positions_path=None, use_positions=True, now=None, mid
         seg = [f"Full rebalance at the {_day(fill)} open: sell "]
         seg += _join([T(s) for s in sells]) if sells else ["nothing"]
         seg += ["; buy "] + (_join([T(s) for s in buys]) if buys else ["nothing"]) + ["."]
+        skipped = blocked_picks(dday, new, old)
+        if skipped:
+            seg += [f" Not bought (earnings within {be.WINNER['earnings_block_days']} days): " + "; ".join(skipped) + "."]
         out.update(level="blue", lines=[seg])
         return out
     if not mw_on:
         out["lines"] = [["No mid-week swaps (weekly rules). " + next_txt]]
         return out
     if is_chk:                                              # Mon/Wed check: the actual decision at this close
-        swaps, _, _, exits = evaluate(dday, holdings_at(P) if positions is None else held_now)
+        held_chk = holdings_at(P) if positions is None else held_now
+        swaps, _, _, exits = evaluate(dday, held_chk)
         lines = []
         if swaps:
             lines.append(pair_line(f"Swap at the {_day(fill)} open: ", swaps, dday, ", same dollar amount."))
@@ -243,7 +292,7 @@ def build_alert(sig=None, positions_path=None, use_positions=True, now=None, mid
         if lines:
             out.update(level="red", lines=lines)
         else:
-            out["lines"] = [[f"{none_txt} at the {_day(D)} check. " + next_txt]]
+            out["lines"] = [[f"{none_txt} at the {_day(D)} check{earnings_suffix(blocked_entrants(dday, held_chk))}. " + next_txt]]
         return out
     if positions is not None:                               # missed swap at this week's check?
         last_reb = max([pd.Timestamp(d) for d in sig.loc[sig["Rebalance_Day"] == 1, "Date"].unique()], default=None)
@@ -251,7 +300,7 @@ def build_alert(sig=None, positions_path=None, use_positions=True, now=None, mid
                   if last_reb is None or pd.Timestamp(d) > last_reb]
         if checks:
             C = max(checks)
-            cday = _Day(sig[sig["Date"] == C], symbols)
+            cday = _Day(sig[sig["Date"] == C], symbols, earnings)
             missed, _, _, missed_exits = evaluate(cday, held_now)
             lines = []
             if missed:
@@ -271,7 +320,7 @@ def build_alert(sig=None, positions_path=None, use_positions=True, now=None, mid
     if exits:
         lines.append([f"With today's ranks the rank-{ex_rule} exit would sell "] + sells_seg(exits, dday)
                      + [" (cash until the rebalance). " + next_txt])
-    out["lines"] = lines or [[f"{none_txt} with today's ranks. " + next_txt]]
+    out["lines"] = lines or [[f"{none_txt} with today's ranks{earnings_suffix(blocked_entrants(dday, held_now))}. " + next_txt]]
     return out
 
 

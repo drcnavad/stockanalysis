@@ -160,7 +160,9 @@ for needle in [f"Rules ({be.WINNER['tag']})", f"Universe: {len(sm.tradable_symbo
         + (["WINNER['midweek_exit_below'] = None", f"worse than {be.WINNER['midweek_exit_below']}"]
            if be.WINNER.get("midweek_exit_below") else []) \
         + ([f"Picks only from ranks 1–{be.WINNER['max_pick_rank']}", "WINNER['max_pick_rank'] = None"]
-           if be.WINNER.get("max_pick_rank") else []):
+           if be.WINNER.get("max_pick_rank") else []) \
+        + (["Earnings rule", "WINNER['earnings_block_days'] = None", "its backtest is partial"]
+           if be.WINNER.get("earnings_block_days") else []):
     expect(needle in blob, f"caption text missing: {needle!r}")
 expect("run_pipeline" not in blob, "old command 'run_pipeline' still shown in the app")
 
@@ -194,6 +196,24 @@ if holdings_alert.exit_below():
         want = sorted(ex.loc[ex.Date == D, "Symbol"])
         expect(c["level"] == "red" and all(w in txt for w in want) and "hold cash until" in txt,
                f"exit alert on {pd.Timestamp(D).date()} should sell {want}: {txt}")
+
+# ---------------------------------------------------------------- earnings rule in the alert (fake dates, in memory only)
+if be.WINNER.get("earnings_block_days"):
+    sig_d = pd.read_csv("Reports/signal_analysis.csv", usecols=["Date", "Symbol", "Close", "Strategy_Score", "Strategy_Rank",
+                                                                "Strategy_Weight"], parse_dates=["Date"])
+    day_df = sig_d[sig_d.Date == sig_d.Date.max()]
+    d0 = holdings_alert._Day(day_df, sm.tradable_symbols)
+    top3 = [d0.symbols[j] for j in d0.order[:3]]
+    D0 = pd.Timestamp(day_df.Date.iloc[0])
+    fake = pd.DataFrame({"Symbol": top3, "Earnings Date": [D0 + pd.Timedelta(days=k) for k in (1, 5, 6)]})
+    d1 = holdings_alert._Day(day_df, sm.tradable_symbols, fake)
+    weak = {d1.symbols[j]: 0.1 for j in d1.order[40:42]}          # two holdings ranked far below 15
+    swaps = holdings_alert.evaluate(d1, weak)[0]
+    blocked = holdings_alert.blocked_entrants(d1, weak)
+    print("earnings rule (fake dates +1/+5/+6 days for the top 3):", swaps, blocked)
+    expect(sorted(d1.symbols[j] for j in d1.earn_days) == sorted(top3[:2]), "earnings window should be d < E <= d + 5")
+    expect(all(buy not in top3[:2] for _, buy, _ in swaps), "blocked name swapped in")
+    expect(len(blocked) == 2 and "not bought: earnings in 1 day" in blocked[0], f"blocked-entrant text: {blocked}")
 
 print("\nAPP TESTS OK" if not FAIL else f"\nAPP TEST FAILURES ({len(FAIL)}): {FAIL}")
 sys.exit(1 if FAIL else 0)

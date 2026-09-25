@@ -1,6 +1,7 @@
 """Run the regression tests:  python tests/run_tests.py  [--fast = skip the app / dashboard tests]
-  test_midweek_repro.py  live engine reproduces the tested backtests exactly (+438.08% / 1.4649 plain MW; the live exit rule)
-  test_rank_audit.py     saved ranks, scores, picks and mid-week decisions re-derived independently from raw bars
+  test_midweek_repro.py  live engine reproduces the tested backtests exactly (+438.08% / 1.4649 plain MW ... +414.07% / 1.3716
+                         T20-MW30) and an independent re-implementation of the earnings rule (E5, pinned +399.90% / 1.3483)
+  test_rank_audit.py     saved ranks, scores, picks, mid-week decisions and earnings skips re-derived independently
   test_runner.py         run_all.py mode choice + NewsAPI once-a-day guard (pure logic, no API calls)
   test_app.py            Streamlit AppTest: page, charts, displayed ranks, Details widgets, captions, holdings alert
   test_paper_account.py  alpaca_paper.py + alpaca_paper_account.ipynb + run_all --sync-paper against a local MOCK server

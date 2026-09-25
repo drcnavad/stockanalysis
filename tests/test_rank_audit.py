@@ -1,6 +1,7 @@
 """Independent audit of the saved pipeline output (Reports/signal_analysis.csv + strategy_decisions.csv): RS_Score,
-Strategy_Score, Strategy_Rank, the weekly top-10 selection and the Mon/Wed mid-week checks (swap + rank-exit sells) are
-re-derived from raw bars WITHOUT the engine's ranking/selection code (backtest_engine is only read for its settings).
+Strategy_Score, Strategy_Rank, the weekly top-10 selection, the Mon/Wed mid-week checks (swap + rank-exit sells) and the
+earnings rule (no new buy when an earnings date is within WINNER['earnings_block_days'] calendar days) are re-derived from
+raw bars and Reports/earnings_date.csv WITHOUT the engine's code (backtest_engine is only read for its settings).
 Run: python tests/run_tests.py  (or PYTHONPATH=. python tests/test_rank_audit.py)"""
 import os
 import sys
@@ -25,6 +26,25 @@ CAP = be.winner_max_per_sector()
 MAX_RANK = be.WINNER.get("max_pick_rank")          # T20: picks only from ranks 1..20
 SOFT = bool(be.WINNER.get("cap_soft"))             # T20: fill free slots ignoring the cap; mid-week swaps ignore the cap
 MODE = be.WINNER.get("rs_benchmark", "etf")
+EARN_DAYS = be.WINNER.get("earnings_block_days")   # E5: no new buy with earnings in the next N calendar days
+_ed = pd.read_csv("Reports/earnings_date.csv")
+EARN = {}
+for _s, _d in zip(_ed["Symbol"].astype(str).str.strip().str.upper(), pd.to_datetime(_ed["Earnings Date"], errors="coerce")):
+    if pd.notna(_d):
+        EARN.setdefault(_s, []).append(_d.normalize())
+
+
+def blocked(sym, D):
+    """True when sym has an earnings date E with D < E <= D + EARN_DAYS (earnings rule on)."""
+    D = pd.Timestamp(D).normalize()
+    return bool(EARN_DAYS) and any(D < e <= D + pd.Timedelta(days=EARN_DAYS) for e in EARN.get(sym, []))
+
+
+def held_before(D):
+    """Strategy holdings at the session before D (what counts as 'already held' for the earnings rule)."""
+    sess = sorted(sa.Date.unique())
+    i = sess.index(D)
+    return set() if i == 0 else set(sa[(sa.Date == sess[i - 1]) & (sa.Strategy_Weight > 0)].Symbol)
 print("RS benchmark:", MODE)
 
 sa = pd.read_csv("Reports/signal_analysis.csv", parse_dates=["Date"])
@@ -111,6 +131,9 @@ def audit(D, compare_col):
     cands = t[(t.Strategy_Score > 0) & vol.reindex(t.index).notna()].sort_values("Strategy_Rank")
     if MAX_RANK:
         cands = cands.iloc[:MAX_RANK]
+    prior = held_before(D)
+    earn_skip = [s for s in cands.index if blocked(s, D) and s not in prior]
+    cands = cands.drop(earn_skip)
     picked, per, skipped = [], {}, []
     for s in cands.index:
         if len(picked) == 10:
@@ -131,7 +154,8 @@ def audit(D, compare_col):
     actual = t[compare_col].fillna(0)
     held = sorted(actual.index[actual > 0])
     print(f"(e) walk-down picks: {picked}  (skipped for sector cap before slot 10: {skipped})"
-          + (f"; picked with the cap relaxed (T20): {relaxed}" if SOFT else ""))
+          + (f"; picked with the cap relaxed (T20): {relaxed}" if SOFT else "")
+          + (f"; not bought, earnings within {EARN_DAYS} days: {earn_skip}" if EARN_DAYS else ""))
     print(f"    {compare_col} > 0: {held} -> same set: {sorted(picked) == held}; max |weight diff| {(w.reindex(held).fillna(0) - actual[held]).abs().max() if held else 0:.4f}; "
           f"total invested {actual.sum():.3f} vs {w.sum():.3f}")
     expect(sorted(picked) == held and (w.reindex(held).fillna(0) - actual[held]).abs().max() < 1e-3, f"selection mismatch on {D.date()}")
@@ -153,7 +177,7 @@ def audit_midweek(D, enter_top=3, exit_below=15, exit_all=None):
     while True:                                   # best entrant first; for it, the worst-ranked holding whose removal fits the cap
         # worst rank first; several holdings that no longer qualify (no rank) -> order of sector_mapping.tradable_symbols
         weak = sorted([s for s in held if rank.get(s, 10 ** 9) > exit_below], key=lambda s: (-rank.get(s, 10 ** 9), tradable.index(s)))
-        ent = [s for s in list(q.index[:enter_top]) if s not in held]
+        ent = [s for s in list(q.index[:enter_top]) if s not in held and not blocked(s, D)]
         pair = next(((e, h) for e in ent for h in weak
                      if SOFT or sum(sector(k) == sector(e) for k in held if k != h) < CAP), None)
         if pair is None:
@@ -190,6 +214,13 @@ if MAX_RANK or SOFT:                              # also audit the latest weekly
     print(f"T20: {len(t20_days)} weekly decisions in the window used the relaxed cap or dropped a holding ranked worse than {MAX_RANK}; "
           f"last: {[str(pd.Timestamp(d).date()) for d in t20_days[-3:]]}")
     dates += [(pd.Timestamp(d), "Strategy_Weight") for d in t20_days[-2:] if pd.Timestamp(d) not in {x for x, _ in dates}]
+if EARN_DAYS:                                     # also audit the latest weekly decisions where the earnings rule skipped a stock
+    dec_e = pd.read_csv("Reports/strategy_decisions.csv", parse_dates=["Date"])
+    e_days = sorted(dec_e.loc[dec_e.Reason.astype(str).str.startswith("earnings in") & dec_e.Date.isin(set(reb)), "Date"].unique())
+    print(f"Earnings rule: {len(e_days)} weekly decisions in the window skipped a stock; last: "
+          f"{[str(pd.Timestamp(d).date()) for d in e_days[-3:]]}")
+    expect(len(e_days) >= 1, "no weekly decision with an earnings skip to audit")
+    dates += [(pd.Timestamp(d), "Strategy_Weight") for d in e_days[-2:] if pd.Timestamp(d) not in {x for x, _ in dates}]
 for D, col in dates:
     audit(D, col)
 audit(latest, "Provisional_Weight")

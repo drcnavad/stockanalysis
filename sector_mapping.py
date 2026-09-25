@@ -5,17 +5,6 @@ import os
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 REPORTS_DIR = os.path.join(PROJECT_ROOT, "Reports")
 
-# ## symbols to analyze  #### Keep for future reference
-# stock_symbols = ['A', 'AAPL', 'ADBE', 'AMD', 'AMZN', 'ANET', 
-# 'APP', 'AVGO', 'BIIB', 'CAT', 
-# 'COIN', 'CRM', 'CRWV', 'CVLT', 'DASH',
-# 'FFIV', 'FTNT', 'GOOGL',
-# 'HIMS', 'HOOD', 'HUBS', 'INTU', 'IT',
-# 'LYV', 'MCK', 'META', 'MRK', 'MRVL', 'MU',
-# 'NOW', 'NVDA', 'OKTA', 'ORCL', 'PANW', 'REGN', 'RSG', 'RTX', 'SNOW',
-# 'SOFI', 'SOUN', 'TEAM', 'TSLA', 'TTD', 'UI', 'UNH', 'UPST', 'URI', 'VRT', 
-# 'SHOP'] 
-
 ## symbols to analyze
 stock_symbols = ['AAPL', 'ADBE', 'AFRM', 'AMZN', 'ANET', "AMD", 'APP', 'AVAV',
 'AVGO', 'BIIB', 'BKR', 'CDNS', 'COIN', 'CRM',
